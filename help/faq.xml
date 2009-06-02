@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<hspage>
+    <title>musicGuru F.A.Q.</title>
+    <menu name="mghelp" selected="F.A.Q."/>
+	<pagecontent>
+        <faq>
+            <question value="What is musicGuru?">
+                musicGuru is a tool helping you in the high level management of your music collection. It can organize your collection pretty much anyway you want, archive your collection to CDs, and manage these CDs.
+            </question>
+            <question value="Which music formats are supported?">
+                MP3, WMA, AAC (iTunes format), AAC Lossless, OGG, FLAC.
+            </question>
+            <question value="How much does musicGuru cost, and how can I buy it?">
+                musicGuru costs $24.95. You can buy it at the <a href="http://www.hardcoded.net/purchase.htm">Hardcoded Software purchase page</a>.
+            </question>
+            <question value="What is the first thing I should do when I first open musicGuru?">
+                You should first <a href="build.htm">build</a> your musicGuru collection, then <a href="design.htm">design</a> it, and then <a href="materialize.htm">materialize</a> your design.
+            </question>
+            <question value="Some of the directories in my design board have a red exclamation point. What's up?">
+                The red exclamation point means that the directory contains conflictual songs. There is a <a href="howto/resolve_conflicts.htm">How To page</a> about resolving conflicts.
+            </question>
+        </faq>
+	</pagecontent>
+</hspage>

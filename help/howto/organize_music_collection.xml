@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<hspage>
+    <title>How to organize a music collection</title>
+    <menu name="mghelp" selected="How To"/>
+	<pagecontent>
+        <p class="longtext">
+            Before trying to organize your music collection, you must first <a href="build_music_collection.htm">build it in musicGuru</a>. Once you did that, you can follow the steps below. Note that the steps below gives you <b>one, vanilla flavored</b> way to organize your collection, but, with musicGuru, you can organize it in virtually any way.
+        </p>
+        <ol>
+            <li>Click on <b>Design Board</b>.</li>
+            <li>Click on the checkbox next to every location in the <b>Locations pane</b>.</li>
+            <li>In the menu, click on <b>Design|Mass Rename</b>.</li>
+            <li>Click on <b>OK</b>.</li>
+            <li>Click on <b>Materialize</b>.</li>
+            <li>Select <b>Rename in respective locations</b>.</li>
+            <li>Click on <b>Next</b>.</li>
+            <li>Wait for the rename operation to complete.</li>
+            <li>Click on <b>Finish</b>.</li>
+        </ol>
+	</pagecontent>
+</hspage>

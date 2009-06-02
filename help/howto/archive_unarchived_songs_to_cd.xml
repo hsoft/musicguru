@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<hspage>
+    <title>How to archive songs that aren't archived yet</title>
+    <menu name="mghelp" selected="How To"/>
+	<pagecontent>
+        <p class="longtext">
+            So what you basically want to do is to add your collection on your hard drive at the same time as your CDs, mass rename everything, and remove all conflicts. For this purpose, the Move Conflicts feature doesn't work because it leaves the original there. This is why we will use Move Conflicts *and* Original. As said in <a href="merge_music_collections.htm">this How To</a>, the duplicate detection mechanism of musicGuru isn't very advanced yet, but it will be once Mp3 Filter 5 is out because musicGuru will intergrate features from it. Meanwhile, what you can do to detect duplicates that aren't found by the conflicts mechanism is to look at the Location column of your top level directories. If the column indicate that there are songs from both hard drive and CD locations in it, it is a good evidence that there might be duplicates in this folder, so you can investigate further.
+        </p>
+        <ol>
+            <li><a href="build_music_collection.htm">Build your collection</a> and don't forget to add your CDs to it!</li>
+            <li>Click on <b>Design Board</b>.</li>
+            <li>Click on the checkbox next to you hard drive location in the <b>Locations pane</b>.</li>
+            <li>Click on the checkbox next to each of your CD locations.</li>
+            <li>In the menu, click on <b>Design|Mass Rename</b>.</li>
+            <li>Click on <b>OK</b>.</li>
+            <li>Click on <b>Menu|Design|Move Conflicts *and* Original</b>.</li>
+            <li>Uncheck your CD locations to remove them from the design board.</li>
+            <li>There might be some inconsistencies in the <b>Mass Rename</b> result due to inconsistent tags. You can merge directories together by dragging a directory's content in another directory.</li>
+            <li>Click on <b>Split into CD/DVD</b>.</li>
+            <li>Select a CD naming model.</li>
+            <li>If you really want to record as few CD as possible, leave the <b>Grouping level</b> slider at the extreme left. But if you want to prevent your artists from being splitted, put the slider on the second tick.</li>
+            <li>Click on <b>OK</b></li>
+            <li>Because you already have some recorded CD, you might have to manually rename your CDs. If, for example, your naming model is a sequence and you already have 7 recorded CDs, then you would have to rename your CDs so the sequence starts at 8.</li>
+            <li>Click on <b>Materialize</b>.</li>
+            <li>Select <b>Record renamed songs to CD/DVD</b>.</li>
+            <li>Click on <b>Next</b>.</li>
+            <li>Review your to-be-recorded CDs and recording options and click on <b>Next</b>.</li>
+            <li>From now on, musicGuru will prompt you for a blank CD when it needs it. Just follow the instructions until you get a screen telling you that you are finished.</li>
+            <li>Click on <b>Finish</b>.</li>
+        </ol>
+	</pagecontent>
+</hspage>

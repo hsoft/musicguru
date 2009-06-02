@@ -1,0 +1,60 @@
+{
+    IBClasses = (
+        {CLASS = ArrowlessBrowserCell; LANGUAGE = ObjC; SUPERCLASS = NSBrowserCell; }, 
+        {
+            CLASS = DesignOutlineView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = DraggableOutlineView; 
+        }, 
+        {
+            ACTIONS = {
+                massRename = id; 
+                materialize = id; 
+                moveConflicts = id; 
+                moveConflictsAndOriginals = id; 
+                moveToIgnoreBox = id; 
+                newFolder = id; 
+                removeEmptyFolders = id; 
+                renameSelected = id; 
+                selectSong = id; 
+                split = id; 
+                switchConflictAndOriginal = id; 
+                unsplit = id; 
+            }; 
+            CLASS = DesignWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                actionMenu = NSMenu; 
+                actionMenuView = NSView; 
+                browserOutline = DraggingOutlineView; 
+                ignoreBoxOutline = DraggingOutlineView; 
+                ignoreBoxPanel = NSPanel; 
+                statsLabel = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = DraggableOutlineView; LANGUAGE = ObjC; SUPERCLASS = OutlineView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {CLASS = OVNode; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = OutlineView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {py = PyApp; }; 
+            SUPERCLASS = NSOutlineView; 
+        }, 
+        {
+            CLASS = OutlineViewDataSource; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {py = PyApp; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = TableView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {py = PyApp; }; 
+            SUPERCLASS = NSTableView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

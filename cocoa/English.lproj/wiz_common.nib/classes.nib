@@ -1,0 +1,43 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {choosePath = id; locationSwitchChange = id; }; 
+            CLASS = LocationChoicePage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                locationSelector = NSComboBox; 
+                newLocationSwitch = NSButton; 
+                newNameText = NSTextField; 
+                newPathText = NSTextField; 
+                pathChooseButton = NSButton; 
+            }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = MessagePage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {messageLabel = NSTextField; }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = ProgressPage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {messageLabel = NSTextField; progress = NSProgressIndicator; }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = WizCommonPages; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {messagePage = MessagePage; progressPage = ProgressPage; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = WizPage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {page = NSView; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

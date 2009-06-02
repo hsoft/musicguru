@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<hspage>
+    <title>How to merge music collections</title>
+    <menu name="mghelp" selected="How To"/>
+	<pagecontent>
+        <p class="longtext">
+            Merging big collections is often a pain, because unless both collections have the exact same structure, you end up with a lot of duplicates, and an unorganized collection. While the current version of musicGuru doesn't allow advanced duplicates detection (it will once Mp3 Filter 5.x is out.), it does weed out the most evident ones (Files with the exact same artist, album etc..). The steps below assume that you already <a href="build_music_collection.htm">built your collection</a>, and that you want to merge another collection, not yet added, and copy only files you <b>do not have</b> from the other collection to yours.
+        </p>
+        <ol>
+            <li><a href="organize_music_collection.htm">Organize</a> your own collection first!</li>
+            <li>Add the other collection to your location list (like you did <a href="build_music_collection.htm">for your own</a>).</li>
+            <li>Click on <b>Design Board</b>.</li>
+            <li>Add your location to the <b>design board</b> by clicking on the checkbox next to it.</li>
+            <li>Add the other location.</li>
+            <li>Click on <b>Menu|Design|Mass Rename</b>.</li>
+            <li>Choose the same settings that you use to organize your own collection.</li>
+            <li>Click on <b>OK</b>.</li>
+            <li>Click on <b>Menu|Design|Move Conflicts</b>.</li>
+            <li>Remove your collection from the <b>design board</b> by unchecking the checkbox next to it.</li>
+            <li>Click on <b>Materialize</b>.</li>
+            <li>Select <b>Copy renamed songs in one location</b>.</li>
+            <li>Click on <b>Next</b>.</li>
+            <li>Select your own collection in the selector.</li>
+            <li>Click on <b>Next</b>.</li>
+            <li>Wait for the copy to be finished.</li>
+            <li>Click on <b>Finish</b>.</li>
+        </ol>
+        <p>
+            Note about the steps 4 and 5. The order in which you add locations to your design board <b>is important</b>. It determines which files will be declared conflictual. By adding your collection first, you make sure that only files from the other collection are sent to the ignore box when you click on <b>Move Conflicts</b>. Unless, of course, the conflict is internal (2 songs, both from your collection, being in conflict). There is a <a href="resolve_conflicts.htm">How To page</a> about resolving conflicts.
+        </p>
+	</pagecontent>
+</hspage>
