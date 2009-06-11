@@ -1,7 +1,7 @@
 #import "MaterializeWizard.h"
-#import <cocoalib/Dialogs.h>
-#import <cocoalib/Utils.h>
-#import <cocoalib/RegistrationInterface.h>
+#import "cocoalib/Dialogs.h"
+#import "cocoalib/Utils.h"
+#import "cocoalib/RegistrationInterface.h"
 #import "DiskNeededPanel.h"
 #import "Consts.h"
 
@@ -69,7 +69,7 @@
     int materializeType = n2i([[aWizard info] objectForKey:@"MaterializeType"]);
     if (materializeType == 0)
     {
-        if (![RegistrationInterface isAppIdRegistered:APPID])
+        if (![py isRegistered])
             return registrationRequiredPage;
         if (([aWizard currentPage] == materializeChoicePage) || ([aWizard currentPage] == registrationRequiredPage))
         {
@@ -87,7 +87,7 @@
     {
         if ([aWizard currentPage] == materializeChoicePage)
             return pathChoicePage;
-        if (![RegistrationInterface isAppIdRegistered:APPID])
+        if (![py isRegistered])
             return registrationRequiredPage;
         if (([aWizard currentPage] == pathChoicePage) || ([aWizard currentPage] == registrationRequiredPage))
         {
@@ -115,7 +115,7 @@
             if (n2b([py prepareBurning]))
                 return freeSpacePage;
         }
-        if (![RegistrationInterface isAppIdRegistered:APPID])
+        if (![py isRegistered])
             return registrationRequiredPage;
         [aWizard blockPrevious];
         if ((!_firstCD) && ([aWizard currentPage] != insertBlankDiskPage))

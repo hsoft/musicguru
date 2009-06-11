@@ -1,8 +1,8 @@
 #import "LocationPanel.h"
 #import "Consts.h"
-#import <cocoalib/Dialogs.h>
-#import <cocoalib/ProgressController.h>
-#import <cocoalib/Utils.h>
+#import "cocoalib/Dialogs.h"
+#import "cocoalib/ProgressController.h"
+#import "cocoalib/Utils.h"
 
 @implementation LocationPanel
 - (id)initWithPy:(PyApp *)aPy

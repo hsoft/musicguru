@@ -1,6 +1,6 @@
-#import <cocoalib/Dialogs.h>
-#import <cocoalib/ProgressController.h>
-#import <cocoalib/Utils.h>
+#import "cocoalib/Dialogs.h"
+#import "cocoalib/ProgressController.h"
+#import "cocoalib/Utils.h"
 #import "AppDelegate.h"
 #import "MassRenameDialog.h"
 #import "SplitDialog.h"

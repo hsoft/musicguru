@@ -1,5 +1,5 @@
 #import "InsertBlankDiskPage.h"
-#import <cocoalib/Utils.h>
+#import "cocoalib/Utils.h"
 #import "PyMusicGuru.h"
 
 @implementation InsertBlankDiskPage

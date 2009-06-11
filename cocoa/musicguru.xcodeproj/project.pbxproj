@@ -23,12 +23,20 @@
 		CE2CD3D90A94822200C0DA8D /* LocationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2CD3D70A94822200C0DA8D /* LocationPanel.m */; };
 		CE2CD62C0A94973500C0DA8D /* Consts.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE2CD62B0A94973500C0DA8D /* Consts.h */; };
 		CE2CD7460A94A6B600C0DA8D /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2CD7450A94A6B600C0DA8D /* Consts.m */; };
-		CE5E602309CD8E680024A9E6 /* cocoalib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5E602209CD8E680024A9E6 /* cocoalib.framework */; };
-		CE5E605E09CD91030024A9E6 /* cocoalib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE5E602209CD8E680024A9E6 /* cocoalib.framework */; };
 		CE79F7C10986839000CD4AB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE79F7BF0986839000CD4AB7 /* AppDelegate.m */; };
 		CE79FA5D09869F6E00CD4AB7 /* mg_cocoa.plugin in Resources */ = {isa = PBXBuildFile; fileRef = CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */; };
 		CE86506309CEEDE900F40C01 /* musicguru.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE86506209CEEDE900F40C01 /* musicguru.icns */; };
 		CE90AF2309D083D7005185D9 /* music_note_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE90AF2209D083D7005185D9 /* music_note_32.png */; };
+		CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */; };
+		CEA0E9BD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m */; };
+		CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */; };
+		CEA0E9BF0FE1210400ABA3F7 /* Outline.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B10FE1210400ABA3F7 /* Outline.m */; };
+		CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */; };
+		CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */; };
+		CEA0E9C20FE1210400ABA3F7 /* Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B90FE1210400ABA3F7 /* Table.m */; };
+		CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9BB0FE1210400ABA3F7 /* Utils.m */; };
+		CEA0E9D60FE12F3200ABA3F7 /* progress.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEA0E9D20FE12F3200ABA3F7 /* progress.nib */; };
+		CEA0E9D70FE12F3200ABA3F7 /* registration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEA0E9D40FE12F3200ABA3F7 /* registration.nib */; };
 		CEB4E7F309CEF34E00A27957 /* Design.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEB4E7F109CEF34E00A27957 /* Design.nib */; };
 		CEB4E7FC09CEF4CE00A27957 /* DesignWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */; };
 		CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */; };
@@ -85,23 +93,6 @@
 		CEEF347D09D318B5003E55A9 /* SplitDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEF347B09D318B5003E55A9 /* SplitDialog.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		CE1F5ED00EBDB92D006E1837 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE5E603C09CD8F460024A9E6 /* cocoalib.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = cocoalib;
-		};
-		CE1F5F430EBDBA10006E1837 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE5E603C09CD8F460024A9E6 /* cocoalib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = cocoalib;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		CE5E605C09CD90D90024A9E6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -109,7 +100,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CE5E605E09CD91030024A9E6 /* cocoalib.framework in CopyFiles */,
 				CECA229509CDB95400D48E88 /* AddLocationWindow.h in CopyFiles */,
 				CEE8A7DC09CED2A0004911BA /* DetailsPanel.h in CopyFiles */,
 				CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */,
@@ -166,21 +156,39 @@
 		CE2CD3D70A94822200C0DA8D /* LocationPanel.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = LocationPanel.m; sourceTree = "<group>"; };
 		CE2CD62B0A94973500C0DA8D /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = SOURCE_ROOT; };
 		CE2CD7450A94A6B600C0DA8D /* Consts.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = Consts.m; sourceTree = "<group>"; };
-		CE5E602209CD8E680024A9E6 /* cocoalib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = cocoalib.framework; path = ../../cocoalib/build/Release/cocoalib.framework; sourceTree = SOURCE_ROOT; };
 		CE5E602409CD8EAB0024A9E6 /* PyMusicGuru.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = PyMusicGuru.h; sourceTree = "<group>"; };
-		CE5E603C09CD8F460024A9E6 /* cocoalib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocoalib.xcodeproj; path = ../../cocoalib/cocoalib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE79F7BF0986839000CD4AB7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CE79F7C00986839000CD4AB7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mg_cocoa.plugin; path = py/dist/mg_cocoa.plugin; sourceTree = "<group>"; };
 		CE86506209CEEDE900F40C01 /* musicguru.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = musicguru.icns; sourceTree = SOURCE_ROOT; };
 		CE90AF2209D083D7005185D9 /* music_note_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = music_note_32.png; path = images/music_note_32.png; sourceTree = SOURCE_ROOT; };
+		CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9AC0FE1210400ABA3F7 /* NSCharacterSet_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSCharacterSet_Extensions.h; path = cocoalib/brsinglelineformatter/NSCharacterSet_Extensions.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9AD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSCharacterSet_Extensions.m; path = cocoalib/brsinglelineformatter/NSCharacterSet_Extensions.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9AE0FE1210400ABA3F7 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9B00FE1210400ABA3F7 /* Outline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Outline.h; path = cocoalib/Outline.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B10FE1210400ABA3F7 /* Outline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Outline.m; path = cocoalib/Outline.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressController.h; path = cocoalib/ProgressController.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressController.m; path = cocoalib/ProgressController.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9B40FE1210400ABA3F7 /* PyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyApp.h; path = cocoalib/PyApp.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9B80FE1210400ABA3F7 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Table.h; path = cocoalib/Table.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B90FE1210400ABA3F7 /* Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Table.m; path = cocoalib/Table.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9BA0FE1210400ABA3F7 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9BB0FE1210400ABA3F7 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9D30FE12F3200ABA3F7 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = cocoalib/English.lproj/progress.nib; sourceTree = "<group>"; };
+		CEA0E9D50FE12F3200ABA3F7 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = cocoalib/English.lproj/registration.nib; sourceTree = "<group>"; };
 		CEB4E7F209CEF34E00A27957 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Design.nib; sourceTree = "<group>"; };
 		CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DesignWindow.m; sourceTree = "<group>"; };
 		CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = DesignWindow.h; sourceTree = "<group>"; };
 		CEB960F909D3078500852670 /* MassRenameDialog.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = MassRenameDialog.h; sourceTree = SOURCE_ROOT; };
 		CEB960FA09D3078500852670 /* MassRenameDialog.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = MassRenameDialog.m; sourceTree = SOURCE_ROOT; };
 		CEBF43370ADC3F580004F7F0 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = /Library/Frameworks/Sparkle.framework; sourceTree = "<absolute>"; };
-		CEC9A8BA09D86A6A0038B2D6 /* musicguru_help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = musicguru_help; path = ../../html/musicguru_help; sourceTree = SOURCE_ROOT; };
+		CEC9A8BA09D86A6A0038B2D6 /* musicguru_help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = musicguru_help; path = help/musicguru_help; sourceTree = "<group>"; };
 		CECA229109CDB69500D48E88 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AddLocation.nib; sourceTree = "<group>"; };
 		CECA229309CDB95400D48E88 /* AddLocationWindow.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = AddLocationWindow.h; sourceTree = "<group>"; };
 		CECA229409CDB95400D48E88 /* AddLocationWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = AddLocationWindow.m; sourceTree = "<group>"; };
@@ -235,7 +243,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				CE5E602309CD8E680024A9E6 /* cocoalib.framework in Frameworks */,
 				CEBF43380ADC3F580004F7F0 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,12 +300,12 @@
 		29B97314FDCFA39411CA2CEA /* musicguru_cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				CEA0E9A80FE120CD00ABA3F7 /* cocoalib */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				CE5E603C09CD8F460024A9E6 /* cocoalib.xcodeproj */,
 			);
 			name = musicguru_cocoa;
 			sourceTree = "<group>";
@@ -338,20 +345,47 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CE5E602209CD8E680024A9E6 /* cocoalib.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CE1F5ECD0EBDB92D006E1837 /* Products */ = {
+		CEA0E9A80FE120CD00ABA3F7 /* cocoalib */ = {
 			isa = PBXGroup;
 			children = (
-				CE1F5ED10EBDB92D006E1837 /* cocoalib.framework */,
+				CEA0E9D20FE12F3200ABA3F7 /* progress.nib */,
+				CEA0E9D40FE12F3200ABA3F7 /* registration.nib */,
+				CEA0E9A90FE1210400ABA3F7 /* brsinglelineformatter */,
+				CEA0E9AE0FE1210400ABA3F7 /* Dialogs.h */,
+				CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */,
+				CEA0E9B00FE1210400ABA3F7 /* Outline.h */,
+				CEA0E9B10FE1210400ABA3F7 /* Outline.m */,
+				CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */,
+				CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */,
+				CEA0E9B40FE1210400ABA3F7 /* PyApp.h */,
+				CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */,
+				CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */,
+				CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */,
+				CEA0E9B80FE1210400ABA3F7 /* Table.h */,
+				CEA0E9B90FE1210400ABA3F7 /* Table.m */,
+				CEA0E9BA0FE1210400ABA3F7 /* Utils.h */,
+				CEA0E9BB0FE1210400ABA3F7 /* Utils.m */,
 			);
-			name = Products;
+			name = cocoalib;
 			sourceTree = "<group>";
+		};
+		CEA0E9A90FE1210400ABA3F7 /* brsinglelineformatter */ = {
+			isa = PBXGroup;
+			children = (
+				CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */,
+				CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */,
+				CEA0E9AC0FE1210400ABA3F7 /* NSCharacterSet_Extensions.h */,
+				CEA0E9AD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m */,
+			);
+			name = brsinglelineformatter;
+			path = cocoalib/brsinglelineformatter;
+			sourceTree = SOURCE_ROOT;
 		};
 		CEB4E80709CEF4F300A27957 /* Design */ = {
 			isa = PBXGroup;
@@ -440,7 +474,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CE1F5F440EBDBA10006E1837 /* PBXTargetDependency */,
 			);
 			name = musicguru;
 			productInstallPath = "$(HOME)/Applications";
@@ -458,28 +491,12 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* musicguru_cocoa */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = CE1F5ECD0EBDB92D006E1837 /* Products */;
-					ProjectRef = CE5E603C09CD8F460024A9E6 /* cocoalib.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* musicguru */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		CE1F5ED10EBDB92D006E1837 /* cocoalib.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = cocoalib.framework;
-			remoteRef = CE1F5ED00EBDB92D006E1837 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D1107290486CEB800E47090 /* Resources */ = {
@@ -521,6 +538,8 @@
 				CE20F4290F594A9C00115114 /* wizard_64.png in Resources */,
 				CE20F42E0F594AB200115114 /* wiz_common.nib in Resources */,
 				CE20F42F0F594AB200115114 /* wizard.nib in Resources */,
+				CEA0E9D60FE12F3200ABA3F7 /* progress.nib in Resources */,
+				CEA0E9D70FE12F3200ABA3F7 /* registration.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,18 +571,18 @@
 				CE20F4270F594A7A00115114 /* WizCommonPages.m in Sources */,
 				CE20F4420F594BD700115114 /* MessagePage.m in Sources */,
 				CE20F4430F594BD700115114 /* ProgressPage.m in Sources */,
+				CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */,
+				CEA0E9BD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m in Sources */,
+				CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */,
+				CEA0E9BF0FE1210400ABA3F7 /* Outline.m in Sources */,
+				CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */,
+				CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */,
+				CEA0E9C20FE1210400ABA3F7 /* Table.m in Sources */,
+				CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CE1F5F440EBDBA10006E1837 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocoalib;
-			targetProxy = CE1F5F430EBDBA10006E1837 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -604,6 +623,22 @@
 				CE2CD3CC0A9480C700C0DA8D /* English */,
 			);
 			name = LocationPanel.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CEA0E9D20FE12F3200ABA3F7 /* progress.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEA0E9D30FE12F3200ABA3F7 /* English */,
+			);
+			name = progress.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CEA0E9D40FE12F3200ABA3F7 /* registration.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEA0E9D50FE12F3200ABA3F7 /* English */,
+			);
+			name = registration.nib;
 			sourceTree = SOURCE_ROOT;
 		};
 		CEB4E7F109CEF34E00A27957 /* Design.nib */ = {

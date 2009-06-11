@@ -1,5 +1,5 @@
 #import "MassRenameDialog.h"
-#import <cocoalib/Utils.h>
+#import "cocoalib/Utils.h"
 
 @implementation MassRenameDialog
 - (id)initWithPyMassRenamePanel:(PyMassRenamePanel *)aPy

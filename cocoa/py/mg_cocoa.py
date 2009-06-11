@@ -1,24 +1,17 @@
-#!/usr/bin/env python
-"""
-Unit Name: mg_cocoa
-Created By: Virgil Dupras
-Created On: 2006/03/19
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2008-11-02 11:24:57 +0100 (Sun, 02 Nov 2008) $
-                 $Revision: 3882 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
+# Unit Name: mg_cocoa
+# Created By: Virgil Dupras
+# Created On: 2006/03/19
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import objc
 from AppKit import *
-from PyObjCTools import NibClassBuilder
 
-from hs import job
+from hsutil import job
 
-from musicguru import app_cocoa,design
+from musicguru import app_cocoa, design
 
-NibClassBuilder.extractClasses("MainMenu", bundle=NSBundle.mainBundle())
-
-class PyMassRenamePanel(NibClassBuilder.AutoBaseClass):
+class PyMassRenamePanel(NSObject):
     def setRefDir(self,refdir):
         #You MUST call this before starting to use the class
         self.panel = design.MassRenamePanel(refdir)
@@ -48,7 +41,7 @@ class PyMassRenamePanel(NibClassBuilder.AutoBaseClass):
         self.panel.whitespace_index = row
     
 
-class PySplitPanel(NibClassBuilder.AutoBaseClass):
+class PySplitPanel(NSObject):
     def setRefDir(self,refdir):
         #You MUST call this before starting to use the class
         self.panel = design.SplittingPanel(refdir)
@@ -81,10 +74,10 @@ class PySplitPanel(NibClassBuilder.AutoBaseClass):
         self.panel.model_index = row
     
 
-class PyApp(NibClassBuilder.AutoBaseClass):
+class PyApp(NSObject):
     pass #fake class
 
-class PyMusicGuru(NibClassBuilder.AutoBaseClass):
+class PyMusicGuru(NSObject):
     def init(self):
         self = super(PyMusicGuru,self).init()
         self.app = app_cocoa.MusicGuru()
@@ -250,16 +243,25 @@ class PyMusicGuru(NibClassBuilder.AutoBaseClass):
         return self.app.GetTableViewValues(tag,row)
     
     #---Worker
-    def setProgressController_(self,progress):
-        self.progress = progress
-    
     def getJobProgress(self):
-        return self.app.last_progress
+        return self.app.progress.last_progress
     
     def getJobDesc(self):
-        return self.app.last_desc
+        return self.app.progress.last_desc
     
     def cancelJob(self):
-        self.app.job_cancelled = True
+        self.app.progress.job_cancelled = True
+    
+    #---Registration
+    @objc.signature('i@:')
+    def isRegistered(self):
+        return self.app.registered
+    
+    @objc.signature('i@:@@')
+    def isCodeValid_withEmail_(self, code, email):
+        return self.app.is_code_valid(code, email)
+    
+    def setRegisteredCode_andEmail_(self, code, email):
+        self.app.set_registration(code, email)
     
 

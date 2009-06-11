@@ -1,8 +1,8 @@
 #import "AppDelegate.h"
-#import <cocoalib/ProgressController.h>
-#import <cocoalib/RegistrationInterface.h>
-#import <cocoalib/Dialogs.h>
-#import <cocoalib/Utils.h>
+#import "cocoalib/ProgressController.h"
+#import "cocoalib/RegistrationInterface.h"
+#import "cocoalib/Dialogs.h"
+#import "cocoalib/Utils.h"
 #import "Consts.h"
 
 @implementation AppDelegate
@@ -73,9 +73,9 @@
 
 - (IBAction)unlockApp:(id)sender
 {
-    if ([RegistrationInterface isAppIdRegistered:APPID])
+    if ([[self py] isRegistered])
         return;
-    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithAppName:APPNAME appId:APPID limitDescription:LIMIT_DESC];
+    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC];
     if ([ri enterCode] == NSOKButton)
         [unlockMenuItem setTitle:@"Thanks for buying musicGuru!"];
     [ri release];
@@ -133,7 +133,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    if ([RegistrationInterface showNagWithAppName:APPNAME appId:APPID limitDescription:LIMIT_DESC])
+    if ([RegistrationInterface showNagWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC])
         [unlockMenuItem setTitle:@"Thanks for buying musicGuru!"];
     [[ProgressController mainProgressController] setWorker:py];
     [self updateCollection:self];

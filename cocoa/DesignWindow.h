@@ -1,8 +1,6 @@
-/* DesignWindow */
-
 #import <Cocoa/Cocoa.h>
-#import <cocoalib/Outline.h>
-#import <cocoalib/Table.h>
+#import "cocoalib/Outline.h"
+#import "cocoalib/Table.h"
 #import "DetailsPanel.h"
 #import "PyMusicGuru.h"
 #import "MaterializeWizard.h"

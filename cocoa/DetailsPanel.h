@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
-#import <cocoalib/PyApp.h>
-#import <cocoalib/Table.h>
+#import "cocoalib/PyApp.h"
+#import "cocoalib/Table.h"
 
 
 @interface DetailsPanel : NSWindowController

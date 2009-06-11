@@ -1,5 +1,5 @@
 #import "PathChoicePage.h"
-#import <cocoalib/Dialogs.h>
+#import "cocoalib/Dialogs.h"
 
 @implementation PathChoicePage
 

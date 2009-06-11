@@ -1,6 +1,6 @@
 #import "RecordingOptionsPage.h"
 #import "PyMusicGuru.h"
-#import <cocoalib/Utils.h>
+#import "cocoalib/Utils.h"
 
 @implementation RecordingOptionsPage
 - (id)init

@@ -1,5 +1,5 @@
 #import "AddLocationWindow.h"
-#import <cocoalib/Dialogs.h>
+#import "cocoalib/Dialogs.h"
 
 @implementation AddLocationWindow
 

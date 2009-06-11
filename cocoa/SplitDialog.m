@@ -1,5 +1,5 @@
 #import "SplitDialog.h"
-#import <cocoalib/Utils.h>
+#import "cocoalib/Utils.h"
 
 @implementation SplitDialog
 - (id)initWithPySplitPanel:(PySplitPanel *)aPy
