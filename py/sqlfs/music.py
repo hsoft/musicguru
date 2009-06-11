@@ -1,20 +1,17 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.fs.sql.music
-Created By: Virgil Dupras
-Created On: 2006/10/06
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import _sql as sql
+# Unit Name: musicguru.sqlfs.music
+# Created By: Virgil Dupras
+# Created On: 2006/10/06
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 
-from hs.path import Path
-from hs.fs.phys import music
-from hs.job import nulljob, JobCancelled
-from hs import fs, io
-import hs.fs.music
+from . import _sql as sql
+
+import hsfs as fs
+import hsfs.music
+from hsfs.phys import music
+from hsutil import io
+from hsutil.job import nulljob, JobCancelled
+from hsutil.path import Path
 
 class Node(object):
     @property
@@ -27,7 +24,7 @@ class Node(object):
          return self.parent.physical_path + self.name
     
 
-class File(sql.File, Node, fs.music._File):
+class File(sql.File, Node, hsfs.music._File):
     pass
 
 class Directory(sql.Directory, Node):

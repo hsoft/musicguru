@@ -13,25 +13,26 @@ import os.path as op
 import tempfile
 import shutil
 
-from hs.path import Path
-from hs.utils.misc import cond, dedupe, tryint
-from hs.utils.files import clean_empty_dirs
-from hs.stats import StatsList
-from hs.utils.str import format_size, format_time, multi_replace, FT_MINUTES, FS_FORBIDDEN
-from hs.fs import phys
-import hs.fs.phys.music
-from hs.job import JobCancelled
-from hs.utils.conflict import is_conflicted, get_unconflicted_name
-from hs.const import APPDATA
+from hsfs import phys
+from hsfs.stats import StatsList
+from hsutil.conflict import is_conflicted, get_unconflicted_name
+from hsutil.files import clean_empty_dirs
+from hsutil.job import JobCancelled
+from hsutil.misc import cond, dedupe, tryint
+from hsutil.path import Path
+from hsutil.str import format_size, format_time, multi_replace, FT_MINUTES, FS_FORBIDDEN
 
-from musicguru import design
-from musicguru.fs_utils import Buffer, BatchOperation
-from musicguru.sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE_NORMAL
+from hsutil.reg import RegistrableApplication
 
-class MusicGuru(object):
+from . import design
+from .fs_utils import Buffer, BatchOperation
+from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE_NORMAL
+
+class MusicGuru(RegistrableApplication):
     def __init__(self, appdata=None):
+        RegistrableApplication.__init__(self, appid=2)
         if appdata is None:
-            appdata = op.join(APPDATA, 'musicguru')
+            appdata = op.expanduser(op.join('~', '.hsoftdata', 'musicguru'))
         self.appdata = appdata
         if not op.exists(self.appdata):
             os.makedirs(self.appdata)

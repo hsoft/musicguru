@@ -1,28 +1,23 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.tests.fs.sql_music
-Created By: Virgil Dupras
-Created On: 2006/10/06
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import unittest
+# Unit Name: musicguru.sqlfs.music_test
+# Created By: Virgil Dupras
+# Created On: 2006/10/06
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import os.path as op
 import os
 import shutil
 
-from hs.testcase import TestCase
-from hs.fs import manual
-from hs.fs.phys import music
-import hs.fs
-from hs.path import Path
-from hs.const import TESTDIR
-from hs.job import Job, JobCancelled
+from nose.tools import nottest
 
-from musicguru import sqlfs
-from musicguru.sqlfs.music import *
+import hsmedia.testcase
+from hsutil.testcase import TestCase
+from hsfs import manual
+from hsfs.phys import music
+from hsutil.path import Path
+from hsutil.job import Job, JobCancelled
+
+from .music import *
 
 class TCRoot_children(TestCase):
     def test_new_directories_are_Volume(self):
@@ -185,7 +180,7 @@ class TCadd_volume(TestCase):
 
 class TCVolume_Update(TestCase):
     def test_that_ref_is_automatically_created(self):
-        ref_dir = op.join(TESTDIR,'ogg')
+        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
         root = Root()
@@ -196,7 +191,7 @@ class TCVolume_Update(TestCase):
         self.assertEqual(3,v.filecount)
     
     def test_that_the_ref_create_is_a_music_dir(self):
-        ref_dir = op.join(TESTDIR,'ogg')
+        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
         root = Root()
@@ -221,7 +216,7 @@ class TCVolume_Update(TestCase):
 
 class TCRoot_update_volumes(TestCase):
     def test_only_update_fixed_volumes(self):
-        ref_dir = op.join(TESTDIR,'ogg')
+        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
         root = Root()
@@ -242,6 +237,7 @@ class TCJobs(TestCase):
         self.log = []
         self.job = Job(1,callback)
     
+    @nottest
     def do_test_log(self):
         self.assertEqual(0,self.log[0])
         self.assertEqual(100,self.log[-1])
@@ -256,7 +252,7 @@ class TCJobs(TestCase):
     
     def test_Root_update_volumes(self):
         root = Root()
-        ref_dir = op.join(TESTDIR,'ogg')
+        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         v = root.new_directory('foo')
         v.initial_path = Path(ref_dir)
         v.vol_type = VOLTYPE_FIXED
@@ -334,7 +330,7 @@ class TCvolume_path_mode(TestCase):
 
 class TCFileAttrs(TestCase):
     def test_has_music_attrs(self):
-        ref_dir = op.join(TESTDIR,'ogg')
+        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref = music.Directory(None,ref_dir)
         root = Root()
         v = root.add_volume(ref,'foo',VOLTYPE_FIXED)
@@ -348,7 +344,7 @@ class TCvolume_is_available(TestCase):
         self.v = self.root.new_directory('vol')
     
     def test_true(self):
-        self.v.initial_path = Path(TESTDIR) #it always exists
+        self.v.initial_path = TestCase.filepath('') #it always exists
         self.assertTrue(self.v.is_available)
     
     def test_false(self):
@@ -365,6 +361,3 @@ class TCvolume_is_available(TestCase):
         self.v.initial_path = Path('/does/not/exist') # physical_path should be read
         self.assertTrue(self.v.is_available)
     
-
-if __name__ == "__main__":
-    unittest.main()

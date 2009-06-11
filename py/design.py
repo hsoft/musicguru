@@ -1,29 +1,25 @@
-#!/usr/bin/env python
-"""
-Unit Name: musicguru.design
-Created By: Virgil Dupras
-Created On: 2006/01/18
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2008-02-18 18:32:22 +0100 (Mon, 18 Feb 2008) $
-                 $Revision: 2388 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
+# Unit Name: musicguru.design
+# Created By: Virgil Dupras
+# Created On: 2006/01/18
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import random
 
-import hs.fs.manual
-import fs_utils
-from hs import job
-from hs.utils.str import pluralize, format_size, format_time, FT_DECIMAL
-from hs.utils import conflict
+import hsfs.manual
+from hsutil import job, conflict
+from hsutil.str import pluralize, format_size, format_time, FT_DECIMAL
 
-class Board(hs.fs.manual.AutoMerge):
-    cls_dir_class = hs.fs.manual.AutoMerge
+from . import fs_utils
+
+class Board(hsfs.manual.AutoMerge):
+    cls_dir_class = hsfs.manual.AutoMerge
 
     def __init__(self):
         super(Board,self).__init__(None,'')
         self.case_sensitive = False
         self.__locations = []
-        self.ignore_box = hs.fs.manual.AutoMerge(None,'')
+        self.ignore_box = hsfs.manual.AutoMerge(None,'')
         self.media_capacity = 0
 
     #---Private
@@ -166,7 +162,7 @@ class MassRenamePanel(object):
             self.ChangeExample()
         if self.example is None:
             return ''
-        tmp = hs.fs.manual.Directory(None,'')
+        tmp = hsfs.manual.Directory(None,'')
         tmp.add_file_copy(self.example)
         renamed = fs_utils.RestructureDirectory(tmp,self.model,self.whitespace)
         file = renamed.allfiles[0]

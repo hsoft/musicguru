@@ -1,28 +1,22 @@
-#!/usr/bin/env python
-"""
-Unit Name: musicguru.fs_utils
-Created By: Virgil Dupras
-Created On: 2005/09/08
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
+# Unit Name: musicguru.fs_utils
+# Created By: Virgil Dupras
+# Created On: 2005/09/08
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import os.path as op
 import os
 import sys
 import shutil
 import tempfile
 
-from hs import fs
-import hs.fs.manual
-import hs.fs.phys
-from hs.utils.str import multi_replace, FS_FORBIDDEN, rem_file_ext, process_tokens
-from hs.path import Path
-from hs.utils.misc import tryint, dedupe
-from hs.job import nulljob, JobCancelled, Job
+import hsfs as fs
+from hsutil.job import nulljob, JobCancelled, Job
+from hsutil.misc import tryint, dedupe
+from hsutil.path import Path
+from hsutil.str import multi_replace, FS_FORBIDDEN, rem_file_ext, process_tokens
 
-from musicguru.sqlfs.music import VOLTYPE_CDROM, MODE_TOKEN, MODE_NORMAL
+from .sqlfs.music import VOLTYPE_CDROM, MODE_TOKEN, MODE_NORMAL
 
 (WS_DONT_TOUCH,
  WS_SPACES_TO_UNDERSCORES,

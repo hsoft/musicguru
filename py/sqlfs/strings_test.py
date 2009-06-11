@@ -1,20 +1,15 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.tests.fs.sql_strings
-Created By: Virgil Dupras
-Created On: 2006/10/11
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import unittest
+# Unit Name: musicguru.sqlfs.strings_test
+# Created By: Virgil Dupras
+# Created On: 2006/10/11
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import sqlite3 as sqlite
 import os.path as op
 
-from hs.testcase import TestCase
+from hsutil.testcase import TestCase
 
-from musicguru.sqlfs.strings import *
+from .strings import *
 
 class TCEmptyBuffer(TestCase):
     def setUp(self):
@@ -63,6 +58,3 @@ class TCReloadedBuffer(TestCase):
     def test_ask_for_rows(self):
         self.assertEqual(2,self.buf.row_of_string('bar'))
     
-
-if __name__ == "__main__":
-    unittest.main()

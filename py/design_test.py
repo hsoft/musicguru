@@ -1,27 +1,22 @@
-#!/usr/bin/env python
-"""
-Unit Name: musicguru.tests.design
-Created By: Virgil Dupras
-Created On: 2006/01/18
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2004-2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import unittest
+# Unit Name: musicguru.design_test
+# Created By: Virgil Dupras
+# Created On: 2006/01/18
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import os.path as op
 import os
 import random
 
-from hs.const import TESTDIR
-import hs.fs.manual
+import hsfs.manual
 
-from musicguru import fs_utils, design
-from musicguru.sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
+from . import fs_utils, design
+from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
+from .testcase import TestCase
 
-class TCBoard(unittest.TestCase):
+class TCBoard(TestCase):
     def setUp(self):
-        self.root = Root(op.join(TESTDIR,'sql','small.db'))
+        self.root = Root(self.filepath('sql','small.db'))
         self.board = design.Board()
         self.board.AddLocation(self.root[0])
 
@@ -68,10 +63,10 @@ class TCBoard(unittest.TestCase):
     def test_is_auto_merge(self):
         #By testing that the board is an AutoMerge subclass, we are sure that the
         #board handles file name conflicts and automatically merge directories.
-        self.assert_(isinstance(self.board,hs.fs.manual.AutoMerge))
+        self.assert_(isinstance(self.board, hsfs.manual.AutoMerge))
 
     def test_auto_create_dir(self):
-        self.assertEqual(hs.fs.manual.AutoMerge,type(self.board._create_sub_dir('foobar')))
+        self.assertEqual(hsfs.manual.AutoMerge,type(self.board._create_sub_dir('foobar')))
 
     def test_case_insensitive(self):
         f1,f2 = self.board[:2]
@@ -90,7 +85,7 @@ class TCBoard(unittest.TestCase):
         self.assertEqual(1,len(not_renamed))
 
     def test_that_mass_rename_priorizes(self):
-        root = Root(op.join(TESTDIR,'sql','small.db'))
+        root = Root(self.filepath('sql','small.db'))
         self.board.AddLocation(root[0])
         self.board.MassRename("foobar/%year% - %artist% - %title%",fs_utils.WS_SPACES_TO_UNDERSCORES)
         self.assertEqual(8,len(self.board.allconflicts))
@@ -103,7 +98,7 @@ class TCBoard(unittest.TestCase):
         self.assertEqual(7,len(self.board.allfiles))
 
     def test_empty(self):
-        root = Root(op.join(TESTDIR,'sql','small.db'))
+        root = Root(self.filepath('sql','small.db'))
         self.board.AddLocation(root[0])
         self.board.media_capacity = 8500
         self.board[0].move(self.board.ignore_box)
@@ -116,7 +111,7 @@ class TCBoard(unittest.TestCase):
         self.assertEqual(False,self.board.splitted)
 
     def test_priorize_conflicts(self):
-        root = Root(op.join(TESTDIR,'sql','small.db'))
+        root = Root(self.filepath('sql','small.db'))
         self.board.AddLocation(root[0])
         f1 = self.board['08 Peephole.wma']
         f2 = self.board['[000] 08 Peephole.wma']
@@ -147,7 +142,7 @@ class TCBoard(unittest.TestCase):
     
     def test_get_stat_line(self):
         self.assertEqual("7 songs, 27.3 minutes, 34.73 MB",self.board.stats_line)
-        root = Root(op.join(TESTDIR,'sql','small.db'))
+        root = Root(self.filepath('sql','small.db'))
         self.board.AddLocation(root[0])
         self.board.MassRename("foobar/%year% - %artist% - %title%",fs_utils.WS_SPACES_TO_UNDERSCORES)
         self.assertEqual("14 songs (8 conflicts), 54.7 minutes, 69.45 MB",self.board.stats_line)
@@ -188,9 +183,9 @@ class TCBoard(unittest.TestCase):
         self.assertEqual(2,len(self.board.ignore_box.allfiles))
         self.assertEqual(0,len(self.board.allconflicts))
 
-class TCMassRenamePanel(unittest.TestCase):
+class TCMassRenamePanel(TestCase):
     def setUp(self):
-        root = Root(op.join(TESTDIR,'sql','small.db'))
+        root = Root(self.filepath('sql','small.db'))
         self.panel = design.MassRenamePanel(root)
 
     def test_default(self):
@@ -227,9 +222,9 @@ class TCMassRenamePanel(unittest.TestCase):
         self.assertEqual('',self.panel.example_after)
         random.choice = oldchoice
 
-class TCSplittingPanel(unittest.TestCase):
+class TCSplittingPanel(TestCase):
     def setUp(self):
-        self.panel = design.SplittingPanel(hs.fs.manual.Directory(None,''))
+        self.panel = design.SplittingPanel(hsfs.manual.Directory(None,''))
 
     def test_default(self):
         self.assertEqual(0,self.panel.model_index)
@@ -278,6 +273,3 @@ class TCSplittingPanel(unittest.TestCase):
         self.assertEqual(12,self.panel.capacity)
         self.panel.custom_capacity = 13
         self.assertEqual(13,self.panel.capacity)
-
-if __name__ == "__main__":
-    unittest.main()

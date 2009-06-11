@@ -1,22 +1,18 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.fs.sql
-Created By: Virgil Dupras
-Created On: 2006/10/03
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2008-02-26 12:23:33 +0100 (Tue, 26 Feb 2008) $
-                 $Revision: 2463 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
+# Unit Name: musicguru.sqlfs
+# Created By: Virgil Dupras
+# Created On: 2006/10/03
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import sqlite3 as sqlite
 import time
 from weakref import WeakValueDictionary
 
-from hs import fs
-from hs.utils.misc import tryint
-from hs.utils.str import multi_replace
-from hs.job import nulljob, JobCancelled
-import hs.sqlite
+import hsfs as fs
+from hsutil.job import nulljob, JobCancelled
+from hsutil.misc import tryint
+from hsutil.str import multi_replace
+import hsutil.sqlite
 
 (NODE_TYPE_DIR,
 NODE_TYPE_FILE) = range(2)
@@ -219,7 +215,7 @@ class Root(Directory):
     cls_dir_class = Directory
     def __init__(self, dbname=':memory:', dirname=''):
         super(Root,self).__init__(None,dirname)
-        self.con = hs.sqlite.ThreadedConn(dbname, False)
+        self.con = hsutil.sqlite.ThreadedConn(dbname, False)
         self.id = 0
         self._sections_to_read = None
         self._id_cache = WeakValueDictionary()

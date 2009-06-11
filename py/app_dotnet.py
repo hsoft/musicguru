@@ -11,9 +11,9 @@ Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
 import os.path as op
 import sys
 
-from hs import job
+from hsutil import job
 
-import app,design
+from .import app, design
 
 class MusicGuru(app.MusicGuru):
     def __init__(self,appdata=None):

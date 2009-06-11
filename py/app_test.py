@@ -5,13 +5,11 @@
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 
-import unittest
+from hsutil.path import Path
+from hsutil.testcase import TestCase
 
-from hs.path import Path
-from hs.testcase import TestCase
-
-from musicguru.app import MusicGuru
-from musicguru.sqlfs.music import Root, VOLTYPE_CDROM
+from .app import MusicGuru
+from .sqlfs.music import Root, VOLTYPE_CDROM
 
 class TCApp_GetLocationData(TestCase):
     def test_values(self):
@@ -28,6 +26,3 @@ class TCApp_GetLocationData(TestCase):
         # The path supplied must be a unicode string, it is going through the pyobjc bridge
         self.assert_(isinstance(result[5], unicode))
     
-
-if __name__ == '__main__':
-    unittest.main()

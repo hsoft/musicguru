@@ -1,19 +1,13 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.tests.fs.sql_utils
-Created By: Virgil Dupras
-Created On: 2006/10/07
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import unittest
+# Unit Name: hs.tests.fs.sql_utils
+# Created By: Virgil Dupras
+# Created On: 2006/10/07
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 
-from hs.testcase import TestCase
+from hsutil.testcase import TestCase
 
-from musicguru.sqlfs import *
-from musicguru.sqlfs.utils import *
+from ._sql import *
+from .utils import *
 
 def getref():
     root = Root()
@@ -96,6 +90,3 @@ class TCnodes_of_attr_values(TestCase):
         f1._set_attr('foo','')
         self.assertEqual([],nodes_of_attr_values(root.con,'foo',[]))
     
-
-if __name__ == "__main__":
-    unittest.main()

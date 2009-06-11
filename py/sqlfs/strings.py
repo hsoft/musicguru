@@ -1,13 +1,9 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.fs.sql.strings
-Created By: Virgil Dupras
-Created On: 2006/10/11
-Last modified by:$Author: hsoft $
-Last modified on:$Date: 2007-09-22 19:38:41 +0200 (Sat, 22 Sep 2007) $
-                 $Revision: 1921 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
+# Unit Name: musicguru.sqlfs.strings
+# Created By: Virgil Dupras
+# Created On: 2006/10/11
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import sqlite3 as sqlite
 
 class Buffer(object):

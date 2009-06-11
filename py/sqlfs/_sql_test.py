@@ -1,26 +1,20 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.tests.fs.sql
-Created By: Virgil Dupras
-Created On: 2006/10/03
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import unittest
+# Unit Name: musicguru.sqlfs._sql_test
+# Created By: Virgil Dupras
+# Created On: 2006/10/03
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import sqlite3 as sqlite
 import os.path as op
 import time
 import weakref
 
-from hs.testcase import TestCase
-import hs.fs.auto
-from hs import fs
-from hs.fs import manual
-from hs.job import Job,JobCancelled
+import hsfs as fs
+from hsfs import manual
+from hsutil.job import Job, JobCancelled
+from hsutil.testcase import TestCase
 
-from musicguru.sqlfs import *
+from ._sql import *
 
 INFO_SAMPLE = {
     'foo': 'bar',
@@ -515,6 +509,3 @@ class TCfind_node_of_id(TestCase):
         f = d.new_file('bar')
         self.assert_(root.find_node_of_id(f.id) is f)
     
-
-if __name__ == "__main__":
-    unittest.main()

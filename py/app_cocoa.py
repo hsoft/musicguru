@@ -17,20 +17,15 @@ from AppKit import *
 import DiscRecording
 import DiscRecordingUI
 
-from hs import fs
-from hs.const import APPDATA
-from hs.utils.misc import cond
-from hs.path import Path
-from hs.utils.str import format_size
-from hs.fs import sql, phys
-import hs.fs.manual
-import hs.fs.sql.music
-import hs.fs.phys.music
-from hs.utils.conflict import is_conflicted, get_conflicted_name
-from hs import cocoa
+import hsfs as fs
+from hsfs import phys
+from hsfs.utils import smart_move
+from hsutil import cocoa
+from hsutil.conflict import is_conflicted, get_conflicted_name
+from hsutil.path import Path
+from hsutil.str import format_size
 
-import app
-from hs.fs.utils import smart_move
+from . import app, sqlfs as sql
 
 (TAG_LOCATIONS,
 TAG_DETAILS,
@@ -85,15 +80,19 @@ def GetInsertedCDType(device):
     else:
         return CT_NONE
 
-class MusicGuru(app.MusicGuru, cocoa.ThreadedJobPerformer):
+class MusicGuru(app.MusicGuru):
     def __init__(self):
-        super(MusicGuru,self).__init__(APPDATA)
+        app.MusicGuru.__init__(self)
+        self.progress = cocoa.ThreadedJobPerformer()
         self.song_list = []
         self.info = []
     
     #---Public
     def AddLocation(self, path, name, removeable):
-        self._run_threaded(super(MusicGuru, self).AddLocation, (path, name, removeable, self._create_job(), ))
+        j = self.progress.create_job()
+        def do():
+            app.MusicGuru.AddLocation(self, path, name, removeable, j)
+        self.progress.run_threaded(do)
     
     def CreateFolderInNode(self,node_path):
         parent = WalkDir(self.board,node_path)
@@ -102,7 +101,7 @@ class MusicGuru(app.MusicGuru, cocoa.ThreadedJobPerformer):
         return new_folder.name
     
     def GetLocationNames(self,in_board,writable):
-        locations = cond(in_board,self.board.locations,self.collection.dirs)
+        locations = self.board.locations if in_board else self.collection.dirs
         if writable:
             locations = (loc for loc in locations if loc.vol_type != sql.music.VOLTYPE_CDROM)
         return [loc.name for loc in locations]
@@ -122,7 +121,10 @@ class MusicGuru(app.MusicGuru, cocoa.ThreadedJobPerformer):
         return node.is_container
     
     def MassRename(self, model, whitespace):
-        self._run_threaded(self.board.MassRename, (model, whitespace, self._create_job(), ))
+        j = self.progress.create_job()
+        def do():
+            self.board.MassRename(model, whitespace, j)
+        self.progress.run_threaded(do)
     
     def MoveToIgnoreBox(self,node_paths):
         nodes = [WalkDir(self.board,node_path) for node_path in node_paths]
@@ -160,7 +162,10 @@ class MusicGuru(app.MusicGuru, cocoa.ThreadedJobPerformer):
         location.initial_path = Path(new_path_str)
     
     def Split(self, model, capacity, grouping_level):
-        self._run_threaded(self.board.Split, (model, capacity, grouping_level, 0, self._create_job(), ))
+        j = self.progress.create_job()
+        def do():
+            self.board.Split(model, capacity, grouping_level, 0, j)
+        self.progress.run_threaded(do)
     
     def SwitchConflictAndOriginal(self,node_path):
         node = WalkDir(self.board,node_path)
@@ -171,11 +176,17 @@ class MusicGuru(app.MusicGuru, cocoa.ThreadedJobPerformer):
         self.board.ToggleLocation(location)
     
     def UpdateCollection(self):
-        self._run_threaded(self.collection.update_volumes, (self._create_job(), ))
+        j = self.progress.create_job()
+        def do():
+            self.collection.update_volumes(j)
+        self.progress.run_threaded(do)
     
     def update_location(self, location_name):
         location = self.collection[location_name]
-        self._run_threaded(location.update, (None, self._create_job(), ))
+        j = self.progress.create_job()
+        def do():
+            location.update(None, j)
+        self.progress.run_threaded(do)
     
     #---Materialize
     def AddCurrentDisk(self,overwrite):

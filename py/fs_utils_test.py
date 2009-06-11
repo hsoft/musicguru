@@ -1,14 +1,9 @@
-#!/usr/bin/env python
-"""
-Unit Name: musicguru.tests.fs_utils
-Created By: Virgil Dupras
-Created On: 2005/09/08
-Last modified by:$Author: virgil $
-Last modified on:$Date: 2009-02-28 17:16:32 +0100 (Sat, 28 Feb 2009) $
-                 $Revision: 4035 $
-Copyright 2004-2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-import unittest
+# Unit Name: musicguru.tests.fs_utils
+# Created By: Virgil Dupras
+# Created On: 2005/09/08
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+
 import os.path as op
 import os
 from StringIO import StringIO
@@ -17,17 +12,15 @@ import weakref
 import gc
 import shutil
 
-from hs.const import TESTDIR
-from hs.fs import manual,phys
-import hs.fs.music
-import hs.fs.phys.music
-from hs import job
-from hs.path import Path
-from hs.testcase import TestCase
-from hs.fs.phys._phys_test import create_test_fs
+import hsfs.music
+from hsfs import manual, phys
+from hsfs.tests.phys_test import create_fake_fs, create_unicode_test_dir
+from hsutil import job
+from hsutil.path import Path
+from hsutil.testcase import TestCase
 
-from musicguru.fs_utils import *
-from musicguru.sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
+from .fs_utils import *
+from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
 
 class TestDir(manual.Directory):
     def AddDir(self,dirname):
@@ -43,7 +36,7 @@ class TCGetNewName(TestCase):
     #and return what GetNewName would have returned.
     def Gen(self,attrs):
         dir = manual.Directory(None,'foo')
-        result = hs.fs.music._File(dir,'bar.mp3')
+        result = hsfs.music._File(dir,'bar.mp3')
         result._read_all_info()
         result._info.update(attrs)
         return result
@@ -125,7 +118,7 @@ class TCGetNewName(TestCase):
 
 class TCRestructureDirectory(TestCase):
     def Gen(self,attrs,parent,name):
-        result = hs.fs.music._File(parent,name + '.mp3')
+        result = hsfs.music._File(parent,name + '.mp3')
         result._read_all_info()
         result._info.update(attrs)
         return result
@@ -563,7 +556,7 @@ class TCSplit(TestCase):
 class TCBatchOperation(TestCase):
     def setUp(self):
         self.rootpath = self.tmpdir()
-        self.testpath = create_test_fs(self.rootpath)
+        self.testpath = create_fake_fs(self.rootpath)
         ref = phys.Directory(None, self.testpath)
         copy = manual.Directory(None,'')
         copy.copy(ref)
@@ -891,9 +884,9 @@ class TCBatchOperation_unicode(TestCase):
         # Path instances should only be "rendered" as unicode(), not str()
     def setUp(self):
         self.mock(sys, 'getfilesystemencoding', lambda: 'ascii') # force a failure on any non-ascii char
-        testpath = Path(TESTDIR)
-        sourcepath = Path(self.tmpdir(unicode(testpath + 'unicode')))
-        sourcedir = phys.Directory(None, unicode(sourcepath))
+        testpath = self.tmppath()
+        create_unicode_test_dir(testpath)
+        sourcedir = phys.Directory(None, unicode(testpath))
         copy = manual.Directory(None, '')
         copy.copy(sourcedir)
         destpath = Path(self.tmpdir())
@@ -1064,6 +1057,3 @@ class TCFSBuffer(TestCase):
         self.assertEqual(4,buf.space_taken)
         self.assertEqual(6,buf.space_left)
     
-
-if __name__ == '__main__':
-    unittest.main()

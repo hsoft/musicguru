@@ -1,16 +1,12 @@
-#!/usr/bin/env python
-"""
-Unit Name: hs.fs.sql.utils
-Created By: Virgil Dupras
-Created On: 2006/10/07
-Last modified by:$Author: hsoft $
-Last modified on:$Date: 2007-09-30 10:38:08 +0200 (Sun, 30 Sep 2007) $
-                 $Revision: 1927 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
-from hs.utils.str import sqlite_escape
+# Unit Name: musicguru.sqlfs.utils
+# Created By: Virgil Dupras
+# Created On: 2006/10/07
+# $Id$
+# Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
 
-from _sql import Node
+from hsutil.str import sqlite_escape
+
+from ._sql import Node
 
 class DBBuffer(object):
     """Progressively buffers a SQL SELECT request, using LIMIT
