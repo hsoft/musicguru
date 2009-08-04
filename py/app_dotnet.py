@@ -1,13 +1,12 @@
-#!/usr/bin/env python
-"""
-Unit Name: musicguru.app
-Created By: Virgil Dupras
-Created On: 2006/11/18
-Last modified by:$Author: hsoft $
-Last modified on:$Date: 2006-11-18 15:47:29 -0500 (Sat, 18 Nov 2006) $
-                 $Revision: 1662 $
-Copyright 2006 Hardcoded Software (http://www.hardcoded.net)
-"""
+# Created By: Virgil Dupras
+# Created On: 2006/11/18
+# $Id$
+# Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
+# 
+# This software is licensed under the "HS" License as described in the "LICENSE" file, 
+# which should be included with this package. The terms are also available at 
+# http://www.hardcoded.net/licenses/hs_license
+
 import os.path as op
 import sys
 
