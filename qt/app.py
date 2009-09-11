@@ -14,6 +14,7 @@ from PyQt4.QtGui import QDesktopServices
 from musicguru.app import MusicGuru as MusicGuruBase
 
 from main_window import MainWindow
+from locations_panel import LocationsPanel
 
 class MusicGuru(MusicGuruBase, QObject):
     def __init__(self):
@@ -24,6 +25,8 @@ class MusicGuru(MusicGuruBase, QObject):
     
     #--- Private
     def _setup(self):
-        self.mainwindow = MainWindow(app=self)
-        self.mainwindow.show()
+        self.mainWindow = MainWindow(app=self)
+        self.mainWindow.show()
+        self.locationsPanel = LocationsPanel(app=self)
+        self.locationsPanel.show()
     

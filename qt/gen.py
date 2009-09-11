@@ -11,4 +11,5 @@
 from hsutil.build import print_and_do
 
 print_and_do("pyuic4 main_window.ui > main_window_ui.py")
+print_and_do("pyuic4 locations_panel.ui > locations_panel_ui.py")
 print_and_do("pyrcc4 mg.qrc > mg_rc.py")
