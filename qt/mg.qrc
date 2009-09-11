@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file alias="locations">images/locations_32.png</file>
+    <file alias="details">images/info_32.png</file>
+    <file alias="ignore_box">images/ignore_box_32.png</file>
+    <file alias="actions">images/actions_32.png</file>
+    <file alias="materialize">images/materialize_32.png</file>
+</qresource>
+</RCC>
