@@ -13,6 +13,8 @@ from PyQt4.QtCore import Qt, QAbstractTableModel, QModelIndex
 from hsutil.str import format_size
 
 class LocationsModel(QAbstractTableModel):
+    HEADER = ['Name', 'Files', 'GB']
+    
     def __init__(self, app):
         QAbstractTableModel.__init__(self)
         self.app = app
@@ -34,6 +36,11 @@ class LocationsModel(QAbstractTableModel):
                 return location.get_stat('filecount')
             elif column == 2:
                 return format_size(location.get_stat('size'), 2, 3, False)
+        return None
+    
+    def headerData(self, section, orientation, role):
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < 3:
+            return self.HEADER[section]
         return None
     
     def rowCount(self, parent):
