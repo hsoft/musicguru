@@ -8,8 +8,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QDialog, QHeaderView
+from PyQt4.QtGui import QDialog, QHeaderView, QFileDialog
+
+from hsutil.path import Path
 
 from musicguru.sqlfs.music import VOLTYPE_CDROM
 
@@ -26,6 +30,7 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
         self._updateLocationInfo()
         
         self.connect(self.locationsView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
+        self.connect(self.changePathButton, SIGNAL('clicked()'), self.changePathButtonClicked)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -36,18 +41,35 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
         h.resizeSection(2, 50)
         h.setResizeMode(0, QHeaderView.Stretch)
     
-    def _updateLocationInfo(self):
+    #--- Private
+    def _selectedLocation(self):
         row = self.locationsView.selectionModel().currentIndex().row()
-        if row < 0:
+        return self.app.collection[row] if row >= 0 else None
+    
+    def _updateLocationInfo(self):
+        location = self._selectedLocation()
+        if location is not None:
+            self.pathLabel.setText(unicode(location.physical_path))
+            type_desc = "Removable (CD/DVD)" if location.vol_type == VOLTYPE_CDROM else "Fixed (Hard disk)"
+            self.typeLabel.setText(type_desc)
+        else:
             self.pathLabel.setText('')
             self.typeLabel.setText('')
-            return
-        location = self.app.collection[row]
-        self.pathLabel.setText(unicode(location.physical_path))
-        type_desc = "Removable (CD/DVD)" if location.vol_type == VOLTYPE_CDROM else "Fixed (Hard disk)"
-        self.typeLabel.setText(type_desc)
     
     #--- Events
+    def changePathButtonClicked(self):
+        location = self._selectedLocation()
+        if location is None:
+            return
+        title = "Select a new root directory for this location"
+        flags = QFileDialog.ShowDirsOnly
+        dirpath = unicode(QFileDialog.getExistingDirectory(self, title, '', flags))
+        if not dirpath:
+            return
+        location.initial_path = Path(dirpath)
+        self._updateLocationInfo()
+        self.app.update_location(location)
+    
     def selectionChanged(self, selected, deselected):
         self._updateLocationInfo()
     
