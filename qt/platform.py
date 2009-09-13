@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
-# Created On: 2009-09-11
+# Created On: 2009-09-13
 # $Id$
 # Copyright 2009 Hardcoded Software (http://www.hardcoded.net)
 # 
@@ -8,7 +8,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.build import print_and_do, build_all_qt_ui
+import logging
+import sys
 
-build_all_qt_ui()
-print_and_do("pyrcc4 mg.qrc > mg_rc.py")
+if sys.platform == 'win32':
+    from platform_win import *
+elif sys.platform == 'darwin':
+    from platform_osx import *
+else:
+    logging.warning("Unsupported Platform!!")

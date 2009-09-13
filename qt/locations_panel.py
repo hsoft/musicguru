@@ -18,6 +18,7 @@ from hsutil.path import Path
 from musicguru.sqlfs.music import VOLTYPE_CDROM
 
 import mg_rc
+from add_location_dialog import AddLocationDialog
 from locations_panel_ui import Ui_LocationsPanel
 from locations_model import LocationsModel
 
@@ -31,6 +32,7 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
         
         self.connect(self.locationsView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
         self.connect(self.changePathButton, SIGNAL('clicked()'), self.changePathButtonClicked)
+        self.connect(self.addButton, SIGNAL('clicked()'), self.addButtonClicked)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -57,6 +59,12 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
             self.typeLabel.setText('')
     
     #--- Events
+    def addButtonClicked(self):
+        dialog = AddLocationDialog(self.app)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            self.app.addLocation(dialog.locationPath, dialog.locationName, dialog.isLocationRemovable)
+    
     def changePathButtonClicked(self):
         location = self._selectedLocation()
         if location is None:
@@ -68,7 +76,7 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
             return
         location.initial_path = Path(dirpath)
         self._updateLocationInfo()
-        self.app.update_location(location)
+        self.app.updateLocation(location)
     
     def selectionChanged(self, selected, deselected):
         self._updateLocationInfo()

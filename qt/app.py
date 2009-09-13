@@ -21,9 +21,11 @@ from main_window import MainWindow
 from locations_panel import LocationsPanel
 
 JOB_UPDATE = 'job_update'
+JOB_ADD = 'job_add'
 
 JOBID2TITLE = {
     JOB_UPDATE: "Updating location",
+    JOB_ADD: "Adding location",
 }
 
 class Progress(QProgressDialog, job.ThreadedJobPerformer):
@@ -78,11 +80,11 @@ class MusicGuru(MusicGuruBase, QObject):
         self.mainWindow.show()
         self.locationsPanel.show()
         
-        self.connect(self.progress, SIGNAL('finished(QString)'), self.job_finished)
+        self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
     
     #--- Private
     
-    def _start_job(self, jobid, func):
+    def _startJob(self, jobid, func):
         title = JOBID2TITLE[jobid]
         try:
             j = self.progress.create_job()
@@ -92,13 +94,19 @@ class MusicGuru(MusicGuruBase, QObject):
             QMessageBox.information(self.main_window, "Action in progress", msg)
     
     #--- Public
-    def update_location(self, location):
+    def addLocation(self, path, name, removeable):
+        def do(j):
+            MusicGuruBase.AddLocation(self, path, name, removeable, j)
+        
+        self._startJob(JOB_ADD, do)
+    
+    def updateLocation(self, location):
         def do(j):
             location.update(None, j)
         
-        self._start_job(JOB_UPDATE, do)
+        self._startJob(JOB_UPDATE, do)
     
     #--- Events
-    def job_finished(self, jobid):
+    def jobFinished(self, jobid):
         pass
     
