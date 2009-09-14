@@ -60,8 +60,6 @@
     <property name="title">
      <string>Actions</string>
     </property>
-    <addaction name="actionMaterialize"/>
-    <addaction name="separator"/>
     <addaction name="actionNewFolder"/>
     <addaction name="actionRemoveEmptyFolders"/>
     <addaction name="actionRenameSelected"/>
@@ -78,13 +76,21 @@
     <property name="title">
      <string>Window</string>
     </property>
-    <addaction name="actionShowDesignBoard"/>
     <addaction name="actionShowLocations"/>
     <addaction name="actionShowDetails"/>
     <addaction name="actionShowIgnoreBox"/>
    </widget>
+   <widget class="QMenu" name="menuMaterialize">
+    <property name="title">
+     <string>Materialize</string>
+    </property>
+    <addaction name="actionRenameInRespectiveLocations"/>
+    <addaction name="actionCopyToOtherLocation"/>
+    <addaction name="actionMoveToOtherLocation"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuActions"/>
+   <addaction name="menuMaterialize"/>
    <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -187,11 +193,6 @@
     <string>Move Conflicts and Originals</string>
    </property>
   </action>
-  <action name="actionShowDesignBoard">
-   <property name="text">
-    <string>Design Board</string>
-   </property>
-  </action>
   <action name="actionShowLocations">
    <property name="icon">
     <iconset resource="../mg.qrc">
@@ -226,6 +227,21 @@
    </property>
    <property name="text">
     <string>Actions</string>
+   </property>
+  </action>
+  <action name="actionRenameInRespectiveLocations">
+   <property name="text">
+    <string>Rename in Respective Locations</string>
+   </property>
+  </action>
+  <action name="actionCopyToOtherLocation">
+   <property name="text">
+    <string>Copy to Other Location</string>
+   </property>
+  </action>
+  <action name="actionMoveToOtherLocation">
+   <property name="text">
+    <string>Move to Other Location</string>
    </property>
   </action>
  </widget>
