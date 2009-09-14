@@ -10,5 +10,5 @@
 
 from hsutil.build import print_and_do, build_all_qt_ui
 
-build_all_qt_ui()
+build_all_qt_ui('ui')
 print_and_do("pyrcc4 mg.qrc > mg_rc.py")

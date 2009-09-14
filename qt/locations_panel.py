@@ -17,7 +17,7 @@ from hsutil.path import Path
 
 import mg_rc
 from add_location_dialog import AddLocationDialog
-from locations_panel_ui import Ui_LocationsPanel
+from ui.locations_panel_ui import Ui_LocationsPanel
 from locations_model import LocationsModel
 
 class LocationsPanel(QDialog, Ui_LocationsPanel):

@@ -16,9 +16,9 @@ from PyQt4.QtGui import QDialog, QGroupBox, QFileDialog
 from hsutil.path import Path
 
 import platform
-from add_location_dialog_ui import Ui_AddLocationDialog
-from add_fixed_drive_groupbox_ui import Ui_AddFixedDriveGroupBox
-from add_removable_drive_groupbox_ui import Ui_AddRemovableDriveGroupBox
+from ui.add_location_dialog_ui import Ui_AddLocationDialog
+from ui.add_fixed_drive_groupbox_ui import Ui_AddFixedDriveGroupBox
+from ui.add_removable_drive_groupbox_ui import Ui_AddRemovableDriveGroupBox
 
 class AddFixedDriveGroupBox(QGroupBox, Ui_AddFixedDriveGroupBox):
     def __init__(self):
