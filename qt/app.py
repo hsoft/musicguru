@@ -68,10 +68,12 @@ class MusicGuru(MusicGuruBase, QObject):
         self.board.RemoveLocation(location)
         location.delete()
         self.emit(SIGNAL('locationsChanged()'))
+        self.emit(SIGNAL('boardChanged()'))
     
     def toggleLocation(self, location):
         self.board.ToggleLocation(location)
         self.emit(SIGNAL('locationsChanged()'))
+        self.emit(SIGNAL('boardChanged()'))
     
     def updateLocation(self, location):
         def do(j):

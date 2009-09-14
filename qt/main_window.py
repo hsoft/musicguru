@@ -11,14 +11,17 @@
 from PyQt4.QtGui import QMainWindow
 
 import mg_rc
+from board_model import BoardModel
 from ui.main_window_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, app):
         QMainWindow.__init__(self, None)
         self.app = app
+        self.boardModel = BoardModel(self.app)
         self._setupUi()
     
     def _setupUi(self):
         self.setupUi(self)
+        self.browserView.setModel(self.boardModel)
     
