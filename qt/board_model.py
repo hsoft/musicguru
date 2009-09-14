@@ -9,7 +9,9 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtGui import QPixmap
 
+from hsutil.conflict import is_conflicted
 from hsutil.misc import dedupe
 from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
@@ -25,6 +27,7 @@ class SongNode(TreeNode):
             format_size(song.size, 2, 2, False),
             format_time(song.duration, FT_MINUTES),
         ]
+        self.imgname = 'song_conflict' if is_conflicted(song.name) else 'song'
     
     def _get_children(self):
         return []
@@ -42,6 +45,7 @@ class FolderNode(TreeNode):
             format_size(folder.get_stat('size'), 2, 2, False),
             format_time(folder.get_stat('duration')),
         ]
+        self.imgname = 'folder_conflict' if folder.allconflicts else 'folder'
     
     def _get_children(self):
         children = []
@@ -78,6 +82,9 @@ class BoardModel(TreeModel):
         node = index.internalPointer()
         if role == Qt.DisplayRole:
             return node.data[index.column()]
+        elif role == Qt.DecorationRole:
+            if index.column() == 0:
+                return QPixmap(":/{0}".format(node.imgname))
         return None
     
     def headerData(self, section, orientation, role):

@@ -94,6 +94,7 @@ class AddLocationDialog(QDialog, Ui_AddLocationDialog):
         self.connect(self.removableDriveButton, SIGNAL('toggled(bool)'), self.radioButtonToggled)
         self.connect(self.fixedBox, SIGNAL('locationChanged(QString,QString)'), self.locationChanged)
         self.connect(self.removableBox, SIGNAL('locationChanged(QString,QString)'), self.locationChanged)
+        self.connect(self.nameField, SIGNAL('textChanged(QString)'), self.nameFieldChanged)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -111,9 +112,11 @@ class AddLocationDialog(QDialog, Ui_AddLocationDialog):
     #--- Events
     def locationChanged(self, newPath, newName):
         self.locationPath = unicode(newPath)
-        self.locationName = unicode(newName)
         self.isLocationRemovable = self.removableDriveButton.isChecked()
         self.nameField.setText(newName)
+    
+    def nameFieldChanged(self, newText):
+        self.locationName = unicode(newText)
     
     def radioButtonToggled(self, checked):
         self._updateVisibleGroupBox()

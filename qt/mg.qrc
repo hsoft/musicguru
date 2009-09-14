@@ -5,5 +5,9 @@
     <file alias="ignore_box">images/ignore_box_32.png</file>
     <file alias="actions">images/actions_32.png</file>
     <file alias="materialize">images/materialize_32.png</file>
+    <file alias="folder">images/folder_16.png</file>
+    <file alias="folder_conflict">images/folder_conflict_16.png</file>
+    <file alias="song">images/song_16.png</file>
+    <file alias="song_conflict">images/song_conflict_16.png</file>
 </qresource>
 </RCC>
