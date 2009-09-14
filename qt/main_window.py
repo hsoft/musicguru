@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtGui import QMainWindow
+from PyQt4.QtGui import QMainWindow, QHeaderView
 
 import mg_rc
 from board_model import BoardModel
@@ -24,4 +24,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def _setupUi(self):
         self.setupUi(self)
         self.browserView.setModel(self.boardModel)
+        h = self.browserView.header()
+        h.setResizeMode(QHeaderView.Fixed)
+        h.resizeSection(1, 120)
+        h.setResizeMode(0, QHeaderView.Stretch)
     

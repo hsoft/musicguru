@@ -10,16 +10,34 @@
 
 from PyQt4.QtCore import Qt, SIGNAL
 
-from hsutil.str import format_size, format_time
+from hsutil.misc import dedupe
+from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
+
+class SongNode(TreeNode):
+    def __init__(self, parent, song, row):
+        TreeNode.__init__(self, parent, row)
+        self.song = song
+        self.data = [
+            song.name,
+            song.original.parent_volume.name,
+            0,
+            format_size(song.size, 2, 2, False),
+            format_time(song.duration, FT_MINUTES),
+        ]
+    
+    def _get_children(self):
+        return []
+    
 
 class FolderNode(TreeNode):
     def __init__(self, parent, folder, row):
         TreeNode.__init__(self, parent, row)
         self.folder = folder
+        parent_volumes = dedupe(song.original.parent_volume for song in folder.iterallfiles())
         self.data = [
             folder.name,
-            '--',
+            ','.join(l.name for l in parent_volumes),
             folder.get_stat('filecount'),
             format_size(folder.get_stat('size'), 2, 2, False),
             format_time(folder.get_stat('duration')),
@@ -29,10 +47,10 @@ class FolderNode(TreeNode):
         children = []
         for index, folder in enumerate(self.folder.dirs):
             children.append(FolderNode(self, folder, index))
+        offset = len(self.folder.dirs)
+        for index, song in enumerate(self.folder.files):
+            children.append(SongNode(self, song, index + offset))
         return children
-    
-    def reset(self):
-        pass
     
 
 class BoardModel(TreeModel):

@@ -22,7 +22,20 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTreeView" name="browserView"/>
+     <widget class="QTreeView" name="browserView">
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
+      <property name="uniformRowHeights">
+       <bool>true</bool>
+      </property>
+      <attribute name="headerDefaultSectionSize">
+       <number>75</number>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>false</bool>
+      </attribute>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -117,7 +130,7 @@
   </action>
   <action name="actionMaterialize">
    <property name="icon">
-    <iconset resource="mg.qrc">
+    <iconset resource="../mg.qrc">
      <normaloff>:/materialize</normaloff>:/materialize</iconset>
    </property>
    <property name="text">
@@ -181,7 +194,7 @@
   </action>
   <action name="actionShowLocations">
    <property name="icon">
-    <iconset resource="mg.qrc">
+    <iconset resource="../mg.qrc">
      <normaloff>:/locations</normaloff>:/locations</iconset>
    </property>
    <property name="text">
@@ -190,7 +203,7 @@
   </action>
   <action name="actionShowDetails">
    <property name="icon">
-    <iconset resource="mg.qrc">
+    <iconset resource="../mg.qrc">
      <normaloff>:/details</normaloff>:/details</iconset>
    </property>
    <property name="text">
@@ -199,7 +212,7 @@
   </action>
   <action name="actionShowIgnoreBox">
    <property name="icon">
-    <iconset resource="mg.qrc">
+    <iconset resource="../mg.qrc">
      <normaloff>:/ignore_box</normaloff>:/ignore_box</iconset>
    </property>
    <property name="text">
@@ -208,7 +221,7 @@
   </action>
   <action name="actionActions">
    <property name="icon">
-    <iconset resource="mg.qrc">
+    <iconset resource="../mg.qrc">
      <normaloff>:/actions</normaloff>:/actions</iconset>
    </property>
    <property name="text">
@@ -217,7 +230,7 @@
   </action>
  </widget>
  <resources>
-  <include location="mg.qrc"/>
+  <include location="../mg.qrc"/>
  </resources>
  <connections/>
 </ui>
