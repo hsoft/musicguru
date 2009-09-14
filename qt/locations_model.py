@@ -44,7 +44,18 @@ class LocationsModel(QAbstractTableModel):
                 return QBrush(Qt.blue)
             elif not location.is_available:
                 return QBrush(Qt.red)
+        elif role == Qt.CheckStateRole:
+            if index.column() == 0:
+                return Qt.Checked if location in self.app.board.locations else Qt.Unchecked
         return None
+    
+    def flags(self, index):
+        if not index.isValid():
+            return Qt.ItemIsEnabled
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        if index.column() == 0:
+            flags |= Qt.ItemIsUserCheckable
+        return flags
     
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < 3:
@@ -55,6 +66,16 @@ class LocationsModel(QAbstractTableModel):
         if parent.isValid():
             return 0
         return len(self.app.collection)
+    
+    def setData(self, index, value, role):
+        if not index.isValid():
+            return False
+        location = self.app.collection[index.row()]
+        if role == Qt.CheckStateRole:
+            if index.column() == 0:
+                self.app.toggleLocation(location)
+                return True
+        return False
     
     #--- Events
     def locationsChanged(self):

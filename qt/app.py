@@ -91,18 +91,26 @@ class MusicGuru(MusicGuruBase, QObject):
             self.progress.run(jobid, title, func, args=(j, ))
         except job.JobInProgressError:
             msg = "A previous action is still hanging in there. You can't start a new one yet. Wait a few seconds, then try again."
-            QMessageBox.information(self.main_window, "Action in progress", msg)
+            QMessageBox.information(self.mainWindow, "Action in progress", msg)
     
     #--- Public
     def addLocation(self, path, name, removeable):
         def do(j):
             MusicGuruBase.AddLocation(self, path, name, removeable, j)
         
+        error_msg = self.CanAddLocation(path, name)
+        if error_msg:
+            QMessageBox.warning(self.mainWindow, "Add Location", error_msg)
+            return
         self._startJob(JOB_ADD, do)
     
     def removeLocation(self, location):
         self.board.RemoveLocation(location)
         location.delete()
+        self.emit(SIGNAL('locationsChanged()'))
+    
+    def toggleLocation(self, location):
+        self.board.ToggleLocation(location)
         self.emit(SIGNAL('locationsChanged()'))
     
     def updateLocation(self, location):
