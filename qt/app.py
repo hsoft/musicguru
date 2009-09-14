@@ -100,6 +100,11 @@ class MusicGuru(MusicGuruBase, QObject):
         
         self._startJob(JOB_ADD, do)
     
+    def removeLocation(self, location):
+        self.board.RemoveLocation(location)
+        location.delete()
+        self.emit(SIGNAL('locationsChanged()'))
+    
     def updateLocation(self, location):
         def do(j):
             location.update(None, j)
@@ -108,5 +113,6 @@ class MusicGuru(MusicGuruBase, QObject):
     
     #--- Events
     def jobFinished(self, jobid):
-        pass
+        if jobid in (JOB_UPDATE, JOB_ADD):
+            self.emit(SIGNAL('locationsChanged()'))
     

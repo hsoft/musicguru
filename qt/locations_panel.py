@@ -11,11 +11,9 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QDialog, QHeaderView, QFileDialog
+from PyQt4.QtGui import QDialog, QHeaderView, QFileDialog, QMessageBox
 
 from hsutil.path import Path
-
-from musicguru.sqlfs.music import VOLTYPE_CDROM
 
 import mg_rc
 from add_location_dialog import AddLocationDialog
@@ -33,6 +31,7 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
         self.connect(self.locationsView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.selectionChanged)
         self.connect(self.changePathButton, SIGNAL('clicked()'), self.changePathButtonClicked)
         self.connect(self.addButton, SIGNAL('clicked()'), self.addButtonClicked)
+        self.connect(self.removeButton, SIGNAL('clicked()'), self.removeButtonClicked)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -52,11 +51,15 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
         location = self._selectedLocation()
         if location is not None:
             self.pathLabel.setText(unicode(location.physical_path))
-            type_desc = "Removable (CD/DVD)" if location.vol_type == VOLTYPE_CDROM else "Fixed (Hard disk)"
+            type_desc = "Removable (CD/DVD)" if location.is_removable else "Fixed (Hard disk)"
             self.typeLabel.setText(type_desc)
+            self.changePathButton.setEnabled(not location.is_removable)
+            self.removeButton.setEnabled(True)
         else:
             self.pathLabel.setText('')
             self.typeLabel.setText('')
+            self.changePathButton.setEnabled(False)
+            self.removeButton.setEnabled(False)
     
     #--- Events
     def addButtonClicked(self):
@@ -77,6 +80,18 @@ class LocationsPanel(QDialog, Ui_LocationsPanel):
         location.initial_path = Path(dirpath)
         self._updateLocationInfo()
         self.app.updateLocation(location)
+    
+    def removeButtonClicked(self):
+        location = self._selectedLocation()
+        if location is None:
+            return
+        title = "Remove location"
+        msg = "Do you really want to remove location {0}?".format(location.name)
+        buttons = QMessageBox.Yes | QMessageBox.No
+        answer = QMessageBox.question(self, title, msg, buttons, QMessageBox.Yes)
+        if answer != QMessageBox.Yes:
+            return
+        self.app.removeLocation(location)
     
     def selectionChanged(self, selected, deselected):
         self._updateLocationInfo()

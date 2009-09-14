@@ -34,8 +34,7 @@ class Directory(sql.Directory, Node):
     cls_file_class = File
 
 (VOLTYPE_CDROM,
-VOLTYPE_FIXED,
-VOLTYPE_NETWORK) = range(3)
+VOLTYPE_FIXED) = range(2)
 
 (MODE_NORMAL,
 MODE_PHYSICAL,
@@ -85,6 +84,10 @@ class Volume(Directory):
     @property
     def is_available(self):
         return io.exists(self.physical_path)
+    
+    @property
+    def is_removable(self):
+        return self.vol_type == VOLTYPE_CDROM
     
     @property
     def mode(self):

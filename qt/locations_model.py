@@ -8,7 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, QAbstractTableModel, QModelIndex
+from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
+from PyQt4.QtGui import QBrush
 
 from hsutil.str import format_size
 
@@ -18,6 +19,8 @@ class LocationsModel(QAbstractTableModel):
     def __init__(self, app):
         QAbstractTableModel.__init__(self)
         self.app = app
+        
+        self.connect(self.app, SIGNAL('locationsChanged()'), self.locationsChanged)
     
     def columnCount(self, parent):
         if parent.isValid():
@@ -36,6 +39,11 @@ class LocationsModel(QAbstractTableModel):
                 return location.get_stat('filecount')
             elif column == 2:
                 return format_size(location.get_stat('size'), 2, 3, False)
+        elif role == Qt.ForegroundRole:
+            if location.is_removable:
+                return QBrush(Qt.blue)
+            elif not location.is_available:
+                return QBrush(Qt.red)
         return None
     
     def headerData(self, section, orientation, role):
@@ -47,5 +55,9 @@ class LocationsModel(QAbstractTableModel):
         if parent.isValid():
             return 0
         return len(self.app.collection)
+    
+    #--- Events
+    def locationsChanged(self):
+        self.reset()
     
 
