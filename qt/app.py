@@ -10,10 +10,11 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import SIGNAL, Qt, QObject, QTimer
-from PyQt4.QtGui import QProgressDialog, QDesktopServices, QMessageBox
+from PyQt4.QtCore import SIGNAL, Qt, QObject
+from PyQt4.QtGui import QDesktopServices, QMessageBox
 
 from hsutil import job
+from qtlib.progress import Progress
 
 from musicguru.app import MusicGuru as MusicGuruBase
 
@@ -27,47 +28,6 @@ JOBID2TITLE = {
     JOB_UPDATE: "Updating location",
     JOB_ADD: "Adding location",
 }
-
-class Progress(QProgressDialog, job.ThreadedJobPerformer):
-    def __init__(self, parent):
-        flags = Qt.CustomizeWindowHint | Qt.WindowTitleHint | Qt.WindowSystemMenuHint
-        QProgressDialog.__init__(self, '', "Cancel", 0, 100, parent, flags)
-        self.setModal(True)
-        self.setAutoReset(False)
-        self.setAutoClose(False)
-        self._timer = QTimer()
-        self._jobid = ''
-        self.connect(self._timer, SIGNAL('timeout()'), self.updateProgress)
-    
-    def updateProgress(self):
-        # the values might change before setValue happens
-        last_progress = self.last_progress
-        last_desc = self.last_desc
-        if not self._job_running or last_progress is None:
-            self._timer.stop()
-            self.close()
-            self.emit(SIGNAL('finished(QString)'), self._jobid)
-            if self._last_error is not None:
-                s = ''.join(traceback.format_exception(*self._last_error))
-                dialog = ErrorReportDialog(self.parent(), s)
-                dialog.exec_()
-            return
-        if self.wasCanceled():
-            self.job_cancelled = True
-            return
-        if last_desc:
-            self.setLabelText(last_desc)
-        self.setValue(last_progress)
-    
-    def run(self, jobid, title, target, args=()):
-        self._jobid = jobid
-        self.reset()
-        self.setLabelText('')
-        self.run_threaded(target, args)
-        self.setWindowTitle(title)
-        self.show()
-        self._timer.start(500)
-    
 
 class MusicGuru(MusicGuruBase, QObject):
     def __init__(self):
