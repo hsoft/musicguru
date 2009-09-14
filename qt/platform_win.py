@@ -8,5 +8,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+import wmi
+
+wmi_command = wmi.WMI()
+
 def getDriveList():
-    return []
+    drives = wmi_command.query("select * from win32_logicaldisk where drivetype=5")
+    return [(drive.DeviceID, drive.VolumeName) for drive in drives]
