@@ -9,10 +9,11 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import Qt, SIGNAL
-from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton
+from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog
 
 import mg_rc
 from board_model import BoardModel
+from mass_rename_dialog import MassRenameDialog
 from ui.main_window_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -23,6 +24,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._setupUi()
         
         self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
+        self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -74,4 +76,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         nodes = [index.internalPointer() for index in selectedIndexes]
         originals = [node.ref.original for node in nodes]
         self.app.selectBoardItems(originals)
+    
+    def massRenameTriggered(self):
+        dialog = MassRenameDialog(self.app)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            self.app.massRename(dialog.model, dialog.whitespace)
     

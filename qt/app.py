@@ -24,10 +24,12 @@ from details_panel import DetailsPanel
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
+JOB_MASS_RENAME = 'job_mass_rename'
 
 JOBID2TITLE = {
     JOB_UPDATE: "Updating location",
     JOB_ADD: "Adding location",
+    JOB_MASS_RENAME: "Renaming",
 }
 
 class MusicGuru(MusicGuruBase, QObject):
@@ -68,6 +70,12 @@ class MusicGuru(MusicGuruBase, QObject):
             return
         self._startJob(JOB_ADD, do)
     
+    def massRename(self, model, whitespace):
+        def do(j):
+            self.board.MassRename(model, whitespace, j)
+        
+        self._startJob(JOB_MASS_RENAME, do)
+    
     def removeLocation(self, location):
         self.board.RemoveLocation(location)
         location.delete()
@@ -93,4 +101,6 @@ class MusicGuru(MusicGuruBase, QObject):
     def jobFinished(self, jobid):
         if jobid in (JOB_UPDATE, JOB_ADD):
             self.emit(SIGNAL('locationsChanged()'))
+        if jobid == JOB_MASS_RENAME:
+            self.emit(SIGNAL('boardChanged()'))
     
