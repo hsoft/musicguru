@@ -20,6 +20,7 @@ from musicguru.app import MusicGuru as MusicGuruBase
 
 from main_window import MainWindow
 from locations_panel import LocationsPanel
+from details_panel import DetailsPanel
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
@@ -36,9 +37,12 @@ class MusicGuru(MusicGuruBase, QObject):
         QObject.__init__(self)
         self.mainWindow = MainWindow(app=self)
         self.locationsPanel = LocationsPanel(app=self)
+        self.detailsPanel = DetailsPanel(app=self)
         self.progress = Progress(self.mainWindow)
+        self.selectedBoardItems = []
         self.mainWindow.show()
         self.locationsPanel.show()
+        self.detailsPanel.show()
         
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
     
@@ -69,6 +73,10 @@ class MusicGuru(MusicGuruBase, QObject):
         location.delete()
         self.emit(SIGNAL('locationsChanged()'))
         self.emit(SIGNAL('boardChanged()'))
+    
+    def selectBoardItems(self, items):
+        self.selectedBoardItems = items
+        self.emit(SIGNAL('boardSelectionChanged()'))
     
     def toggleLocation(self, location):
         self.board.ToggleLocation(location)

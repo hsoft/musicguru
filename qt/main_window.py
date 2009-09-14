@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, SIGNAL
 from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton
 
 import mg_rc
@@ -21,6 +21,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app = app
         self.boardModel = BoardModel(self.app)
         self._setupUi()
+        
+        self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -65,4 +67,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.materializeButton = button
         self.toolBar.insertWidget(self.actionMaterialize, button) # the action is a placeholder
         self.toolBar.removeAction(self.actionMaterialize)
+    
+    #--- Events
+    def browserSelectionChanged(self, selected, deselected):
+        selectedIndexes = self.browserView.selectionModel().selectedRows()
+        nodes = [index.internalPointer() for index in selectedIndexes]
+        originals = [node.ref.original for node in nodes]
+        self.app.selectBoardItems(originals)
     

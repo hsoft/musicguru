@@ -19,7 +19,7 @@ from qtlib.tree_model import TreeNode, TreeModel
 class SongNode(TreeNode):
     def __init__(self, parent, song, row):
         TreeNode.__init__(self, parent, row)
-        self.song = song
+        self.ref = song
         self.data = [
             song.name,
             song.original.parent_volume.name,
@@ -36,7 +36,7 @@ class SongNode(TreeNode):
 class FolderNode(TreeNode):
     def __init__(self, parent, folder, row):
         TreeNode.__init__(self, parent, row)
-        self.folder = folder
+        self.ref = folder
         parent_volumes = dedupe(song.original.parent_volume for song in folder.iterallfiles())
         self.data = [
             folder.name,
@@ -49,10 +49,10 @@ class FolderNode(TreeNode):
     
     def _get_children(self):
         children = []
-        for index, folder in enumerate(self.folder.dirs):
+        for index, folder in enumerate(self.ref.dirs):
             children.append(FolderNode(self, folder, index))
-        offset = len(self.folder.dirs)
-        for index, song in enumerate(self.folder.files):
+        offset = len(self.ref.dirs)
+        for index, song in enumerate(self.ref.files):
             children.append(SongNode(self, song, index + offset))
         return children
     
