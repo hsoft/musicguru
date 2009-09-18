@@ -115,16 +115,13 @@ class Board(hsfs.manual.AutoMerge):
         except ValueError:
             pass
 
-    def Split(self,model,capacity,grouping_level,truncate_name_to = 0,parent_job=job.nulljob):
+    def Split(self, model, capacity, grouping_level, parent_job=job.nulljob):
         self.media_capacity = capacity
         splitted = fs_utils.Split(self,model,capacity,grouping_level)
         self.clear()
         self.copy(splitted)
         self.detach_copy(True)
-        if truncate_name_to:
-            for cd in self:
-                cd.name = cd.name[:truncate_name_to]
-
+    
     def ToggleLocation(self,location):
         if not self.RemoveLocation(location):
             self.AddLocation(location)
@@ -144,23 +141,28 @@ class Board(hsfs.manual.AutoMerge):
     stats_line = property(__GetStatsLine)
 
 class MassRenamePanel(object):
-    __ws_dict = {0:fs_utils.WS_DONT_TOUCH,1:fs_utils.WS_SPACES_TO_UNDERSCORES,2:fs_utils.WS_UNDERSCORES_TO_SPACES}
-    __model_dict = {
-        0:"%artist%/%album%/%track% - %artist% - %title%",
-        1:"%artist%/%album%/%track% - %title%",
-        2:"%genre%/%artist%/(%year%) %album%/%track% - %title%",
-        3:"%artist%/%album% - %track% - %title%",
-    }
-
+    WHITESPACES = [fs_utils.WS_DONT_TOUCH, fs_utils.WS_SPACES_TO_UNDERSCORES, fs_utils.WS_UNDERSCORES_TO_SPACES]
+    MODELS = [
+        "%artist%/%album%/%track% - %artist% - %title%",
+        "%artist%/%album%/%track% - %title%",
+        "%genre%/%artist%/(%year%) %album%/%track% - %title%",
+        "%artist%/%album% - %track% - %title%",
+    ]
+    
     def __init__(self,refdir):
         self.custom_model = "%group:artist:emp:upper%/%artist%/%track% - %artist% - %title%"
         self.model_index = 0
         self.whitespace_index = 0
         self.refdir = refdir
         self.example = None
-
-    #---Private
-    def __GetExampleAfter(self):
+    
+    #--- Public
+    def ChangeExample(self):
+        self.example = random.choice(self.refdir.allfiles)
+    
+    #--- Properties
+    @property
+    def example_after(self):
         if self.example is None:
             self.ChangeExample()
         if self.example is None:
@@ -170,52 +172,45 @@ class MassRenamePanel(object):
         renamed = fs_utils.RestructureDirectory(tmp,self.model,self.whitespace)
         file = renamed.allfiles[0]
         return unicode(file.path[1:])
-
-    def __GetExampleBefore(self):
+    
+    @property
+    def example_before(self):
         if self.example is None:
             self.ChangeExample()
         if self.example is None:
             return ''
         return unicode(self.example.path[1:])
-
-    def __GetModel(self):
-        if self.model_index in self.__model_dict:
-            return self.__model_dict[self.model_index]
-        else:
+    
+    @property
+    def model(self):
+        try:
+            return self.MODELS[self.model_index]
+        except IndexError:
             return self.custom_model.replace('\\','/')
-
-    def __GetWhitespace(self):
-        return self.__ws_dict.get(self.whitespace_index,fs_utils.WS_DONT_TOUCH)
-
-    #---Public
-    def ChangeExample(self):
-        self.example = random.choice(self.refdir.allfiles)
-
-    #---Properties
-    example_after  = property(__GetExampleAfter)
-    example_before = property(__GetExampleBefore)
-    model          = property(__GetModel)
-    whitespace     = property(__GetWhitespace)
+    
+    @property
+    def whitespace(self):
+        try:
+            return self.WHITESPACES[self.whitespace_index]
+        except IndexError:
+            return fs_utils.WS_DONT_TOUCH
+    
 
 class SplittingPanel(object):
-    __capacities = [700 * 1024 * 1024,4700 * 1000 * 1000,8500 * 1000 * 1000]
-    __model_dict = {
-        0:"CD %sequence%",
-        1:"CD %item:first% - %item:last%",
-        2:"CD %item:first:1% - %item:last:1%",
-    }
-
+    CAPACITIES = [700*1024*1024, 4700*1000*1000, 8500*1000*1000]
+    MODELS = ["CD %sequence%", "CD %item:first% - %item:last%", "CD %item:first:1% - %item:last:1%"]
+    
     def __init__(self,refdir):
         self.custom_model = "CD %item:first:3% - %item:last:3%"
         self.model_index = 0
         self.capacity_index = 0
         self.grouping_level = 0
-        self.custom_capacity = 0
-        self.truncate_name_to = 16
+        self.custom_capacity = 650
         self.refdir = refdir
-
-    #---Private
-    def __GetExample(self):
+    
+    #--- Properties
+    @property
+    def example(self):
         if self.grouping_level == 0:
             return '(No grouping)'
         sample = [d for d in self.refdir.alldirs if len(list(d.parents)) == self.grouping_level]
@@ -224,20 +219,17 @@ class SplittingPanel(object):
             return unicode(example.path)
         else:
             return '(No folder at this level)'
-
-    def __GetModel(self):
-        if self.model_index in self.__model_dict:
-            return self.__model_dict[self.model_index]
-        else:
-            return self.custom_model.replace('\\','/')
-
-    def __GetCapacity(self):
+    
+    @property    
+    def model(self):
         try:
-            return self.__capacities[self.capacity_index]
+            return self.MODELS[self.model_index]
         except IndexError:
-            return self.custom_capacity
-
-    #---Properties
-    example  = property(__GetExample)
-    model    = property(__GetModel)
-    capacity = property(__GetCapacity)
+            return self.custom_model.replace('\\','/')
+    
+    @property
+    def capacity(self):
+        try:
+            return self.CAPACITIES[self.capacity_index]
+        except IndexError:
+            return self.custom_capacity * 1024 * 1024
