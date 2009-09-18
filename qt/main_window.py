@@ -27,6 +27,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
         self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
         self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
+        self.connect(self.actionNewFolder, SIGNAL('triggered()'), self.newFolderTriggered)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
         self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
     
@@ -86,6 +87,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = dialog.exec_()
         if result == QDialog.Accepted:
             self.app.massRename(dialog.model, dialog.whitespace)
+    
+    def newFolderTriggered(self):
+        selectedIndexes = self.browserView.selectionModel().selectedRows()
+        nodes = [index.internalPointer() for index in selectedIndexes]
+        parent = nodes[0].ref if nodes else self.app.board
+        newname = self.app.new_folder(parent)
+        parentNode = nodes[0] if nodes else None
+        self.boardModel.insertFolder(parentNode)
+        children = parentNode.subnodes if parentNode is not None else self.boardModel.subnodes
+        for node in children:
+            if node.ref.name == newname:
+                index = node.index
+                self.browserView.setCurrentIndex(index)
+                self.browserView.edit(index)
+                break
     
     def showDetailsTriggered(self):
         self.app.detailsPanel.show()

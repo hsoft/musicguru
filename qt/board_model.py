@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtCore import Qt, SIGNAL, QModelIndex
 from PyQt4.QtGui import QPixmap
 
 from hsutil.conflict import is_conflicted
@@ -17,8 +17,8 @@ from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
 
 class FSNode(TreeNode):
-    def __init__(self, parent, ref, row):
-        TreeNode.__init__(self, parent, row)
+    def __init__(self, model, parent, ref, row):
+        TreeNode.__init__(self, model, parent, row)
         self.ref = ref
         self._data = None
         self._imageName = None
@@ -32,6 +32,7 @@ class FSNode(TreeNode):
     def reset(self):
         self._data = None
         self._imageName = None
+        self._subnodes = None
     
     @property
     def data(self):
@@ -60,9 +61,8 @@ class SongNode(FSNode):
     def _getImageName(self):
         return 'song_conflict' if is_conflicted(self.ref.name) else 'song'
     
-    def _get_children(self):
+    def _getChildren(self):
         return []
-    
 
 class FolderNode(FSNode):
     def _getData(self):
@@ -79,14 +79,14 @@ class FolderNode(FSNode):
     def _getImageName(self):
         return 'folder_conflict' if self.ref.allconflicts else 'folder'
     
-    def _get_children(self):
-        children = []
-        for index, folder in enumerate(self.ref.dirs):
-            children.append(FolderNode(self, folder, index))
-        offset = len(self.ref.dirs)
-        for index, song in enumerate(self.ref.files):
-            children.append(SongNode(self, song, index + offset))
-        return children
+    def _createNode(self, ref, row):
+        if ref.is_container:
+            return FolderNode(self.model, self, ref, row)
+        else:
+            return SongNode(self.model, self, ref, row)
+    
+    def _getChildren(self):
+        return self.ref.dirs + self.ref.files
     
 
 class BoardModel(TreeModel):
@@ -99,11 +99,14 @@ class BoardModel(TreeModel):
         
         self.connect(self.app, SIGNAL('boardChanged()'), self.boardChanged)
     
-    def _root_nodes(self):
-        nodes = []
-        for index, folder in enumerate(self.board.dirs):
-            nodes.append(FolderNode(None, folder, index))
-        return nodes
+    def _createNode(self, ref, row):
+        if ref.is_container:
+            return FolderNode(self, None, ref, row)
+        else:
+            return SongNode(self, None, ref, row)
+    
+    def _getChildren(self):
+        return self.board.dirs
     
     def columnCount(self, parent):
         return len(self.HEADER)
@@ -135,6 +138,15 @@ class BoardModel(TreeModel):
             return self.HEADER[section]
         
         return None
+    
+    def insertFolder(self, parentNode):
+        if parentNode is not None:
+            parentNode.reset()
+            insertIndex = self.createIndex(0, 0, parentNode)
+        else:
+            self._subnodes = None
+            insertIndex = QModelIndex()
+        self.emit(SIGNAL('rowsInserted(QModelIndex,int,int)'), insertIndex, 0, 0)
     
     def setData(self, index, value, role):
         if not index.isValid():
