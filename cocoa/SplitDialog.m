@@ -52,7 +52,7 @@ http://www.hardcoded.net/licenses/hs_license
         [py setCapacitySelectedRow:i2n([capacitySelector selectedRow])];
         int customCapacity = [customCapacityText intValue];
         if (customCapacity)
-            [py setCustomCapacity:i2n(customCapacity * 1024 * 1024)];
+            [py setCustomCapacity:i2n(customCapacity)];
         [py setCustomModel:[customModelText stringValue]];
         return YES;
     }
