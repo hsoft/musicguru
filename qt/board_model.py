@@ -16,36 +16,68 @@ from hsutil.misc import dedupe
 from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
 
-class SongNode(TreeNode):
-    def __init__(self, parent, song, row):
+class FSNode(TreeNode):
+    def __init__(self, parent, ref, row):
         TreeNode.__init__(self, parent, row)
-        self.ref = song
-        self.data = [
+        self.ref = ref
+        self._data = None
+        self._imageName = None
+    
+    def _getData(self):
+        raise NotImplementedError()
+    
+    def _getImageName(self):
+        raise NotImplementedError()
+    
+    def reset(self):
+        self._data = None
+        self._imageName = None
+    
+    @property
+    def data(self):
+        if self._data is None:
+            self._data = self._getData()
+        return self._data
+    
+    @property
+    def imageName(self):
+        if self._imageName is None:
+            self._imageName = self._getImageName()
+        return self._imageName
+    
+
+class SongNode(FSNode):
+    def _getData(self):
+        song = self.ref
+        return [
             song.name,
             song.original.parent_volume.name,
             0,
             format_size(song.size, 2, 2, False),
             format_time(song.duration, FT_MINUTES),
         ]
-        self.imgname = 'song_conflict' if is_conflicted(song.name) else 'song'
+    
+    def _getImageName(self):
+        return 'song_conflict' if is_conflicted(self.ref.name) else 'song'
     
     def _get_children(self):
         return []
     
 
-class FolderNode(TreeNode):
-    def __init__(self, parent, folder, row):
-        TreeNode.__init__(self, parent, row)
-        self.ref = folder
+class FolderNode(FSNode):
+    def _getData(self):
+        folder = self.ref
         parent_volumes = dedupe(song.original.parent_volume for song in folder.iterallfiles())
-        self.data = [
+        return [
             folder.name,
             ','.join(l.name for l in parent_volumes),
             folder.get_stat('filecount'),
             format_size(folder.get_stat('size'), 2, 2, False),
             format_time(folder.get_stat('duration')),
         ]
-        self.imgname = 'folder_conflict' if folder.allconflicts else 'folder'
+    
+    def _getImageName(self):
+        return 'folder_conflict' if self.ref.allconflicts else 'folder'
     
     def _get_children(self):
         children = []
@@ -84,14 +116,37 @@ class BoardModel(TreeModel):
             return node.data[index.column()]
         elif role == Qt.DecorationRole:
             if index.column() == 0:
-                return QPixmap(":/{0}".format(node.imgname))
+                return QPixmap(":/{0}".format(node.imageName))
+        elif role == Qt.EditRole:
+            if index.column() == 0:
+                return node.data[index.column()]
         return None
+    
+    def flags(self, index):
+        if not index.isValid():
+            return Qt.ItemIsEnabled
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        if index.column() == 0:
+            flags |= Qt.ItemIsEditable
+        return flags
     
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
             return self.HEADER[section]
         
         return None
+    
+    def setData(self, index, value, role):
+        if not index.isValid():
+            return False
+        node = index.internalPointer()
+        if role == Qt.EditRole:
+            if index.column() == 0:
+                value = unicode(value.toString())
+                self.app.RenameNode(node.ref, value)
+                node.reset()
+                return True
+        return False
     
     #--- Events
     def boardChanged(self):
