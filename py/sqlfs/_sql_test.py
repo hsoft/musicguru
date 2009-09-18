@@ -53,7 +53,7 @@ def getref():
 
 class TCDirectory(TestCase):
     def test_new_directory(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('bar')
         self.assertEqual('bar',d.name)
         self.assert_(root is d.parent)
@@ -64,21 +64,21 @@ class TCDirectory(TestCase):
     def test_persistence(self):
         p = self.tmpdir()
         dbpath = op.join(p,'fs.db')
-        root = Root(dbpath,'root')
+        root = Root(dbpath, 'root', threaded=False)
         root.new_directory('bar')
         root.con.close()
-        root = Root(dbpath,'root')
+        root = Root(dbpath, 'root', threaded=False)
         self.assertEqual('bar',root[0].name)
     
     def test_two_subdir_levels(self):
-        root = Root()
+        root = Root(threaded=False)
         d1 = root.new_directory('foo')
         d2 = d1.new_directory('bar')
         self.assert_(root[0][0] is d2)
         self.assertEqual('bar',d2.name)
     
     def test_escaping(self):
-        root = Root()
+        root = Root(threaded=False)
         try:
             d1 = root.new_directory('foo\'bar')
             self.assertEqual('foo\'bar',d1.name)
@@ -86,7 +86,7 @@ class TCDirectory(TestCase):
             self.fail()
     
     def test_new_file(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('subdir')
         root.new_file('foo')
         file = d.new_file('bar')
@@ -95,20 +95,20 @@ class TCDirectory(TestCase):
         self.assert_(isinstance(file,File))
     
     def test_name_collisions(self):
-        root = Root()
+        root = Root(threaded=False)
         root.new_directory('foo')
         self.assertRaises(fs.AlreadyExistsError,root.new_directory,'foo')
         self.assertRaises(fs.AlreadyExistsError,root.new_file,'foo')
     
     def test_unicode(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory(u'foo\u00e9')
         self.assertEqual(u'foo\u00e9',d.name)
     
 
 class TCFile(TestCase):
     def test_escaping(self):
-        root = Root()
+        root = Root(threaded=False)
         try:
             f = root.new_file('foo\'bar')
             self.assertEqual('foo\'bar',f.name)
@@ -118,7 +118,7 @@ class TCFile(TestCase):
 
 class TCAttr_multiple(TestCase):
     def test_attrs(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attrs(INFO_SAMPLE)
         result = f._get_attrs()
@@ -127,28 +127,28 @@ class TCAttr_multiple(TestCase):
     def test_attrs_persistence(self):
         p = self.tmpdir()
         dbpath = op.join(p,'fs.db')
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         f = root.new_file('foobar')
         f._set_attrs(INFO_SAMPLE)
         root.con.close()
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         f = root[0]
         result = f._get_attrs()
         self.assertEqual(INFO_SAMPLE,result)
     
     def test_set_attrs_twice(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attrs(INFO_SAMPLE)
         f._set_attrs(INFO_SAMPLE)
         sql = "select count(*) from attrs"
         result = f.con.execute(sql)
-        self.assertEqual(len(INFO_SAMPLE), result[0][0])
+        self.assertEqual(len(INFO_SAMPLE), result.fetchall()[0][0])
     
     def test_dir_attrs(self):
         #This test is just to verify that the _get_attrs _set_attrs func are at the Node level.
         #Tests in File are assumed.
-        root = Root()
+        root = Root(threaded=False)
         subdir = root.new_directory('foobar')
         subdir._set_attrs(INFO_SAMPLE)
         result = subdir._get_attrs()
@@ -156,7 +156,7 @@ class TCAttr_multiple(TestCase):
     
     def test_escaping(self):
         #Hey, this test nver failed because of my use of 'cur.executemany'
-        root = Root()
+        root = Root(threaded=False)
         d = {'foo': 'foo\'bar'}
         f = root.new_file('foobar')
         try:
@@ -167,35 +167,35 @@ class TCAttr_multiple(TestCase):
 
 class TCAttr_single(TestCase):
     def test_str(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo','bar')
         self.assertEqual('bar',f._get_attr('foo'))
     
     def test_int(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo',42)
         self.assertEqual(42,f._get_attr('foo'))
     
     def test_str_int(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo','42')
         self.assertEqual('42',f._get_attr('foo'))
     
     def test_set_same_attr_twice(self):
         #When that happens, we don't want two rows in the db, we want an update to happen.
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo',1)
         f._set_attr('foo',2)
         self.assertEqual(2,f._get_attr('foo'))
         result = root.con.execute("select * from attrs")
-        self.assertEqual(1, len(result))
+        self.assertEqual(1, len(result.fetchall()))
     
     def test_escaping(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         try:
             f._set_attr('foo','foo\'bar')
@@ -203,24 +203,24 @@ class TCAttr_single(TestCase):
             self.fail()
     
     def test_raise_key_error_if_not_exists(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         self.assertRaises(KeyError,f._get_attr,'foo')
     
     def test_unicode(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo',u'foo\u00e9')
         self.assertEqual(u'foo\u00e9',f._get_attr('foo'))
     
     def test_binary(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo','\x0e\xff')
         self.assertEqual('\x0e\xff',f._get_attr('foo'))
     
     def test_replace_newline_and_cr(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('foobar')
         f._set_attr('foo','foo\rbar\n')
         self.assertEqual('foobar',f._get_attr('foo'))
@@ -228,7 +228,7 @@ class TCAttr_single(TestCase):
 
 class TC_delete(TestCase):
     def test_that_objects_are_gone(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('file')
         d = root.new_directory('dir')
         f.delete()
@@ -239,16 +239,16 @@ class TC_delete(TestCase):
     def test_transaction_is_commited(self):
         p = self.tmpdir()
         dbpath = op.join(p,'fs.db')
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         f = root.new_file('file')
         f.delete()
         root.con.close()
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         result = root.con.execute("select * from nodes")
-        self.assertEqual(0, len(result))
+        self.assertEqual(0, len(result.fetchall()))
     
     def test_also_delete_attrs(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('file')
         d = root.new_directory('dir')
         f._set_attrs(INFO_SAMPLE)
@@ -256,17 +256,17 @@ class TC_delete(TestCase):
         f.delete()
         d.delete()
         result = root.con.execute("select * from attrs")
-        self.assertEqual(0, len(result))
+        self.assertEqual(0, len(result.fetchall()))
     
     def test_delete_dir_then_add_file_with_same_name(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         d.delete()
         result = root.new_file('foo')
         self.assert_(isinstance(result,File))
     
     def test_that_delete_is_recursive(self):
-        root = Root()
+        root = Root(threaded=False)
         d1 = root.new_directory('dir1')
         d2 = root.new_directory('dir2')
         sd1 = d1.new_directory('dir')
@@ -274,13 +274,13 @@ class TC_delete(TestCase):
         sd1.new_file('file2')
         d1.delete()
         result = root.con.execute("select * from nodes")
-        self.assertEqual(1, len(result)) #Only d2 should be left
+        self.assertEqual(1, len(result.fetchall())) #Only d2 should be left
     
 
 class TCUpdate_initial(TestCase):
     #Only test the first call of Update on a Directory
     def test_that_dirs_and_files_are_added(self):
-        root = Root()
+        root = Root(threaded=False)
         root.update(getref())
         self.assert_('sub1' in root)
         self.assert_('sub2' in root)
@@ -289,7 +289,7 @@ class TCUpdate_initial(TestCase):
         self.assert_('file3' in root['sub2'])
     
     def test_that_attrs_are_set(self):
-        root = Root()
+        root = Root(threaded=False)
         ref = getref()
         for f in ref.allfiles:
             f._read_all_info()
@@ -302,20 +302,20 @@ class TCUpdate_initial(TestCase):
     def test_that_attrs_are_set_with_persistence(self):
         p = self.tmpdir()
         dbpath = op.join(p,'fs.db')
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         ref = getref()
         for f in ref.allfiles:
             f._read_all_info()
             f._info['md5'] = f.name
         root.update(ref)
         root.con.close()
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         self.assertEqual('file1',root['file1'].md5)
         self.assertEqual('file2',root['sub1']['file2'].md5)
         self.assertEqual('file3',root['sub2']['file3'].md5)
     
     def test_update_files_with_higher_mtime(self):
-        root = Root()
+        root = Root(threaded=False)
         ref = getref()
         for f in ref.allfiles:
             f._read_all_info()
@@ -329,7 +329,7 @@ class TCUpdate_initial(TestCase):
         self.assertEqual('changed',root['sub1']['file2'].md5)
     
     def test_calls_read_all_info(self):
-        root = Root()
+        root = Root(threaded=False)
         ref = getref()
         root.update(ref)
         self.assertEqual(3,ref.callcount)
@@ -340,7 +340,7 @@ class TCUpdate_initial(TestCase):
         
         oldread = manual.File._read_all_info
         manual.File._read_all_info = FakeReadAllInfo
-        root = Root()
+        root = Root(threaded=False)
         self.assert_(root._sections_to_read is None)
         root._sections_to_read = 42
         root.update(getref())
@@ -353,7 +353,7 @@ class TCUpdate_initial(TestCase):
         
         self.log = []
         job = Job(1,callback)
-        root = Root()
+        root = Root(threaded=False)
         ref = getref()
         try:
             root.update(ref,job=job)
@@ -373,7 +373,7 @@ class TCUpdate_subsequent(TestCase):
         self.callcount = 0
         self.oldread = manual.File._read_all_info
         manual.File._read_all_info = FakeReadAllInfo
-        root = Root()
+        root = Root(threaded=False)
         ref = getref()
         root.update(ref)
         self.root = root
@@ -455,7 +455,7 @@ class TCJobs(TestCase):
         
         self.log = []
         job = Job(1,callback)
-        root = Root()
+        root = Root(threaded=False)
         ref = getref()
         root.update(ref,job=job)
         self.assertEqual(0,self.log[0])
@@ -464,22 +464,22 @@ class TCJobs(TestCase):
 
 class TCfind_node_of_id(TestCase):
     def test_id_is_self(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         self.assert_(root.find_node_of_id(root.id) is root)
     
     def test_find_id_not_in_self(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         self.assert_(root.find_node_of_id(42) is None)
     
     def test_find_id_in_children(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         self.assert_(root.find_node_of_id(d.id) is d)
     
     def test_id_cache_is_weakref(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         w = weakref.ref(d)
         root.find_node_of_id(d.id)
@@ -491,14 +491,14 @@ class TCfind_node_of_id(TestCase):
     def test_check_cache_validity(self):
         #Ok, the cache is weakref. But what if something else keeps the object alive?
         #The cache would return an erronous value.
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         root.find_node_of_id(d.id)
         d.delete()
         self.assert_(root.find_node_of_id(d.id) is None)
     
     def test_node_was_deleted_and_a_new_node_was_created_with_the_same_id(self):
-        root = Root()
+        root = Root(threaded=False)
         d1 = root.new_directory('foo')
         root.find_node_of_id(d1.id)
         d1.delete()
@@ -507,7 +507,7 @@ class TCfind_node_of_id(TestCase):
         self.assert_(root.find_node_of_id(d2.id) is d2)
     
     def test_two_levels_deep(self):
-        root = Root()
+        root = Root(threaded=False)
         d = root.new_directory('foo')
         f = d.new_file('bar')
         self.assert_(root.find_node_of_id(f.id) is f)

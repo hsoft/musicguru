@@ -660,7 +660,7 @@ class TCBatchOperation(TestCase):
         #The actual copy (with CD prompting) will only happen on Copy or Rename.
         #meanwhile, BatchProcess has to build a name_list. Paths in name_list
         #that are from CDs will start with %cd:<cd name>%.
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         dir = volume.new_directory('fs')
@@ -684,7 +684,7 @@ class TCBatchOperation(TestCase):
             return Path(self.rootpath)
         
         copypath = self.tmpdir()
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         dir = volume.new_directory('fs')
@@ -719,7 +719,7 @@ class TCBatchOperation(TestCase):
             return
         
         copypath = self.tmpdir()
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         dir = volume.new_directory('fs')
@@ -768,7 +768,7 @@ class TCBatchOperation(TestCase):
             self.assert_(location is volume)
             return self.rootpath
         
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         dir = volume.new_directory('fs')
@@ -793,7 +793,7 @@ class TCBatchOperation(TestCase):
             self.log.append(progress)
             return True
         
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         dir = volume.new_directory('fs')
@@ -812,7 +812,7 @@ class TCBatchOperation(TestCase):
     
     def test_cd_copy_OnNeedCD_returns_string(self):
         #When OnNeedCD returns a string instead of a path, BO must work properly.
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         dir = volume.new_directory('fs')
@@ -831,7 +831,7 @@ class TCBatchOperation(TestCase):
             self.assert_(location is volume)
             return Path(self.testpath)
         
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         volume.new_file('file1.test')

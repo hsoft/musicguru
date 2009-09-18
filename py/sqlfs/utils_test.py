@@ -13,7 +13,7 @@ from ._sql import *
 from .utils import *
 
 def getref():
-    root = Root()
+    root = Root(threaded=False)
     f1 = root.new_file('f1')
     f2 = root.new_file('f2')
     f3 = root.new_file('f3')
@@ -88,7 +88,7 @@ class TCnodes_of_attr_values(TestCase):
         nodes_of_attr_values(root.con,'foo',['foo\'bar'])
     
     def test_return_nothing_if_there_is_no_values(self):
-        root = Root()
+        root = Root(threaded=False)
         f1 = root.new_file('f1')
         f1._set_attr('foo','')
         self.assertEqual([],nodes_of_attr_values(root.con,'foo',[]))

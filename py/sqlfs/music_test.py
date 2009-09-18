@@ -24,31 +24,31 @@ from .music import *
 
 class TCRoot_children(TestCase):
     def test_new_directories_are_Volume(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         self.assert_(type(v) is Volume)
     
     def test_new_files_are_music_File(self):
-        root = Root()
+        root = Root(threaded=False)
         f = root.new_file('file')
         self.assert_(type(f) is File)
 
 class TCVolume_children(TestCase):
     def test_new_directories_are_music_Directory(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         d = v.new_directory('bar')
         self.assert_(type(d) is Directory)
     
     def test_new_files_are_music_File(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         f = v.new_file('file')
         self.assert_(type(f) is File)
 
 class TCDirectory_children(TestCase):
     def test_new_files_are_music_File(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         d = v.new_directory('bar')
         f = d.new_file('file')
@@ -58,7 +58,7 @@ class TCDirectory_children(TestCase):
 class TCVolume_initial_path(TestCase):
     def test_initial_path(self):
         p = Path(('foo','bar'))
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         v.initial_path = p
         result = v.initial_path
@@ -68,17 +68,17 @@ class TCVolume_initial_path(TestCase):
     def test_initial_path_persistence(self):
         p = Path(('foo','bar'))
         dbpath = op.join(self.tmpdir(),'fs.db')
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         v = root.new_directory('foo')
         v.initial_path = p
         root.con.close()
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         v = root[0]
         self.assertEqual(p,v.initial_path)
     
     def test_keep_initial_path_cache(self):
         p = Path(('foo','bar'))
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         v.initial_path = p
         p = v.initial_path
@@ -86,7 +86,7 @@ class TCVolume_initial_path(TestCase):
     
     def test_invalidate_cache_on_set(self):
         p = Path(('foo','bar'))
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         v.initial_path = p
         self.assertEqual(p,v.initial_path)
@@ -95,36 +95,36 @@ class TCVolume_initial_path(TestCase):
         self.assertEqual(p,v.initial_path)
     
     def test_initial_value(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         self.assertEqual(Path(''),v.initial_path)
     
 
 class TCVolume_vol_type(TestCase):
     def test_vol_type(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         v.vol_type = VOLTYPE_FIXED
         self.assertEqual(VOLTYPE_FIXED,v.vol_type)
     
     def test_vol_type_persistence(self):
         dbpath = op.join(self.tmpdir(),'fs.db')
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         v = root.new_directory('foo')
         v.vol_type = VOLTYPE_FIXED
-        root = Root(dbpath)
+        root = Root(dbpath, threaded=False)
         v = root[0]
         self.assertEqual(VOLTYPE_FIXED,v.vol_type)
     
     def test_initial_value(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         self.assertEqual(VOLTYPE_FIXED,v.vol_type)
     
 
 class TCVolume_physical_path(TestCase):
     def test_on_fixed_drive(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         v.initial_path = Path(('foo','bar'))
         self.assertEqual(v.initial_path,v.physical_path)
@@ -132,7 +132,7 @@ class TCVolume_physical_path(TestCase):
 
 class TCDirectory_physical_path(TestCase):
     def test_typical(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         d = v.new_directory('bar')
         v.initial_path = Path(('initial','path'))
@@ -142,7 +142,7 @@ class TCDirectory_physical_path(TestCase):
 
 class TCFile_physical_path(TestCase):
     def test_typical(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         d = v.new_directory('bar')
         f = d.new_file('baz')
@@ -159,7 +159,7 @@ class TCadd_volume(TestCase):
         return ref    
     
     def test_typical(self):
-        root = Root()
+        root = Root(threaded=False)
         ref = self._get_ref_dir()
         v = root.add_volume(ref,'volume_name',42)
         self.assert_(v in root)
@@ -172,7 +172,7 @@ class TCadd_volume(TestCase):
     def test_job_cancel(self):
         j = Job(1, lambda progress: False) # Will cancel right away
         ref = self._get_ref_dir()
-        root = Root()
+        root = Root(threaded=False)
         try:
             root.add_volume(ref, 'volume_name', 42, j)
         except JobCancelled:
@@ -186,7 +186,7 @@ class TCVolume_Update(TestCase):
         ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
-        root = Root()
+        root = Root(threaded=False)
         v = root.add_volume(ref,'the_volume',VOLTYPE_FIXED)
         self.assertEqual(2,v.filecount)
         shutil.copy(op.join(ref_dir,'test1.ogg'),op.join(ref_dir,'test3.ogg'))
@@ -197,7 +197,7 @@ class TCVolume_Update(TestCase):
         ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
-        root = Root()
+        root = Root(threaded=False)
         v = root.add_volume(ref,'the_volume',VOLTYPE_FIXED)
         self.assertEqual(2,v.filecount)
         shutil.copy(op.join(ref_dir,'test1.ogg'),op.join(ref_dir,'test3.foo'))
@@ -207,7 +207,7 @@ class TCVolume_Update(TestCase):
     def test_gracefully_handle_invalid_path(self):
         # Sometimes, the volume is from an external drive and that drive is not plugged in.
         # In this case, we just want to ignore the error and just not update that volume.
-        root = Root()
+        root = Root(threaded=False)
         volume = root.new_directory('foobar')
         volume.vol_type = VOLTYPE_FIXED
         volume.initial_path = '/does/not/exist'
@@ -222,7 +222,7 @@ class TCRoot_update_volumes(TestCase):
         ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
-        root = Root()
+        root = Root(threaded=False)
         vf = root.add_volume(ref,'fixed',VOLTYPE_FIXED)
         vc = root.add_volume(ref,'cdrom',VOLTYPE_CDROM)
         shutil.copy(op.join(ref_dir,'test1.ogg'),op.join(ref_dir,'test3.ogg'))
@@ -246,7 +246,7 @@ class TCJobs(TestCase):
         self.assertEqual(100,self.log[-1])
     
     def test_Volume_Update(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         ref = manual.Directory(None,'')
         ref.new_file('foo')
@@ -254,7 +254,7 @@ class TCJobs(TestCase):
         self.do_test_log()
     
     def test_Root_update_volumes(self):
-        root = Root()
+        root = Root(threaded=False)
         ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         v = root.new_directory('foo')
         v.initial_path = Path(ref_dir)
@@ -263,7 +263,7 @@ class TCJobs(TestCase):
         self.do_test_log()
     
     def test_Root_add_volume(self):
-        root = Root()
+        root = Root(threaded=False)
         ref = manual.Directory(None,'')
         ref.new_file('foo')
         root.add_volume(ref,'foo',1,job=self.job)
@@ -272,18 +272,18 @@ class TCJobs(TestCase):
 
 class TCparent_volume(TestCase):
     def test_from_volume(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         self.assert_(v.parent_volume is v)
     
     def test_from_directory(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         d = v.new_directory('foo')
         self.assert_(d.parent_volume is v)
     
     def test_from_file(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         d = v.new_directory('foo')
         f = d.new_file('foo')
@@ -292,11 +292,11 @@ class TCparent_volume(TestCase):
 
 class TCbuffer_path(TestCase):
     def test_initial_value(self):
-        root = Root()
+        root = Root(threaded=False)
         self.assertEqual(Path(()),root.buffer_path)
     
     def test_cdrom_volume_path(self):
-        root = Root()
+        root = Root(threaded=False)
         v = root.new_directory('foo')
         root.buffer_path = Path('buffer')
         v.vol_type = VOLTYPE_CDROM
@@ -305,7 +305,7 @@ class TCbuffer_path(TestCase):
 
 class TCvolume_path_mode(TestCase):
     def setUp(self):
-        self.root = Root()
+        self.root = Root(threaded=False)
         self.v = self.root.new_directory('vol')
         self.v.initial_path = Path('initial')
         self.f = self.v.new_file('file')
@@ -335,7 +335,7 @@ class TCFileAttrs(TestCase):
     def test_has_music_attrs(self):
         ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
         ref = music.Directory(None,ref_dir)
-        root = Root()
+        root = Root(threaded=False)
         v = root.add_volume(ref,'foo',VOLTYPE_FIXED)
         f = v['test1.ogg']
         self.assertEqual('Astro',f.title)
@@ -343,7 +343,7 @@ class TCFileAttrs(TestCase):
 
 class TCvolume_is_available(TestCase):
     def setUp(self):
-        self.root = Root()
+        self.root = Root(threaded=False)
         self.v = self.root.new_directory('vol')
     
     def test_true(self):

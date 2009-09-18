@@ -125,8 +125,8 @@ class Root(sql.Root):
     cls_dir_class = Volume
     cls_file_class = File
     
-    def __init__(self, dbname=':memory:', dirname=''):
-        super(Root, self).__init__(dbname, dirname)
+    def __init__(self, dbname=':memory:', dirname='', threaded=True):
+        super(Root, self).__init__(dbname, dirname, threaded=threaded)
         self._sections_to_read = (fs.IT_ATTRS, fs.IT_EXTRA)
     
     def add_volume(self, ref, volume_name, volume_type, job=nulljob):

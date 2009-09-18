@@ -19,7 +19,7 @@ from .testcase import TestCase
 
 class TCBoard(TestCase):
     def setUp(self):
-        self.root = Root(self.filepath('sql','small.db'))
+        self.root = Root(self.filepath('sql','small.db'), threaded=False)
         self.board = design.Board()
         self.board.AddLocation(self.root[0])
 
@@ -88,7 +88,7 @@ class TCBoard(TestCase):
         self.assertEqual(1,len(not_renamed))
 
     def test_that_mass_rename_priorizes(self):
-        root = Root(self.filepath('sql','small.db'))
+        root = Root(self.filepath('sql','small.db'), threaded=False)
         self.board.AddLocation(root[0])
         self.board.MassRename("foobar/%year% - %artist% - %title%",fs_utils.WS_SPACES_TO_UNDERSCORES)
         self.assertEqual(8,len(self.board.allconflicts))
@@ -101,7 +101,7 @@ class TCBoard(TestCase):
         self.assertEqual(7,len(self.board.allfiles))
 
     def test_empty(self):
-        root = Root(self.filepath('sql','small.db'))
+        root = Root(self.filepath('sql','small.db'), threaded=False)
         self.board.AddLocation(root[0])
         self.board.media_capacity = 8500
         self.board[0].move(self.board.ignore_box)
@@ -114,7 +114,7 @@ class TCBoard(TestCase):
         self.assertEqual(False,self.board.splitted)
 
     def test_priorize_conflicts(self):
-        root = Root(self.filepath('sql','small.db'))
+        root = Root(self.filepath('sql','small.db'), threaded=False)
         self.board.AddLocation(root[0])
         f1 = self.board['08 Peephole.wma']
         f2 = self.board['[000] 08 Peephole.wma']
@@ -132,8 +132,6 @@ class TCBoard(TestCase):
         self.assertEqual('CD 1',self.board[0].name)
         self.assert_(self.board.splitted)
         self.board.Unsplit()
-        self.board.Split('12345678901234567890',1,0,16)
-        self.assertEqual('1234567890123456',self.board[0].name)
 
     def test_unsplit(self):
         self.board.Split('CD %sequence%', 0xffffffff, 0)
@@ -145,7 +143,7 @@ class TCBoard(TestCase):
     
     def test_get_stat_line(self):
         self.assertEqual("7 songs, 27.3 minutes, 34.73 MB",self.board.stats_line)
-        root = Root(self.filepath('sql','small.db'))
+        root = Root(self.filepath('sql','small.db'), threaded=False)
         self.board.AddLocation(root[0])
         self.board.MassRename("foobar/%year% - %artist% - %title%",fs_utils.WS_SPACES_TO_UNDERSCORES)
         self.assertEqual("14 songs (8 conflicts), 54.7 minutes, 69.45 MB",self.board.stats_line)
@@ -188,7 +186,7 @@ class TCBoard(TestCase):
 
 class TCMassRenamePanel(TestCase):
     def setUp(self):
-        root = Root(self.filepath('sql','small.db'))
+        root = Root(self.filepath('sql','small.db'), threaded=False)
         self.panel = design.MassRenamePanel(root)
 
     def test_default(self):
@@ -234,7 +232,6 @@ class TCSplittingPanel(TestCase):
         self.assertEqual(0,self.panel.capacity_index)
         self.assertEqual("CD %sequence%",self.panel.model)
         self.assertEqual(700 * 1024 * 1024,self.panel.capacity)
-        self.assertEqual(16,self.panel.truncate_name_to)
 
     def test_change(self):
         self.panel.model_index = 2
@@ -268,11 +265,7 @@ class TCSplittingPanel(TestCase):
         self.panel.capacity_index = 2
         self.assertEqual(8.5 * 1000 * 1000 * 1000,self.panel.capacity)
         self.panel.capacity_index = 3
-        self.assertEqual(0,self.panel.capacity)
+        self.panel.custom_capacity = 42
+        self.assertEqual(self.panel.capacity, 42*1024*1024)
         self.panel.capacity_index = 0
-        self.panel.custom_capacity = 12
         self.assertEqual(700 * 1024 * 1024,self.panel.capacity)
-        self.panel.capacity_index = 3
-        self.assertEqual(12,self.panel.capacity)
-        self.panel.custom_capacity = 13
-        self.assertEqual(13,self.panel.capacity)

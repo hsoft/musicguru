@@ -15,7 +15,7 @@ from .sqlfs.music import Root, VOLTYPE_CDROM
 
 class TCApp_GetLocationData(TestCase):
     def test_values(self):
-        root = Root()
+        root = Root(threaded=False)
         root.buffer_path = Path('/does/not/exist')
         loc = root.new_directory('foo')
         loc.vol_type = VOLTYPE_CDROM

@@ -66,7 +66,7 @@ class Node(object):
         sql = "select type,value from attrs where parent = ? and name = ?"
         result = self.con.execute(sql,(self.id,key))
         try:
-            value_type, value = result[0]
+            value_type, value = result.fetchall()[0]
             return db_to_value(value_type,value)
         except IndexError:
             raise KeyError("Attr '%s' does not exists for id %d" % (key,self.id))
@@ -136,7 +136,7 @@ class Directory(fs.Directory,Node):
             result._id_cache = self._id_cache
         sql = "insert into nodes(parent,type,name) values(?,?,?)"
         cur = self.con.execute(sql, (self.id, node_type, name))
-        result.id = self.con.lastrowid
+        result.id = cur.lastrowid
         result.con = self.con
         self._id_cache[result.id] = result
         if commit:
@@ -216,9 +216,12 @@ class Directory(fs.Directory,Node):
 
 class Root(Directory):
     cls_dir_class = Directory
-    def __init__(self, dbname=':memory:', dirname=''):
+    def __init__(self, dbname=':memory:', dirname='', threaded=True):
         super(Root,self).__init__(None,dirname)
-        self.con = hsutil.sqlite.ThreadedConn(dbname, False)
+        if threaded:
+            self.con = hsutil.sqlite.ThreadedConn(dbname, False)
+        else:
+            self.con = sqlite.connect(dbname)
         self.id = 0
         self._sections_to_read = None
         self._id_cache = WeakValueDictionary()
