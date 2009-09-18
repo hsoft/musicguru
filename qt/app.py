@@ -25,11 +25,13 @@ from details_panel import DetailsPanel
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
 JOB_MASS_RENAME = 'job_mass_rename'
+JOB_SPLIT = 'job_split'
 
 JOBID2TITLE = {
     JOB_UPDATE: "Updating location",
     JOB_ADD: "Adding location",
     JOB_MASS_RENAME: "Renaming",
+    JOB_SPLIT: "Splitting",
 }
 
 class MusicGuru(MusicGuruBase, QObject):
@@ -86,6 +88,12 @@ class MusicGuru(MusicGuruBase, QObject):
         self.selectedBoardItems = items
         self.emit(SIGNAL('boardSelectionChanged()'))
     
+    def split(self, model, capacity, grouping_level):
+        def do(j):
+            self.board.Split(model, capacity, grouping_level, j)
+        
+        self._startJob(JOB_SPLIT, do)
+    
     def toggleLocation(self, location):
         self.board.ToggleLocation(location)
         self.emit(SIGNAL('locationsChanged()'))
@@ -101,6 +109,6 @@ class MusicGuru(MusicGuruBase, QObject):
     def jobFinished(self, jobid):
         if jobid in (JOB_UPDATE, JOB_ADD):
             self.emit(SIGNAL('locationsChanged()'))
-        if jobid == JOB_MASS_RENAME:
+        if jobid in (JOB_MASS_RENAME, JOB_SPLIT):
             self.emit(SIGNAL('boardChanged()'))
     

@@ -14,6 +14,7 @@ from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolBu
 import mg_rc
 from board_model import BoardModel
 from mass_rename_dialog import MassRenameDialog
+from split_dialog import SplitDialog
 from ui.main_window_ui import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
+        self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -70,16 +72,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.toolBar.insertWidget(self.actionMaterialize, button) # the action is a placeholder
         self.toolBar.removeAction(self.actionMaterialize)
     
-    #--- Events
-    def browserSelectionChanged(self, selected, deselected):
-        selectedIndexes = self.browserView.selectionModel().selectedRows()
-        nodes = [index.internalPointer() for index in selectedIndexes]
-        originals = [node.ref.original for node in nodes]
-        self.app.selectBoardItems(originals)
+    #--- Actions
+    def splitTriggered(self):
+        dialog = SplitDialog(self.app)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            self.app.split(dialog.model, dialog.capacity, dialog.grouping_level)
     
     def massRenameTriggered(self):
         dialog = MassRenameDialog(self.app)
         result = dialog.exec_()
         if result == QDialog.Accepted:
             self.app.massRename(dialog.model, dialog.whitespace)
+    
+    #--- Events
+    def browserSelectionChanged(self, selected, deselected):
+        selectedIndexes = self.browserView.selectionModel().selectedRows()
+        nodes = [index.internalPointer() for index in selectedIndexes]
+        originals = [node.ref.original for node in nodes]
+        self.app.selectBoardItems(originals)
     
