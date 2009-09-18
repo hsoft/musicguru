@@ -20,7 +20,7 @@ import hsfs as fs
 from hsfs import phys
 from hsfs.utils import smart_move
 from hsutil import cocoa
-from hsutil.conflict import is_conflicted, get_conflicted_name
+from hsutil.conflict import is_conflicted
 from hsutil.path import Path
 from hsutil.str import format_size
 
@@ -93,11 +93,9 @@ class MusicGuru(app.MusicGuru):
             app.MusicGuru.AddLocation(self, path, name, removeable, j)
         self.progress.run_threaded(do)
     
-    def CreateFolderInNode(self,node_path):
-        parent = WalkDir(self.board,node_path)
-        new_name = get_conflicted_name(parent,'New Folder')
-        new_folder = fs.manual.AutoMerge(parent,new_name)
-        return new_folder.name
+    def CreateFolderInNode(self, node_path):
+        parent = WalkDir(self.board, node_path)
+        return app.MusicGuru.new_folder(self, parent)
     
     def GetLocationNames(self,in_board,writable):
         locations = self.board.locations if in_board else self.collection.dirs
