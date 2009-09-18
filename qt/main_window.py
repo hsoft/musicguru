@@ -25,6 +25,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._setupUi()
         
         self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
+        self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
+        self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
         self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
     
@@ -84,6 +86,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = dialog.exec_()
         if result == QDialog.Accepted:
             self.app.massRename(dialog.model, dialog.whitespace)
+    
+    def showDetailsTriggered(self):
+        self.app.detailsPanel.show()
+    
+    def showLocationsTriggered(self):
+        self.app.locationsPanel.show()
     
     #--- Events
     def browserSelectionChanged(self, selected, deselected):

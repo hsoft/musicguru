@@ -45,8 +45,6 @@ class MusicGuru(MusicGuruBase, QObject):
         self.progress = Progress(self.mainWindow)
         self.selectedBoardItems = []
         self.mainWindow.show()
-        self.locationsPanel.show()
-        self.detailsPanel.show()
         
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
     
