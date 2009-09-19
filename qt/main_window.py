@@ -27,8 +27,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
         self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
         self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
+        self.connect(self.actionShowIgnoreBox, SIGNAL('triggered()'), self.showIgnoreBoxTriggered)
         self.connect(self.actionNewFolder, SIGNAL('triggered()'), self.newFolderTriggered)
         self.connect(self.actionRemoveEmptyFolders, SIGNAL('triggered()'), self.removeEmptyFoldersTriggered)
+        self.connect(self.actionMoveSelectedToIgnoreBox, SIGNAL('triggered()'), self.moveSelectedToIgnoreBoxTriggered)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
         self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
     
@@ -89,6 +91,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if result == QDialog.Accepted:
             self.app.massRename(dialog.model, dialog.whitespace)
     
+    def moveSelectedToIgnoreBoxTriggered(self):
+        self.app.moveSelectedToIgnoreBox()
+    
     def newFolderTriggered(self):
         selectedIndexes = self.browserView.selectionModel().selectedRows()
         nodes = [index.internalPointer() for index in selectedIndexes]
@@ -110,6 +115,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def showDetailsTriggered(self):
         self.app.detailsPanel.show()
     
+    def showIgnoreBoxTriggered(self):
+        self.app.ignoreBox.show()
+    
     def showLocationsTriggered(self):
         self.app.locationsPanel.show()
     
@@ -117,6 +125,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def browserSelectionChanged(self, selected, deselected):
         selectedIndexes = self.browserView.selectionModel().selectedRows()
         nodes = [index.internalPointer() for index in selectedIndexes]
-        originals = [node.ref.original for node in nodes]
-        self.app.selectBoardItems(originals)
+        items = [node.ref for node in nodes]
+        self.app.selectBoardItems(items)
     

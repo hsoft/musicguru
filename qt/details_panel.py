@@ -26,7 +26,8 @@ class DetailsPanel(QDialog, Ui_DetailsPanel):
     
     #--- Private
     def _updateInfo(self):
-        info = self.app.GetSelectionInfo(self.app.selectedBoardItems)
+        originals = [item.original for item in self.app.selectedBoardItems]
+        info = self.app.GetSelectionInfo(originals)
         self.tableWidget.clear()
         self.tableWidget.setRowCount(len(info))
         for index, (name, value) in enumerate(info):

@@ -13,6 +13,7 @@ from __future__ import unicode_literals
 from PyQt4.QtCore import SIGNAL, Qt, QObject
 from PyQt4.QtGui import QDesktopServices, QMessageBox
 
+from hsfs.utils import smart_move
 from hsutil import job
 from qtlib.progress import Progress
 
@@ -21,6 +22,7 @@ from musicguru.app import MusicGuru as MusicGuruBase
 from main_window import MainWindow
 from locations_panel import LocationsPanel
 from details_panel import DetailsPanel
+from ignore_box import IgnoreBox
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
@@ -42,6 +44,7 @@ class MusicGuru(MusicGuruBase, QObject):
         self.mainWindow = MainWindow(app=self)
         self.locationsPanel = LocationsPanel(app=self)
         self.detailsPanel = DetailsPanel(app=self)
+        self.ignoreBox = IgnoreBox(app=self)
         self.progress = Progress(self.mainWindow)
         self.selectedBoardItems = []
         self.mainWindow.show()
@@ -75,6 +78,11 @@ class MusicGuru(MusicGuruBase, QObject):
             self.board.MassRename(model, whitespace, j)
         
         self._startJob(JOB_MASS_RENAME, do)
+    
+    def moveSelectedToIgnoreBox(self):
+        smart_move(self.selectedBoardItems, self.board.ignore_box, allow_merge=True)
+        self.emit(SIGNAL('boardChanged()'))
+        self.emit(SIGNAL('ignoreBoxChanged()'))
     
     def removeEmptyFolders(self):
         MusicGuruBase.RemoveEmptyDirs(self)
