@@ -10,7 +10,7 @@
 from hsutil.path import Path
 from hsutil.testcase import TestCase
 
-from .app import MusicGuru
+from .app_cocoa import MusicGuru
 from .sqlfs.music import Root, VOLTYPE_CDROM
 
 class TCApp_GetLocationData(TestCase):

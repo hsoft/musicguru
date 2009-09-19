@@ -260,6 +260,39 @@ class MusicGuru(app.MusicGuru):
         return super(MusicGuru,self).PrepareBurning(free_bytes)
     
     #---Data
+    def GetNodeData(self, node):
+        if node.is_container:
+            img_name = cond(node.allconflicts,'folder_conflict_16','folder_16')
+            parent_volumes = dedupe(song.original.parent_volume for song in node.iterallfiles())
+            return [
+                node.name,
+                ','.join(l.name for l in parent_volumes),
+                node.get_stat('filecount'),
+                format_size(node.get_stat('size'),2,2,False),
+                format_time(node.get_stat('duration')),
+                img_name,
+            ]
+        else:
+            img_name = cond(is_conflicted(node.name),'song_conflict_16','song_16')
+            return [
+                node.name,
+                node.original.parent_volume.name,
+                0,
+                format_size(node.size,2,2,False),
+                format_time(node.duration,FT_MINUTES),
+                img_name,
+            ]
+    
+    def GetLocationData(self, location):
+        return [
+            location.name,
+            location.get_stat('filecount'),
+            format_size(location.get_stat('size'),2,3,False),
+            location.vol_type == VOLTYPE_CDROM,
+            location.is_available,
+            unicode(location.physical_path)
+        ]
+    
     def GetOutlineViewChildCounts(self, tag, node_path):
         item = WalkDir(self.GetOutlineBase(tag), node_path)
         if item.is_container:
