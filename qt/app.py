@@ -79,6 +79,11 @@ class MusicGuru(MusicGuruBase, QObject):
         
         self._startJob(JOB_MASS_RENAME, do)
     
+    def moveConflicts(self, with_original=False):
+        if self.board.MoveConflicts(with_original=with_original) > 0:
+            self.emit(SIGNAL('boardChanged()'))
+            self.emit(SIGNAL('ignoreBoxChanged()'))
+    
     def moveSelectedToIgnoreBox(self):
         smart_move(self.selectedBoardItems, self.board.ignore_box, allow_merge=True)
         self.emit(SIGNAL('boardChanged()'))
@@ -107,6 +112,10 @@ class MusicGuru(MusicGuruBase, QObject):
     def toggleLocation(self, location):
         self.board.ToggleLocation(location)
         self.emit(SIGNAL('locationsChanged()'))
+        self.emit(SIGNAL('boardChanged()'))
+    
+    def undoSplit(self):
+        self.board.Unsplit()
         self.emit(SIGNAL('boardChanged()'))
     
     def updateLocation(self, location):

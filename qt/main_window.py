@@ -35,6 +35,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionSwitchConflictAndOriginal, SIGNAL('triggered()'), self.switchConflictAndOriginalTriggered)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
         self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
+        self.connect(self.actionUndoSplit, SIGNAL('triggered()'), self.undoSplitTriggered)
+        self.connect(self.actionMoveConflicts, SIGNAL('triggered()'), self.moveConflictsTriggered)
+        self.connect(self.actionMoveConflictsAndOriginals, SIGNAL('triggered()'), self.moveConflictsAndOriginalsTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -93,6 +96,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if result == QDialog.Accepted:
             self.app.massRename(dialog.model, dialog.whitespace)
     
+    def moveConflictsTriggered(self):
+        self.app.moveConflicts()
+    
+    def moveConflictsAndOriginalsTriggered(self):
+        self.app.moveConflicts(with_original=True)
+    
     def moveSelectedToIgnoreBoxTriggered(self):
         self.app.moveSelectedToIgnoreBox()
     
@@ -140,6 +149,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.boardModel.refreshNode(currentNode.parent)
         newIndex = self.boardModel.index(currentIndex.row(), currentIndex.column(), currentNode.parent.index)
         self.browserView.setCurrentIndex(newIndex)
+    
+    def undoSplitTriggered(self):
+        self.app.undoSplit()
     
     #--- Events
     def browserSelectionChanged(self, selected, deselected):
