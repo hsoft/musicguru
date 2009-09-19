@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, SIGNAL
 from PyQt4.QtGui import QPixmap
 
 from hsutil.conflict import is_conflicted
@@ -29,7 +29,10 @@ class FSNode(TreeNode):
     def _getImageName(self):
         raise NotImplementedError()
     
-    def reset(self):
+    def reset(self, with_subnodes=False):
+        if with_subnodes:
+            for node in self.subnodes:
+                node.reset(with_subnodes=True)
         self._data = None
         self._imageName = None
         self._subnodes = None
@@ -127,4 +130,11 @@ class FSModel(TreeModel):
             return self.HEADER[section]
         
         return None
+    
+    def refreshNode(self, node):
+        if node is None:
+            self.reset()
+            return
+        node.reset(with_subnodes=True)
+        self.emit(SIGNAL('layoutChanged()'))
     

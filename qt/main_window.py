@@ -30,7 +30,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowIgnoreBox, SIGNAL('triggered()'), self.showIgnoreBoxTriggered)
         self.connect(self.actionNewFolder, SIGNAL('triggered()'), self.newFolderTriggered)
         self.connect(self.actionRemoveEmptyFolders, SIGNAL('triggered()'), self.removeEmptyFoldersTriggered)
+        self.connect(self.actionRenameSelected, SIGNAL('triggered()'), self.renameSelectedTriggered)
         self.connect(self.actionMoveSelectedToIgnoreBox, SIGNAL('triggered()'), self.moveSelectedToIgnoreBoxTriggered)
+        self.connect(self.actionSwitchConflictAndOriginal, SIGNAL('triggered()'), self.switchConflictAndOriginalTriggered)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
         self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
     
@@ -112,6 +114,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def removeEmptyFoldersTriggered(self):
         self.app.removeEmptyFolders()
     
+    def renameSelectedTriggered(self):
+        selectedIndexes = self.browserView.selectionModel().selectedRows()
+        if not selectedIndexes:
+            return
+        index = selectedIndexes[0]
+        self.browserView.setCurrentIndex(index)
+        self.browserView.edit(index)
+    
     def showDetailsTriggered(self):
         self.app.detailsPanel.show()
     
@@ -120,6 +130,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showLocationsTriggered(self):
         self.app.locationsPanel.show()
+    
+    def switchConflictAndOriginalTriggered(self):
+        currentIndex = self.browserView.currentIndex()
+        if not currentIndex.isValid():
+            return
+        currentNode = currentIndex.internalPointer()
+        self.app.SwitchConflictAndOriginal(currentNode.ref)
+        self.boardModel.refreshNode(currentNode.parent)
+        newIndex = self.boardModel.index(currentIndex.row(), currentIndex.column(), currentNode.parent.index)
+        self.browserView.setCurrentIndex(newIndex)
     
     #--- Events
     def browserSelectionChanged(self, selected, deselected):
