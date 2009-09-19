@@ -16,10 +16,10 @@ import shutil
 import hsfs as fs
 from hsfs import phys
 from hsfs.stats import StatsList
-from hsutil.conflict import is_conflicted, get_unconflicted_name, get_conflicted_name
+from hsutil.conflict import get_unconflicted_name, get_conflicted_name
 from hsutil.files import clean_empty_dirs
 from hsutil.job import JobCancelled
-from hsutil.misc import cond, dedupe, tryint
+from hsutil.misc import cond, tryint
 from hsutil.path import Path
 from hsutil.str import format_size, format_time, multi_replace, FT_MINUTES, FS_FORBIDDEN
 
@@ -42,12 +42,8 @@ class MusicGuru(RegistrableApplication):
     
     def AddLocation(self, path, name, removeable, job):
         vol_type = cond(removeable, VOLTYPE_CDROM, VOLTYPE_FIXED)
-        try:
-            ref = phys.music.Directory(None, path)
-            self.collection.add_volume(ref, name, vol_type, job)
-            return True
-        except JobCancelled:
-            return False
+        ref = phys.music.Directory(None, path)
+        self.collection.add_volume(ref, name, vol_type, job)
     
     def CanAddLocation(self, path, name):
         #returns None is it is possible to add the location, and returns the error msg otherwise.

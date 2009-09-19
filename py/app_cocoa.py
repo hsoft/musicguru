@@ -22,7 +22,7 @@ from hsfs.utils import smart_move
 from hsutil import cocoa
 from hsutil.conflict import is_conflicted
 from hsutil.path import Path
-from hsutil.str import format_size
+from hsutil.str import format_size, format_time, FT_MINUTES
 
 from . import app, sqlfs as sql
 
@@ -288,7 +288,7 @@ class MusicGuru(app.MusicGuru):
             location.name,
             location.get_stat('filecount'),
             format_size(location.get_stat('size'),2,3,False),
-            location.vol_type == VOLTYPE_CDROM,
+            location.is_removable,
             location.is_available,
             unicode(location.physical_path)
         ]
