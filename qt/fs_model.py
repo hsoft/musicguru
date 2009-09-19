@@ -29,13 +29,13 @@ class FSNode(TreeNode):
     def _getImageName(self):
         raise NotImplementedError()
     
-    def reset(self, with_subnodes=False):
+    def invalidate(self, with_subnodes=False):
         if with_subnodes:
             for node in self.subnodes:
-                node.reset(with_subnodes=True)
+                node.invalidate(with_subnodes=True)
         self._data = None
         self._imageName = None
-        self._subnodes = None
+        TreeNode.invalidate(self)
     
     @property
     def data(self):
@@ -95,8 +95,8 @@ class FolderNode(FSNode):
 class FSModel(TreeModel):
     HEADER = ['Name', 'Location', 'Songs', 'Size (MB)', 'Time']
     
-    def __init__(self, refdir):
-        self.refdir = refdir
+    def __init__(self, ref):
+        self.ref = ref
         TreeModel.__init__(self)
     
     def _createNode(self, ref, row):
@@ -106,7 +106,7 @@ class FSModel(TreeModel):
             return SongNode(self, None, ref, row)
     
     def _getChildren(self):
-        return self.refdir.dirs
+        return self.ref.dirs
     
     def columnCount(self, parent):
         return len(self.HEADER)
@@ -133,8 +133,8 @@ class FSModel(TreeModel):
     
     def refreshNode(self, node):
         if node is None:
-            self.reset()
+            self.invalidate()
             return
-        node.reset(with_subnodes=True)
+        node.invalidate(with_subnodes=True)
         self.emit(SIGNAL('layoutChanged()'))
     
