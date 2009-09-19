@@ -76,6 +76,10 @@ class MusicGuru(MusicGuruBase, QObject):
         
         self._startJob(JOB_MASS_RENAME, do)
     
+    def removeEmptyFolders(self):
+        MusicGuruBase.RemoveEmptyDirs(self)
+        self.emit(SIGNAL('boardChanged()'))
+    
     def removeLocation(self, location):
         self.board.RemoveLocation(location)
         location.delete()

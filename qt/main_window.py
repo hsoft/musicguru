@@ -28,6 +28,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
         self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
         self.connect(self.actionNewFolder, SIGNAL('triggered()'), self.newFolderTriggered)
+        self.connect(self.actionRemoveEmptyFolders, SIGNAL('triggered()'), self.removeEmptyFoldersTriggered)
         self.connect(self.actionMassRename, SIGNAL('triggered()'), self.massRenameTriggered)
         self.connect(self.actionSplit, SIGNAL('triggered()'), self.splitTriggered)
     
@@ -102,6 +103,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.browserView.setCurrentIndex(index)
                 self.browserView.edit(index)
                 break
+    
+    def removeEmptyFoldersTriggered(self):
+        self.app.removeEmptyFolders()
     
     def showDetailsTriggered(self):
         self.app.detailsPanel.show()
