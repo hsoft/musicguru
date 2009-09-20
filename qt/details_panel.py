@@ -9,13 +9,13 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QDialog, QTableWidgetItem
+from PyQt4.QtGui import QWidget, QTableWidgetItem
 
 from ui.details_panel_ui import Ui_DetailsPanel
 
-class DetailsPanel(QDialog, Ui_DetailsPanel):
+class DetailsPanel(QWidget, Ui_DetailsPanel):
     def __init__(self, app):
-        QDialog.__init__(self, None)
+        QWidget.__init__(self, None)
         self.app = app
         self._setupUi()
         

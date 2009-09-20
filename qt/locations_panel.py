@@ -11,7 +11,7 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QDialog, QHeaderView, QFileDialog, QMessageBox
+from PyQt4.QtGui import QWidget, QDialog, QHeaderView, QFileDialog, QMessageBox
 
 from hsutil.path import Path
 
@@ -20,9 +20,9 @@ from add_location_dialog import AddLocationDialog
 from ui.locations_panel_ui import Ui_LocationsPanel
 from locations_model import LocationsModel
 
-class LocationsPanel(QDialog, Ui_LocationsPanel):
+class LocationsPanel(QWidget, Ui_LocationsPanel):
     def __init__(self, app):
-        QDialog.__init__(self, None)
+        QWidget.__init__(self, None)
         self.app = app
         self.locationsModel = LocationsModel(self.app)
         self._setupUi()
