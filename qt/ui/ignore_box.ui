@@ -28,15 +28,21 @@
    </property>
    <item>
     <widget class="QTreeView" name="browserView">
+     <property name="acceptDrops">
+      <bool>true</bool>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::DragDrop</enum>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
      <property name="uniformRowHeights">
       <bool>true</bool>
      </property>
-     <attribute name="headerDefaultSectionSize">
-      <number>75</number>
-     </attribute>
-     <attribute name="headerStretchLastSection">
-      <bool>false</bool>
-     </attribute>
      <attribute name="headerDefaultSectionSize">
       <number>75</number>
      </attribute>

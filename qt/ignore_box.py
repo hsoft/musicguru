@@ -11,13 +11,12 @@
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QWidget, QHeaderView
 
-from fs_model import FSModel
+from fs_model import FSModel, IGNORE_BOX_NAME
 from ui.ignore_box_ui import Ui_IgnoreBox
 
 class IgnoreBoxModel(FSModel):
     def __init__(self, app):
-        FSModel.__init__(self, app.board.ignore_box)
-        self.app = app
+        FSModel.__init__(self, app, app.board.ignore_box, IGNORE_BOX_NAME)
         
         self.connect(self.app, SIGNAL('ignoreBoxChanged()'), self.ignoreBoxChanged)
     

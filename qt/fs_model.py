@@ -8,13 +8,19 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtCore import Qt, SIGNAL, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
+from hsfs.utils import smart_move
 from hsutil.conflict import is_conflicted
 from hsutil.misc import dedupe
+from hsutil.path import Path
 from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
+
+MIME_PATHS = 'application/musicguru.paths'
+DESIGN_BOARD_NAME = '<design board>'
+IGNORE_BOX_NAME = '<ignore box>'
 
 class FSNode(TreeNode):
     def __init__(self, model, parent, ref, row):
@@ -95,8 +101,10 @@ class FolderNode(FSNode):
 class FSModel(TreeModel):
     HEADER = ['Name', 'Location', 'Songs', 'Size (MB)', 'Time']
     
-    def __init__(self, ref):
+    def __init__(self, app, ref, name):
+        self.app = app
         self.ref = ref
+        self.name = name # the name is going to be the first item in the paths passed around in d&d
         TreeModel.__init__(self)
     
     def _createNode(self, ref, row):
@@ -125,11 +133,68 @@ class FSModel(TreeModel):
                 return node.data[index.column()]
         return None
     
+    def dropMimeData(self, mimeData, action, row, column, parentIndex):
+        # In the test I have made, the row and column args always seem to be -1/-1 except when
+        # parentIndex is invalid (which means that the drop destination is the root node).
+        def find_path(path):
+            if path[0] == DESIGN_BOARD_NAME:
+                return self.app.board.find_path(path[1:])
+            elif path[0] == IGNORE_BOX_NAME:
+                return self.app.board.ignore_box.find_path(path[1:])
+        
+        if not mimeData.hasFormat(MIME_PATHS):
+            return False
+        if parentIndex.isValid():
+            destNode = parentIndex.internalPointer()
+        else:
+            destNode = self
+        startLen = len(destNode.ref)
+        paths = unicode(mimeData.data(MIME_PATHS), 'utf-8').split('\n')
+        sourceItems = [find_path(Path(path)) for path in paths]
+        smart_move(sourceItems, destNode.ref, allow_merge=True)
+        lenDiff = len(destNode.ref) - startLen # it's possible not all sourceItems are moved
+        destNode.invalidate()
+        self.insertRows(0, lenDiff, parentIndex)
+        return True
+    
+    def flags(self, index):
+        if not index.isValid():
+            return Qt.ItemIsEnabled
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
+        if index.column() == 0:
+            flags |= Qt.ItemIsEditable
+        return flags
+    
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole and section < len(self.HEADER):
             return self.HEADER[section]
         
         return None
+    
+    def insertRows(self, row, count, parentIndex):
+        self.beginInsertRows(parentIndex, row, row + count - 1)
+        node = parentIndex.internalPointer() if parentIndex.isValid() else self
+        node.invalidate()
+        self.endInsertRows()
+        return True
+    
+    def mimeData(self, indexes):
+        nodes = dedupe(index.internalPointer() for index in indexes)
+        paths = [unicode(self.name + node.ref.path) for node in nodes]
+        data = '\n'.join(paths).encode('utf-8')
+        mimeData = QMimeData()
+        mimeData.setData(MIME_PATHS, QByteArray(data))
+        return mimeData
+    
+    def mimeTypes(self):
+        return [MIME_PATHS]
+    
+    def removeRows(self, row, count, parentIndex):
+        self.beginRemoveRows(parentIndex, row, row + count - 1)
+        node = parentIndex.internalPointer() if parentIndex.isValid() else self
+        node.invalidate()
+        self.endRemoveRows()
+        return True
     
     def refreshNode(self, node):
         if node is None:
@@ -137,4 +202,7 @@ class FSModel(TreeModel):
             return
         node.invalidate(with_subnodes=True)
         self.emit(SIGNAL('layoutChanged()'))
+    
+    def supportedDropActions(self):
+        return Qt.MoveAction
     
