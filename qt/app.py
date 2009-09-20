@@ -11,7 +11,7 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import SIGNAL, Qt, QObject
-from PyQt4.QtGui import QDesktopServices, QMessageBox
+from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication
 
 from hsfs.utils import smart_move
 from hsutil import job
@@ -52,7 +52,6 @@ class MusicGuru(MusicGuruBase, QObject):
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
     
     #--- Private
-    
     def _startJob(self, jobid, func):
         title = JOBID2TITLE[jobid]
         try:
@@ -102,6 +101,34 @@ class MusicGuru(MusicGuruBase, QObject):
     def selectBoardItems(self, items):
         self.selectedBoardItems = items
         self.emit(SIGNAL('boardSelectionChanged()'))
+    
+    def showDetailsPanel(self):
+        self.detailsPanel.show()
+        self.detailsPanel.activateWindow()
+    
+    def showIgnoreBox(self):
+        if not self.ignoreBox.isVisible():
+            desktop = QApplication.desktop()
+            w = self.mainWindow.width()
+            h = self.ignoreBox.height()
+            x = self.mainWindow.x()
+            y = min(self.mainWindow.y() + self.mainWindow.height(), desktop.height() - h)
+            self.ignoreBox.move(x, y)
+            self.ignoreBox.resize(w, h)
+        self.ignoreBox.show()
+        self.ignoreBox.activateWindow()
+    
+    def showLocationPanel(self):
+        if not self.locationsPanel.isVisible():
+            desktop = QApplication.desktop()
+            w = self.locationsPanel.width()
+            h = self.mainWindow.height()
+            x = min(self.mainWindow.x() + self.mainWindow.width(), desktop.width() - w)
+            y = self.mainWindow.y()
+            self.locationsPanel.move(x, y)
+            self.locationsPanel.resize(w, h)
+        self.locationsPanel.show()
+        self.locationsPanel.activateWindow()
     
     def split(self, model, capacity, grouping_level):
         def do(j):

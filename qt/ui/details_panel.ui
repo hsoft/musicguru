@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>332</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,9 @@
    </property>
    <item>
     <widget class="QTableWidget" name="tableWidget">
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
      <property name="showGrid">
       <bool>false</bool>
      </property>
@@ -32,15 +35,6 @@
       <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="horizontalHeaderVisible">
       <bool>false</bool>
      </attribute>
      <column/>

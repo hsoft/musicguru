@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import SIGNAL
+from PyQt4.QtCore import Qt, SIGNAL
 from PyQt4.QtGui import QWidget, QTableWidgetItem
 
 from ui.details_panel_ui import Ui_DetailsPanel
@@ -23,6 +23,7 @@ class DetailsPanel(QWidget, Ui_DetailsPanel):
     
     def _setupUi(self):
         self.setupUi(self)
+        self.setWindowFlags(Qt.Tool)
     
     #--- Private
     def _updateInfo(self):

@@ -134,13 +134,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.browserView.edit(index)
     
     def showDetailsTriggered(self):
-        self.app.detailsPanel.show()
+        self.app.showDetailsPanel()
     
     def showIgnoreBoxTriggered(self):
-        self.app.ignoreBox.show()
+        self.app.showIgnoreBox()
     
     def showLocationsTriggered(self):
-        self.app.locationsPanel.show()
+        self.app.showLocationPanel()
     
     def switchConflictAndOriginalTriggered(self):
         currentIndex = self.browserView.currentIndex()
