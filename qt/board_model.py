@@ -49,15 +49,6 @@ class BoardModel(FSModel):
             flags |= Qt.ItemIsEditable
         return flags
     
-    def insertFolder(self, parentNode):
-        if parentNode is not None:
-            parentNode.invalidate()
-            insertIndex = self.createIndex(0, 0, parentNode)
-        else:
-            self.invalidate()
-            insertIndex = QModelIndex()
-        self.emit(SIGNAL('rowsInserted(QModelIndex,int,int)'), insertIndex, 0, 0)
-    
     def insertRows(self, row, count, parentIndex):
         self.beginInsertRows(parentIndex, row, row + count - 1)
         node = parentIndex.internalPointer() if parentIndex.isValid() else self

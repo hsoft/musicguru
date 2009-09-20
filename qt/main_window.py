@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtCore import Qt, SIGNAL, QModelIndex
 from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog
 
 import mg_rc
@@ -106,14 +106,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.moveSelectedToIgnoreBox()
     
     def newFolderTriggered(self):
+        # We're not using browserView.currentIndex as a base index here because it's impossible
+        # for the user to set the currentIndex to "None" after a node has been selected (even if
+        # you deselect all nodes, the current index will stay on the last selected node).
         selectedIndexes = self.browserView.selectionModel().selectedRows()
-        nodes = [index.internalPointer() for index in selectedIndexes]
-        parent = nodes[0].ref if nodes else self.app.board
+        currentIndex = selectedIndexes[0] if selectedIndexes else QModelIndex()
+        parent = currentIndex.internalPointer().ref if currentIndex.isValid() else self.app.board
         newname = self.app.new_folder(parent)
-        parentNode = nodes[0] if nodes else None
-        self.boardModel.insertFolder(parentNode)
-        children = parentNode.subnodes if parentNode is not None else self.boardModel.subnodes
-        for node in children:
+        self.boardModel.insertRow(0, currentIndex)
+        parentNode = currentIndex.internalPointer() if currentIndex.isValid() else self.boardModel
+        for node in parentNode.subnodes:
             if node.ref.name == newname:
                 index = node.index
                 self.browserView.setCurrentIndex(index)
