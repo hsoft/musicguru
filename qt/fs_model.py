@@ -8,6 +8,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
+from __future__ import unicode_literals
+
 from PyQt4.QtCore import Qt, SIGNAL, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
@@ -28,6 +30,9 @@ class FSNode(TreeNode):
         self.ref = ref
         self._data = None
         self._imageName = None
+    
+    def __repr__(self):
+        return "<FSNode %s>" % self.ref.name
     
     def _getData(self):
         raise NotImplementedError()
@@ -98,6 +103,17 @@ class FolderNode(FSNode):
         return self.ref.dirs + self.ref.files
     
 
+class DummyNode(FSNode):
+    def _getData(self):
+        return [''] * 5
+    
+    def _getImageName(self):
+        return ''
+    
+    def _getChildren(self):
+        return []
+    
+
 class FSModel(TreeModel):
     HEADER = ['Name', 'Location', 'Songs', 'Size (MB)', 'Time']
     
@@ -106,6 +122,9 @@ class FSModel(TreeModel):
         self.ref = ref
         self.name = name # the name is going to be the first item in the paths passed around in d&d
         TreeModel.__init__(self)
+    
+    def _createDummyNode(self, parent, row):
+        return DummyNode(self, parent, None, row)
     
     def _createNode(self, ref, row):
         if ref.is_container:

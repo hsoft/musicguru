@@ -11,7 +11,7 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import SIGNAL, Qt, QObject
-from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication
+from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog
 
 from hsfs.utils import smart_move
 from hsutil import job
@@ -23,17 +23,20 @@ from main_window import MainWindow
 from locations_panel import LocationsPanel
 from details_panel import DetailsPanel
 from ignore_box import IgnoreBox
+from disk_needed_dialog import DiskNeededDialog
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
 JOB_MASS_RENAME = 'job_mass_rename'
 JOB_SPLIT = 'job_split'
+JOB_MATERIALIZE = 'job_materialize'
 
 JOBID2TITLE = {
     JOB_UPDATE: "Updating location",
     JOB_ADD: "Adding location",
     JOB_MASS_RENAME: "Renaming",
     JOB_SPLIT: "Splitting",
+    JOB_MATERIALIZE: "Materializing",
 }
 
 class MusicGuru(MusicGuruBase, QObject):
@@ -72,6 +75,23 @@ class MusicGuru(MusicGuruBase, QObject):
             return
         self._startJob(JOB_ADD, do)
     
+    def copyOrMove(self, copy):
+        def onNeedCd(location):
+            # We can't do anything GUI related in a separate thread with Qt. Since copy/move
+            # operations are performed asynchronously, the calls made to needCdDialog (created in
+            # the main thread) must also be made asynchronously.
+            return needCdDialog.askForDiskAsync(location.name)
+        
+        def do(j):
+            MusicGuruBase.CopyOrMove(self, copy, dirpath, j, onNeedCd)
+        
+        needCdDialog = DiskNeededDialog()
+        title = "Choose a destination"
+        flags = QFileDialog.ShowDirsOnly
+        dirpath = unicode(QFileDialog.getExistingDirectory(self.mainWindow, title, '', flags))
+        if dirpath:
+            self._startJob(JOB_MATERIALIZE, do)
+    
     def massRename(self, model, whitespace):
         def do(j):
             self.board.MassRename(model, whitespace, j)
@@ -97,6 +117,12 @@ class MusicGuru(MusicGuruBase, QObject):
         location.delete()
         self.emit(SIGNAL('locationsChanged()'))
         self.emit(SIGNAL('boardChanged()'))
+    
+    def renameInRespectiveLocations(self):
+        def do(j):
+            MusicGuruBase.RenameInRespectiveLocations(self, j)
+        
+        self._startJob(JOB_MATERIALIZE, do)
     
     def selectBoardItems(self, items):
         self.selectedBoardItems = items

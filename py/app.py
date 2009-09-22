@@ -222,6 +222,7 @@ class MusicGuru(RegistrableApplication):
         return True
     
     def RenameInRespectiveLocations(self,job):
+        #XXX Refactor: Return value isn't used in any gui port.
         for location in self.board.locations:
             if location.vol_type == VOLTYPE_CDROM:
                 return 1

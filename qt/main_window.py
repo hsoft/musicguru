@@ -38,6 +38,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionUndoSplit, SIGNAL('triggered()'), self.undoSplitTriggered)
         self.connect(self.actionMoveConflicts, SIGNAL('triggered()'), self.moveConflictsTriggered)
         self.connect(self.actionMoveConflictsAndOriginals, SIGNAL('triggered()'), self.moveConflictsAndOriginalsTriggered)
+        self.connect(self.actionRenameInRespectiveLocations, SIGNAL('triggered()'), self.renameInRespectiveLocationsTriggered)
+        self.connect(self.actionCopyToOtherLocation, SIGNAL('triggered()'), self.copyToOtherLocationTriggered)
+        self.connect(self.actionMoveToOtherLocation, SIGNAL('triggered()'), self.moveToOtherLocationTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -84,11 +87,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.toolBar.removeAction(self.actionMaterialize)
     
     #--- Actions
-    def splitTriggered(self):
-        dialog = SplitDialog(self.app)
-        result = dialog.exec_()
-        if result == QDialog.Accepted:
-            self.app.split(dialog.model, dialog.capacity, dialog.grouping_level)
+    def copyToOtherLocationTriggered(self):
+        self.app.copyOrMove(copy=True)
     
     def massRenameTriggered(self):
         dialog = MassRenameDialog(self.app)
@@ -104,6 +104,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def moveSelectedToIgnoreBoxTriggered(self):
         self.app.moveSelectedToIgnoreBox()
+    
+    def moveToOtherLocationTriggered(self):
+        self.app.copyOrMove(copy=False)
     
     def newFolderTriggered(self):
         # We're not using browserView.currentIndex as a base index here because it's impossible
@@ -125,6 +128,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def removeEmptyFoldersTriggered(self):
         self.app.removeEmptyFolders()
     
+    def renameInRespectiveLocationsTriggered(self):
+        self.app.renameInRespectiveLocations()
+    
     def renameSelectedTriggered(self):
         selectedIndexes = self.browserView.selectionModel().selectedRows()
         if not selectedIndexes:
@@ -141,6 +147,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showLocationsTriggered(self):
         self.app.showLocationPanel()
+    
+    def splitTriggered(self):
+        dialog = SplitDialog(self.app)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            self.app.split(dialog.model, dialog.capacity, dialog.grouping_level)
     
     def switchConflictAndOriginalTriggered(self):
         currentIndex = self.browserView.currentIndex()
