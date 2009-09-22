@@ -148,18 +148,25 @@ class FSModel(TreeModel):
             destNode = parentIndex.internalPointer()
         else:
             destNode = self
-        startLen = len(destNode.ref)
         paths = unicode(mimeData.data(MIME_PATHS), 'utf-8').split('\n')
-        sourceItems = [find_path(Path(path)) for path in paths]
+        sourceItems = set(find_path(Path(path)) for path in paths)
+        sourceItems = set(item for item in sourceItems if item.parent not in sourceItems | set([destNode.ref]))
+        if not sourceItems:
+            return False
         smart_move(sourceItems, destNode.ref, allow_merge=True)
-        lenDiff = len(destNode.ref) - startLen # it's possible not all sourceItems are moved
         destNode.invalidate()
-        self.insertRows(0, lenDiff, parentIndex)
+        # InsertRow calls have to be made at correct indexes or else the subsequent removeRows call
+        # will be made at incorrect indexes. To do so, we just go through every subitem of destNode.ref
+        # and if it's in sourceItems, we call insertRow. 
+        # destNode.subnodes
+        for index, node in enumerate(destNode.subnodes):
+            if node.ref in sourceItems:
+                self.insertRow(index, parentIndex)
         return True
     
     def flags(self, index):
         if not index.isValid():
-            return Qt.ItemIsEnabled
+            return Qt.ItemIsEnabled | Qt.ItemIsDropEnabled
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
         if index.column() == 0:
             flags |= Qt.ItemIsEditable
@@ -172,8 +179,8 @@ class FSModel(TreeModel):
         return None
     
     def insertRows(self, row, count, parentIndex):
-        self.beginInsertRows(parentIndex, row, row + count - 1)
         node = parentIndex.internalPointer() if parentIndex.isValid() else self
+        self.beginInsertRows(parentIndex, row, row + count - 1)
         node.invalidate()
         self.endInsertRows()
         return True
@@ -190,8 +197,8 @@ class FSModel(TreeModel):
         return [MIME_PATHS]
     
     def removeRows(self, row, count, parentIndex):
-        self.beginRemoveRows(parentIndex, row, row + count - 1)
         node = parentIndex.internalPointer() if parentIndex.isValid() else self
+        self.beginRemoveRows(parentIndex, row, row + count - 1)
         node.invalidate()
         self.endRemoveRows()
         return True
