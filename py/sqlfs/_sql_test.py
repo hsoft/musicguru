@@ -12,6 +12,8 @@ import os.path as op
 import time
 import weakref
 
+from nose.tools import eq_
+
 import hsfs as fs
 from hsfs import manual
 from hsutil.job import Job, JobCancelled
@@ -335,16 +337,14 @@ class TCUpdate_initial(TestCase):
         self.assertEqual(3,ref.callcount)
     
     def test_only_read_selected_sections(self):
-        def FakeReadAllInfo(instance,sections=None):
-            self.assertEqual(root._sections_to_read,sections)
+        def FakeReadAllInfo(instance, attrnames=None):
+            eq_(root._attrs_to_read, attrnames)
         
-        oldread = manual.File._read_all_info
-        manual.File._read_all_info = FakeReadAllInfo
+        self.mock(manual.File, '_read_all_info', FakeReadAllInfo)
         root = Root(threaded=False)
-        self.assert_(root._sections_to_read is None)
-        root._sections_to_read = 42
+        assert root._attrs_to_read is None
+        root._attrs_to_read = ['foo']
         root.update(getref())
-        manual.File._read_all_info = oldread
     
     def test_cancel(self):
         def callback(progress):

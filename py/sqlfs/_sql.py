@@ -195,7 +195,7 @@ class Directory(fs.Directory,Node):
                     except KeyError:
                         new = self.new_file(reffile.name, commit=False)
                     if (new.mtime == 0) or (reffile.mtime > new.mtime):
-                        reffile._read_all_info(self.root._sections_to_read)
+                        reffile._read_all_info(self.root._attrs_to_read)
                         new._set_attrs(reffile._info, False)
                         new._info = {}
             for refdir in ref.dirs:
@@ -223,7 +223,7 @@ class Root(Directory):
         else:
             self.con = sqlite.connect(dbname)
         self.id = 0
-        self._sections_to_read = None
+        self._attrs_to_read = None
         self._id_cache = WeakValueDictionary()
         self._id_cache[0] = self
         try:

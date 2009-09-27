@@ -127,7 +127,8 @@ class Root(sql.Root):
     
     def __init__(self, dbname=':memory:', dirname='', threaded=True):
         super(Root, self).__init__(dbname, dirname, threaded=threaded)
-        self._sections_to_read = (fs.IT_ATTRS, fs.IT_EXTRA)
+        self._attrs_to_read = ['size', 'ctime', 'mtime', 'duration', 'bitrate', 'samplerate', 'title', 
+            'artist', 'album', 'genre', 'year', 'track', 'comment']
     
     def add_volume(self, ref, volume_name, volume_type, job=nulljob):
         result = self.new_directory(volume_name)
