@@ -119,9 +119,10 @@ class Node(object):
 class File(fs.File, Node):
     """A SQL stored representation of a file.
     """
-    def _read_info(self, section):
-        super(File, self)._read_info(section)
-        self._info.update(self._get_attrs())
+    def _read_info(self, field):
+        super(File, self)._read_info(field)
+        for key, value in self._get_attrs().items():
+            setattr(self, key, value)
 
 class Directory(fs.Directory,Node):
     """A SQL stored representation of a directory.
@@ -196,8 +197,12 @@ class Directory(fs.Directory,Node):
                         new = self.new_file(reffile.name, commit=False)
                     if (new.mtime == 0) or (reffile.mtime > new.mtime):
                         reffile._read_all_info(self.root._attrs_to_read)
-                        new._set_attrs(reffile._info, False)
-                        new._info = {}
+                        attrs = {}
+                        for attrname in reffile.INITIAL_INFO:
+                            if attrname in reffile.__dict__:
+                                attrs[attrname] = getattr(reffile, attrname)
+                        new._set_attrs(attrs, False)
+                        new._invalidate_info()
             for refdir in ref.dirs:
                 try:
                     new = self[refdir.name]

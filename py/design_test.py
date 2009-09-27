@@ -95,8 +95,8 @@ class TCBoard(TestCase):
         self.assertEqual(1,len([s for s in self.board.allconflicts if s.original.parent_volume is self.board.locations[0]]))
         
     def test_mass_rename_case_insensitive(self):
-        self.board[0]._info['artist'] = 'foobar'
-        self.board[1]._info['artist'] = 'FOOBAR'
+        self.board[0].artist = 'foobar'
+        self.board[1].artist = 'FOOBAR'
         self.board.MassRename("parent_dir/%artist%/%title%",fs_utils.WS_SPACES_TO_UNDERSCORES)
         self.assertEqual(7,len(self.board.allfiles))
 

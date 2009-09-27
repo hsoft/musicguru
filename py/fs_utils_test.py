@@ -41,7 +41,8 @@ class TCGetNewName(TestCase):
         dir = manual.Directory(None,'foo')
         result = hsfs.music._File(dir,'bar.mp3')
         result._read_all_info()
-        result._info.update(attrs)
+        for key, value in attrs.items():
+            setattr(result, key, value)
         return result
 
     def MockGetNewName(self,file,model,whitespaces = WS_DONT_TOUCH):
@@ -123,7 +124,8 @@ class TCRestructureDirectory(TestCase):
     def Gen(self,attrs,parent,name):
         result = hsfs.music._File(parent,name + '.mp3')
         result._read_all_info()
-        result._info.update(attrs)
+        for key, value in attrs.items():
+            setattr(result, key, value)
         return result
     
     def test_main(self):
@@ -381,7 +383,7 @@ class TCSplit(TestCase):
                 seq += 1
             file = result.AddFile(filename)
             file._read_all_info()
-            file._info['size'] = spec[1]
+            file.size = spec[1]
         return result
     
     _one_byte = (None,1)
@@ -442,8 +444,8 @@ class TCSplit(TestCase):
     
     def test_invalid_model(self):
         ref = self.Gen([self._one_byte,self._one_byte])
-        ref[0]._info['artist'] = 'foobar_first'
-        ref[1]._info['artist'] = 'foobar_last'
+        ref[0].artist = 'foobar_first'
+        ref[1].artist = 'foobar_last'
         splitter = Split(ref,'CD %foobar% - %sequence:foobar:bleh% - %% - %artist% - %artist:foobar% - %artist:first:foobar% - %sequence%',2)
         self.assertEqual('CD (none) - (none) - (none) - (none) - (none) - (none) - 1',splitter[0].name)
     

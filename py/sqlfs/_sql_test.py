@@ -33,11 +33,11 @@ class FakeFile(manual.File):
         super(FakeFile,self)._read_all_info(sections)
         self.root.callcount += 1        
     
-    def _read_info(self,section):
-        if section == fs.IT_ATTRS:
-            self._info['mtime'] = 42
-        elif section == fs.IT_MD5:
-            self._info['md5'] = self.name
+    def _read_info(self, field):
+        if field == 'mtime':
+            self.mtime = 42
+        elif field == 'md5':
+            self.md5 = self.name
     
 
 def getref():
@@ -295,7 +295,7 @@ class TCUpdate_initial(TestCase):
         ref = getref()
         for f in ref.allfiles:
             f._read_all_info()
-            f._info['md5'] = f.name
+            f.md5 = f.name
         root.update(ref)
         self.assertEqual('file1',root['file1'].md5)
         self.assertEqual('file2',root['sub1']['file2'].md5)
@@ -308,7 +308,7 @@ class TCUpdate_initial(TestCase):
         ref = getref()
         for f in ref.allfiles:
             f._read_all_info()
-            f._info['md5'] = f.name
+            f.md5 = f.name
         root.update(ref)
         root.con.close()
         root = Root(dbpath, threaded=False)
@@ -321,11 +321,11 @@ class TCUpdate_initial(TestCase):
         ref = getref()
         for f in ref.allfiles:
             f._read_all_info()
-            f._info['md5'] = f.name
+            f.md5 = f.name
         root.update(ref)
-        ref['file1']._info['md5'] = 'changed'
-        ref['sub1']['file2']._info['md5'] = 'changed'
-        ref['sub1']['file2']._info['mtime'] = time.time() + 1
+        ref['file1'].md5 = 'changed'
+        ref['sub1']['file2'].md5 = 'changed'
+        ref['sub1']['file2'].mtime = time.time() + 1
         root.update(ref)
         self.assertEqual('file1',root['file1'].md5)
         self.assertEqual('changed',root['sub1']['file2'].md5)
@@ -396,8 +396,8 @@ class TCUpdate_subsequent(TestCase):
         root,ref = self.root,self.ref
         reffile = ref.new_file('file4')
         reffile.mtime #read info
-        reffile._info['mtime'] = 0
-        reffile._info['size'] = 42
+        reffile.mtime = 0
+        reffile.size = 42
         root.update(ref)
         self.assertEqual(2,root.filecount)
         file4 = root['file4']
