@@ -37,7 +37,7 @@ class MusicGuru(RegistrableApplication):
         self.appdata = appdata
         if not op.exists(self.appdata):
             os.makedirs(self.appdata)
-        self.collection = Root(op.join(appdata, 'music.db'), threaded=False)
+        self.collection = Root(op.join(appdata, 'music.db'))
         self.board = design.Board()
     
     def AddLocation(self, path, name, removeable, job):
