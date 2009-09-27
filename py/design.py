@@ -9,20 +9,19 @@
 
 import random
 
-import hsfs.manual
 from hsutil import job, conflict
 from hsutil.str import pluralize, format_size, format_time, FT_DECIMAL
 
-from . import fs_utils
+from . import fs_utils, manualfs
 
-class Board(hsfs.manual.AutoMerge):
-    cls_dir_class = hsfs.manual.AutoMerge
+class Board(manualfs.AutoMerge):
+    cls_dir_class = manualfs.AutoMerge
 
     def __init__(self):
         super(Board,self).__init__(None,'')
         self.case_sensitive = False
         self.__locations = []
-        self.ignore_box = hsfs.manual.AutoMerge(None,'')
+        self.ignore_box = manualfs.AutoMerge(None,'')
         self.media_capacity = 0
 
     #---Private
@@ -167,7 +166,7 @@ class MassRenamePanel(object):
             self.ChangeExample()
         if self.example is None:
             return ''
-        tmp = hsfs.manual.Directory(None,'')
+        tmp = manualfs.Directory(None,'')
         tmp.add_file_copy(self.example)
         renamed = fs_utils.RestructureDirectory(tmp,self.model,self.whitespace)
         file = renamed.allfiles[0]

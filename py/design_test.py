@@ -11,9 +11,9 @@ import os.path as op
 import os
 import random
 
-import hsfs.manual
+from nose.tools import eq_
 
-from . import fs_utils, design
+from . import fs_utils, manualfs, design
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
 from .testcase import TestCase
 
@@ -66,10 +66,10 @@ class TCBoard(TestCase):
     def test_is_auto_merge(self):
         #By testing that the board is an AutoMerge subclass, we are sure that the
         #board handles file name conflicts and automatically merge directories.
-        self.assert_(isinstance(self.board, hsfs.manual.AutoMerge))
+        assert isinstance(self.board, manualfs.AutoMerge)
 
     def test_auto_create_dir(self):
-        self.assertEqual(hsfs.manual.AutoMerge,type(self.board._create_sub_dir('foobar')))
+        eq_(manualfs.AutoMerge,type(self.board._create_sub_dir('foobar')))
 
     def test_case_insensitive(self):
         f1,f2 = self.board[:2]
@@ -225,7 +225,7 @@ class TCMassRenamePanel(TestCase):
 
 class TCSplittingPanel(TestCase):
     def setUp(self):
-        self.panel = design.SplittingPanel(hsfs.manual.Directory(None,''))
+        self.panel = design.SplittingPanel(manualfs.Directory(None,''))
 
     def test_default(self):
         self.assertEqual(0,self.panel.model_index)

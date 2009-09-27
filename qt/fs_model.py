@@ -13,12 +13,13 @@ from __future__ import unicode_literals
 from PyQt4.QtCore import Qt, SIGNAL, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
-from hsfs.utils import smart_move
 from hsutil.conflict import is_conflicted
 from hsutil.misc import dedupe
 from hsutil.path import Path
 from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
+
+from musicguru.fs_utils import smart_move
 
 MIME_PATHS = 'application/musicguru.paths'
 DESIGN_BOARD_NAME = '<design board>'

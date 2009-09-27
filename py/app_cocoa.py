@@ -18,13 +18,13 @@ import DiscRecordingUI
 
 import hsfs as fs
 from hsfs import phys
-from hsfs.utils import smart_move
 from hsutil import cocoa
 from hsutil.conflict import is_conflicted
 from hsutil.path import Path
 from hsutil.str import format_size, format_time, FT_MINUTES
 
 from . import app, sqlfs as sql
+from .fs_utils import smart_move
 
 (TAG_LOCATIONS,
 TAG_DETAILS,

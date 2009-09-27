@@ -15,7 +15,7 @@ import weakref
 from nose.tools import eq_
 
 import hsfs as fs
-from hsfs import manual
+from .. import manualfs
 from hsutil.job import Job, JobCancelled
 from hsutil.testcase import TestCase
 
@@ -28,9 +28,9 @@ INFO_SAMPLE = {
     'long': 42L
 }
 
-class FakeFile(manual.File):
-    def _read_all_info(self,sections = None):
-        super(FakeFile,self)._read_all_info(sections)
+class FakeFile(manualfs.File):
+    def _read_all_info(self, attrnames=None):
+        super(FakeFile, self)._read_all_info(attrnames)
         self.root.callcount += 1        
     
     def _read_info(self, field):
@@ -41,7 +41,7 @@ class FakeFile(manual.File):
     
 
 def getref():
-    ref = manual.Directory()
+    ref = manualfs.Directory()
     ref.cls_file_class = FakeFile
     ref.callcount = 0
     d1 = ref.new_directory('sub1')
@@ -124,7 +124,7 @@ class TCAttr_multiple(TestCase):
         f = root.new_file('foobar')
         f._set_attrs(INFO_SAMPLE)
         result = f._get_attrs()
-        self.assertEqual(INFO_SAMPLE,result)
+        self.assertEqual(INFO_SAMPLE, dict(result))
     
     def test_attrs_persistence(self):
         p = self.tmpdir()
@@ -136,7 +136,7 @@ class TCAttr_multiple(TestCase):
         root = Root(dbpath, threaded=False)
         f = root[0]
         result = f._get_attrs()
-        self.assertEqual(INFO_SAMPLE,result)
+        self.assertEqual(INFO_SAMPLE, dict(result))
     
     def test_set_attrs_twice(self):
         root = Root(threaded=False)
@@ -154,7 +154,7 @@ class TCAttr_multiple(TestCase):
         subdir = root.new_directory('foobar')
         subdir._set_attrs(INFO_SAMPLE)
         result = subdir._get_attrs()
-        self.assertEqual(INFO_SAMPLE,result)
+        self.assertEqual(INFO_SAMPLE, dict(result))
     
     def test_escaping(self):
         #Hey, this test nver failed because of my use of 'cur.executemany'
@@ -330,21 +330,13 @@ class TCUpdate_initial(TestCase):
         self.assertEqual('file1',root['file1'].md5)
         self.assertEqual('changed',root['sub1']['file2'].md5)
     
-    def test_calls_read_all_info(self):
-        root = Root(threaded=False)
-        ref = getref()
-        root.update(ref)
-        self.assertEqual(3,ref.callcount)
-    
-    def test_only_read_selected_sections(self):
-        def FakeReadAllInfo(instance, attrnames=None):
-            eq_(root._attrs_to_read, attrnames)
-        
-        self.mock(manual.File, '_read_all_info', FakeReadAllInfo)
+    def test_only_read_selected_attrs(self):
         root = Root(threaded=False)
         assert root._attrs_to_read is None
-        root._attrs_to_read = ['foo']
+        root._attrs_to_read = ['mtime']
         root.update(getref())
+        f = root.allfiles[0]
+        eq_(f.md5, '') # md5 has not been read
     
     def test_cancel(self):
         def callback(progress):
@@ -371,8 +363,8 @@ class TCUpdate_subsequent(TestCase):
             self.oldread(instance,sections)
         
         self.callcount = 0
-        self.oldread = manual.File._read_all_info
-        manual.File._read_all_info = FakeReadAllInfo
+        self.oldread = manualfs.File._read_all_info
+        manualfs.File._read_all_info = FakeReadAllInfo
         root = Root(threaded=False)
         ref = getref()
         root.update(ref)
@@ -380,15 +372,13 @@ class TCUpdate_subsequent(TestCase):
         self.ref = ref
         
     def tearDown(self):
-        manual.File._read_all_info = self.oldread
+        manualfs.File._read_all_info = self.oldread
     
     def test_files_were_added(self):
         root,ref = self.root,self.ref
         ref.new_file('file4')
         root.update(ref)
         self.assertEqual(2,root.filecount)
-        #In total, _read_all_info should only be called once for every file
-        self.assertEqual(4,self.callcount)
     
     def test_always_update_zero_mtime_nodes(self):
         #We always want attrs to be read when a sql file mtime is zero, event if the ref mtime

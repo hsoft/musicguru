@@ -13,11 +13,11 @@ from __future__ import unicode_literals
 from PyQt4.QtCore import SIGNAL, Qt, QObject
 from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog
 
-from hsfs.utils import smart_move
 from hsutil import job
 from qtlib.progress import Progress
 
 from musicguru.app import MusicGuru as MusicGuruBase
+from musicguru.fs_utils import smart_move
 
 from main_window import MainWindow
 from locations_panel import LocationsPanel

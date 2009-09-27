@@ -14,16 +14,39 @@ import shutil
 import tempfile
 
 import hsfs as fs
+from hsutil import conflict
 from hsutil.job import nulljob, JobCancelled, Job
 from hsutil.misc import tryint, dedupe
 from hsutil.path import Path
 from hsutil.str import multi_replace, FS_FORBIDDEN, rem_file_ext, process_tokens
 
 from .sqlfs.music import VOLTYPE_CDROM, MODE_TOKEN, MODE_NORMAL
+from .manualfs import AutoResolve
 
 (WS_DONT_TOUCH,
  WS_SPACES_TO_UNDERSCORES,
  WS_UNDERSCORES_TO_SPACES) = range(3)
+ 
+def smart_move(items, dest, allow_merge=True):
+    """move items into dest by taking care of name conflicts.
+    
+    It is assumed that every item has an assigned parent.
+    Don't include root items in items.
+    """
+    items = [item for item in items if item.parent not in items]
+    for item in [item for item in items if item not in dest]:
+        try:
+            item.move(dest)
+        except fs.AlreadyExistsError:
+            merged = False
+            if allow_merge:
+                dest_item = dest[item.name]
+                if dest_item.is_container and item.is_container:
+                    smart_move(item, dest_item, True)
+                    merged = True
+            if not merged:
+                item_name = conflict.get_unconflicted_name(item.name)
+                item.move(dest, conflict.get_conflicted_name(dest, item_name))
 
 def RestructureDirectory(directory, namingmodel, whitespaces=WS_DONT_TOUCH, case_sensitive=True, rename_empty_tag=True, parent_job=nulljob):
     def do_process(s, clean=True):
@@ -83,7 +106,7 @@ def RestructureDirectory(directory, namingmodel, whitespaces=WS_DONT_TOUCH, case
         'firstletter': handle_firstletter,
     }
     namingmodel = namingmodel.replace('\\', '/')
-    result = fs.manual.AutoResolve(None, '')
+    result = AutoResolve(None, '')
     if not case_sensitive:
         result.case_sensitive = False
     files = directory.allfiles
@@ -166,7 +189,7 @@ def Split(refdir, naming_model, max_bytes, grouping_level=0):
             for subdir in directory.dirs:
                 split_directory(subdir)
     
-    result = fs.manual.AutoResolve(None, '')
+    result = AutoResolve(None, '')
     result.new_directory('0').cumul_size = 0
     split_directory(refdir)
     rename_chunks()

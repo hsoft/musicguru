@@ -15,22 +15,123 @@ import weakref
 import gc
 import shutil
 
+from nose.tools import eq_
+
 import hsfs.music
-from hsfs import manual, phys
+from hsfs import phys
 from hsfs.tests.phys_test import create_fake_fs, create_unicode_test_dir
 from hsutil import job
 from hsutil.path import Path
 from hsutil.testcase import TestCase
 
+from . import manualfs
 from .fs_utils import *
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
 
-class TestDir(manual.Directory):
+class TestDir(manualfs.Directory):
     def AddDir(self,dirname):
         return TestDir(self,dirname)
 
     def AddFile(self,filename):
         return self._create_sub_file(filename)
+
+class SmartMove(TestCase):
+    def test_simple(self):
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        foobar_from = merge_from.AddFile('foobar_from')
+        foobar_into = merge_into.AddFile('foobar_into')
+        smart_move([foobar_from],merge_into)
+        eq_(2,len(merge_into))
+        eq_('foobar_into',merge_into[0].name)
+        eq_('foobar_from',merge_into[1].name)
+    
+    def test_conflict(self):
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        foobar_from = merge_from.AddFile('foobar')
+        foobar_into = merge_into.AddFile('foobar')
+        smart_move([foobar_from],merge_into)
+        eq_(2,len(merge_into))
+        eq_('foobar',merge_into[0].name)
+        eq_('[000] foobar',merge_into[1].name)
+    
+    def test_double_conflict(self):
+        # If a file named '[000] foobar' goes into a directory where there is already a '[000] foobar'
+        # file, the new name must be '[001] foobar', not '[000] [000] foobar'!
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        merge_from.AddFile('foobar')
+        merge_from.AddFile('[000] foobar')
+        merge_into.AddFile('foobar')
+        merge_into.AddFile('[000] foobar')
+        smart_move(merge_from.files,merge_into)
+        eq_(4,len(merge_into))
+        eq_('foobar',merge_into[0].name)
+        eq_('[000] foobar',merge_into[1].name)
+        eq_('[001] foobar',merge_into[2].name)
+        eq_('[002] foobar',merge_into[3].name)
+    
+    def test_dont_allow_merge(self):
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        foobar_from = merge_from.AddDir('foobar')
+        foobar_into = merge_into.AddDir('foobar')
+        foobar_from.AddFile('foobar')
+        foobar_into.AddFile('foobar')
+        smart_move(merge_from,merge_into,False)
+        eq_(2,len(merge_into))
+        eq_('foobar',merge_into[0].name)
+        eq_('[000] foobar',merge_into[1].name)
+        eq_('foobar',merge_into[0][0].name)
+        eq_('foobar',merge_into[1][0].name)
+    
+    def test_allow_merge(self):
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        foobar_from = merge_from.AddDir('foobar')
+        foobar_into = merge_into.AddDir('foobar')
+        foobar_from.AddFile('foobar')
+        foobar_into.AddFile('foobar')
+        smart_move(merge_from,merge_into,True)
+        eq_(1,len(merge_into))
+        eq_('foobar',merge_into[0].name)
+        eq_('foobar',merge_into[0][0].name)
+        eq_('[000] foobar',merge_into[0][1].name)
+        
+    def test_item_in_dest(self):
+        merge_from = TestDir(None,'merge_from')
+        foobar_from = merge_from.AddFile('foobar')
+        smart_move([foobar_from],merge_from)
+        eq_(1,len(merge_from))
+        eq_('foobar',merge_from[0].name)
+        
+    def test_merge_2nd_level(self):
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        foobar_from = merge_from.AddDir('foo').AddDir('bar')
+        foobar_into = merge_into.AddDir('foo').AddDir('bar')
+        foobar_from.AddFile('foobar')
+        foobar_into.AddFile('foobar')
+        smart_move(merge_from,merge_into,True)
+        eq_(1,len(merge_into))
+        eq_('foo',merge_into[0].name)
+        eq_(1,len(merge_into[0]))
+        eq_('bar',merge_into[0][0].name)
+        eq_(2,len(merge_into[0][0]))
+        eq_('foobar',merge_into[0][0][0].name)
+        eq_('[000] foobar',merge_into[0][0][1].name)
+
+    def test_dont_move_children(self):
+        # If items contain both an item and its parent, dont move the item (only the parent must be moved)
+        merge_from = TestDir(None,'merge_from')
+        merge_into = TestDir(None,'merge_into')
+        subdir = merge_from.AddDir('subdir')
+        subfile = subdir.AddFile('subfile')
+        smart_move([subdir, subfile], merge_into)
+        assert subfile not in merge_into
+        assert subfile in subdir
+    
 
 class TCGetNewName(TestCase):
     #The GetNewName functionnality has been moved to the RestructureView.
@@ -38,7 +139,7 @@ class TCGetNewName(TestCase):
     #is that I'll create an interface here that will call restructuredirectory
     #and return what GetNewName would have returned.
     def Gen(self,attrs):
-        dir = manual.Directory(None,'foo')
+        dir = manualfs.Directory(None, 'foo')
         result = hsfs.music._File(dir,'bar.mp3')
         result._read_all_info()
         for key, value in attrs.items():
@@ -46,7 +147,7 @@ class TCGetNewName(TestCase):
         return result
 
     def MockGetNewName(self,file,model,whitespaces = WS_DONT_TOUCH):
-        dir = manual.Directory(None,'foo')
+        dir = manualfs.Directory(None, 'foo')
         dir.add_child(file)
         result = RestructureDirectory(dir,model,whitespaces)
         myfile = result.allfiles[0]
@@ -129,7 +230,7 @@ class TCRestructureDirectory(TestCase):
         return result
     
     def test_main(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {
             'artist':'foo_artist',
             'album' :'foo_album',
@@ -148,7 +249,7 @@ class TCRestructureDirectory(TestCase):
         self.assertEqual('09 - foo_artist - foo_title.mp3',result[0][0][0].name)
     
     def test_conflict(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {
             'artist':'foo_artist',
             'album' :'foo_album',
@@ -169,7 +270,7 @@ class TCRestructureDirectory(TestCase):
         self.assertEqual('[000] 09 - foo_artist - foo_title.mp3',result[0][0][1].name)
     
     def test_slash_in_tokens(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {
             'artist':'foo/artist',
             'album' :'foo\\album',
@@ -188,98 +289,98 @@ class TCRestructureDirectory(TestCase):
         self.assertEqual('09 - foo artist - foo title.mp3',result[0][0][0].name)
     
     def test_groups(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist%')
         self.assertEqual('E-L.mp3',result[0].name)
     
     def test_groups_lower(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'zoo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emp:lower%')
         self.assertEqual('p-z.mp3',result[0].name)
     
     def test_groups_on_exact_step(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'roo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
         self.assertEqual('r-z.mp3',result[0].name)
     
     def test_groups_on_step_plus_one(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'soo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
         self.assertEqual('r-z.mp3',result[0].name)
     
     def test_groups_on_step_minus_one(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'qoo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
         self.assertEqual('m-q.mp3',result[0].name)
     
     def test_groups_genre(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'genre':'soo_genre',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:genre:emr:lower%')
         self.assertEqual('r-z.mp3',result[0].name)
     
     def test_groups_out_of_range(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'(oo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
         self.assertEqual('a-d.mp3',result[0].name)
     
     def test_groups_empty(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
         self.assertEqual('a-d.mp3',result[0].name)
     
     def test_firstletter_normal(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:artist%')
         self.assertEqual('F.mp3',result[0].name)
     
     def test_firstletter_album(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'album':'goo_album',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:album%')
         self.assertEqual('G.mp3',result[0].name)
     
     def test_firstletter_no_attr(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:album%')
         self.assertEqual('(none).mp3',result[0].name)
     
     def test_firstletter_empty_attr(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:artist%')
         self.assertEqual('(none).mp3',result[0].name)
     
     def test_firstletter_lower(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:artist:lower%')
         self.assertEqual('f.mp3',result[0].name)
     
     def test_forbidden_chars(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {
             'artist':'foo/\\artist',
             'album' :'foo:*album',
@@ -296,7 +397,7 @@ class TCRestructureDirectory(TestCase):
         self.assertEqual('foo  artist - foo  title.mp3',result[0][0][0].name)
     
     def test_weakref(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {
             'artist':'foo_artist',
             'album' :'foo_album',
@@ -307,7 +408,7 @@ class TCRestructureDirectory(TestCase):
             }
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%artist%/%album%/%track% - %artist% - %title%')
-        copy = manual.Directory(None,'')
+        copy = manualfs.Directory(None, '')
         copy.copy(result)
         w = weakref.ref(result)
         del result
@@ -316,7 +417,7 @@ class TCRestructureDirectory(TestCase):
         self.assert_(w() is None)
     
     def test_case_insensitive_option(self):
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist','title' :'t1'}
         file1 = self.Gen(attrs,dir,'foobar1')
         attrs = {'artist':'FOO_ARTIST','title' :'t2'}
@@ -326,7 +427,7 @@ class TCRestructureDirectory(TestCase):
         self.assertEqual(2,len(result.allfiles))
     
     def test_dont_rename_empty_tags(self):
-        dir = manual.Directory(None,'')
+        dir = manualfs.Directory(None, '')
         subdir = dir.new_directory('subdir')
         attrs = {
             'artist':'',
@@ -348,11 +449,11 @@ class TCRestructureDirectory(TestCase):
     def test_backslashes_are_counted_as_slashes(self):
         #What happened here is that models containing backslashes could make 
         #the result not to create a directory when it should.
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist','title' :'t1'}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%artist%\\%title%')
-        self.assert_(isinstance(result[0],manual.Directory))
+        assert isinstance(result[0], manualfs.Directory)
     
     def test_job(self):
         def do_progress(progress):
@@ -361,7 +462,7 @@ class TCRestructureDirectory(TestCase):
         
         self.progress = 0
         j = job.Job(1,do_progress)
-        dir = manual.Directory(None,'root')
+        dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist','title' :'t1'}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%artist%\\%title%',parent_job=j)
@@ -547,7 +648,7 @@ class TCSplit(TestCase):
     def test_file_that_is_higher_than_the_grouping_level(self):
         # if a file is in root of refdir when grouping level is 0, we want that
         # file at the root of its chunk in the splitted result.
-        ref = manual.Directory(None,'')
+        ref = manualfs.Directory(None, '')
         ref.new_file('foobar')
         splitted = Split(ref,'CD %sequence%',1,1)
         self.assertEqual('foobar',splitted[0][0].name)
@@ -563,7 +664,7 @@ class TCBatchOperation(TestCase):
         self.rootpath = self.tmpdir()
         self.testpath = create_fake_fs(self.rootpath)
         ref = phys.Directory(None, self.testpath)
-        copy = manual.Directory(None,'')
+        copy = manualfs.Directory(None, '')
         copy.copy(ref)
         self.ref = ref
         self.copy = copy
@@ -669,7 +770,7 @@ class TCBatchOperation(TestCase):
         dir.new_file('file1.test')
         dir.new_file('file2.test')
         dir.new_file('file3.test')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(('','foobar')))
         self.assertEqual(3,len(bo.name_list))
@@ -693,7 +794,7 @@ class TCBatchOperation(TestCase):
         dir.new_file('file1.test')
         dir.new_file('file2.test')
         dir.new_file('file3.test')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(copypath))
         bo.OnNeedCD = OnNeedCD
@@ -728,7 +829,7 @@ class TCBatchOperation(TestCase):
         dir.new_file('file1.test')
         dir.new_file('file2.test')
         dir.new_file('file3.test')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(copypath))
         bo.OnNeedCD = OnNeedCD
@@ -753,9 +854,9 @@ class TCBatchOperation(TestCase):
     def test_with_ioerror(self):
         #When not copying from CDs, operation throwing IOError should just
         #skip the operation and go to the next file.
-        fake_file = manual.File(self.copy,'fake_file')
-        fake_original_dir = manual.Directory(None,'')
-        fake_original_file = manual.File(fake_original_dir,'fake_file')
+        fake_file = manualfs.File(self.copy, 'fake_file')
+        fake_original_dir = manualfs.Directory(None,'')
+        fake_original_file = manualfs.File(fake_original_dir, 'fake_file')
         fake_file.copy(fake_original_file)
         bo = BatchOperation(self.copy,self.testpath)
         self.assert_(bo.copy())
@@ -778,7 +879,7 @@ class TCBatchOperation(TestCase):
         dir.new_file('file2.test')
         dir.new_file('file3.test')
         dir.new_file('fake')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(self.tmpdir()))
         self.need_cd_calls = 0
@@ -802,7 +903,7 @@ class TCBatchOperation(TestCase):
         dir.new_file('file1.test')
         dir.new_file('file2.test')
         dir.new_file('file3.test')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(self.tmpdir()))
         bo.OnNeedCD = OnNeedCD
@@ -821,7 +922,7 @@ class TCBatchOperation(TestCase):
         dir.new_file('file1.test')
         dir.new_file('file2.test')
         dir.new_file('file3.test')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(self.tmpdir()))
         bo.OnNeedCD = lambda location: self.rootpath
@@ -837,7 +938,7 @@ class TCBatchOperation(TestCase):
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
         volume.new_file('file1.test')
-        renamed = manual.Directory(None,'')
+        renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(self.tmpdir()))
         bo.OnNeedCD = OnNeedCD
@@ -892,7 +993,7 @@ class TCBatchOperation_unicode(TestCase):
         testpath = self.tmppath()
         create_unicode_test_dir(testpath)
         sourcedir = phys.Directory(None, unicode(testpath))
-        copy = manual.Directory(None, '')
+        copy = manualfs.Directory(None, '')
         copy.copy(sourcedir)
         destpath = Path(self.tmpdir())
         self.sourcedircopy = copy

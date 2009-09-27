@@ -15,11 +15,11 @@ from nose.tools import nottest
 
 import hsmedia.testcase
 from hsutil.testcase import TestCase
-from hsfs import manual
 from hsfs.phys import music
 from hsutil.path import Path
 from hsutil.job import Job, JobCancelled
 
+from .. import manualfs
 from .music import *
 
 class TCRoot_children(TestCase):
@@ -153,7 +153,7 @@ class TCFile_physical_path(TestCase):
 
 class TCadd_volume(TestCase):
     def _get_ref_dir(self):
-        ref = manual.Directory(None,'initial')
+        ref = manualfs.Directory(None,'initial')
         ref.new_directory('dir')
         ref.new_file('file')    
         return ref    
@@ -248,7 +248,7 @@ class TCJobs(TestCase):
     def test_Volume_Update(self):
         root = Root(threaded=False)
         v = root.new_directory('foo')
-        ref = manual.Directory(None,'')
+        ref = manualfs.Directory(None,'')
         ref.new_file('foo')
         v.update(ref,job=self.job)
         self.do_test_log()
@@ -264,7 +264,7 @@ class TCJobs(TestCase):
     
     def test_Root_add_volume(self):
         root = Root(threaded=False)
-        ref = manual.Directory(None,'')
+        ref = manualfs.Directory(None,'')
         ref.new_file('foo')
         root.add_volume(ref,'foo',1,job=self.job)
         self.do_test_log()

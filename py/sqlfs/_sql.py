@@ -77,10 +77,7 @@ class Node(object):
         result = {}
         sql = "select name,type,value from attrs where parent = ?"
         cur = self.con.execute(sql,(self.id,))
-        for key,value_type,value in cur:
-            result[key] = db_to_value(value_type,value)
-        return result
-        
+        return ((key, db_to_value(value_type, value)) for key, value_type, value in cur)
     
     def _set_attr(self, key, value, commit=True):
         sql = "insert or replace into attrs(parent,name,type,value) values(?,?,?,?)"
@@ -121,7 +118,7 @@ class File(fs.File, Node):
     """
     def _read_info(self, field):
         super(File, self)._read_info(field)
-        for key, value in self._get_attrs().items():
+        for key, value in self._get_attrs():
             setattr(self, key, value)
 
 class Directory(fs.Directory,Node):
@@ -196,11 +193,15 @@ class Directory(fs.Directory,Node):
                     except KeyError:
                         new = self.new_file(reffile.name, commit=False)
                     if (new.mtime == 0) or (reffile.mtime > new.mtime):
-                        reffile._read_all_info(self.root._attrs_to_read)
+                        attrnames = self.root._attrs_to_read
+                        if attrnames is None:
+                            attrnames = reffile.INITIAL_INFO.keys()
                         attrs = {}
-                        for attrname in reffile.INITIAL_INFO:
-                            if attrname in reffile.__dict__:
+                        for attrname in attrnames:
+                            try:
                                 attrs[attrname] = getattr(reffile, attrname)
+                            except AttributeError: # just ignore it
+                                pass
                         new._set_attrs(attrs, False)
                         new._invalidate_info()
             for refdir in ref.dirs:
