@@ -17,6 +17,7 @@ from hsutil import job
 from qtlib.app import Application as ApplicationBase
 from qtlib.about_box import AboutBox
 from qtlib.progress import Progress
+from qtlib.reg import Registration
 
 from musicguru.app import MusicGuru as MusicGuruBase
 from musicguru.fs_utils import smart_move
@@ -27,6 +28,7 @@ from details_panel import DetailsPanel
 from ignore_box import IgnoreBox
 from disk_needed_dialog import DiskNeededDialog
 from add_location_dialog import AddLocationDialog
+from preferences import Preferences
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
@@ -42,13 +44,26 @@ JOBID2TITLE = {
     JOB_MATERIALIZE: "Materializing",
 }
 
+def demo_check(method):
+    def wrapper(self, *args, **kwargs):
+        if not self.registered:
+            msg = "It's not possible to materialize your design in demo mode."
+            QMessageBox.information(self.mainWindow, "Demo Limitation", msg)
+        else:
+            return method(self, *args, **kwargs)
+    
+    return wrapper
+
 class MusicGuru(MusicGuruBase, ApplicationBase):
     LOGO_NAME = 'mg_logo'
+    DEMO_LIMIT_DESC = "In the demo version, it's not possible to materialize designs."
     
     def __init__(self):
         appdata = unicode(QDesktopServices.storageLocation(QDesktopServices.DataLocation))
         MusicGuruBase.__init__(self, appdata)
         ApplicationBase.__init__(self)
+        self.prefs = Preferences()
+        self.prefs.load()
         self.selectedBoardItems = []
         self.selectedLocation = None
         self.mainWindow = MainWindow(app=self)
@@ -103,6 +118,13 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         self.locationsPanel.move(x, y)
         self.locationsPanel.resize(w, h)
     
+    def _setup_as_registered(self):
+        self.prefs.registration_code = self.registration_code
+        self.prefs.registration_email = self.registration_email
+        self.mainWindow.actionRegister.setVisible(False)
+        self.aboutBox.registerButton.hide()
+        self.aboutBox.registeredEmailLabel.setText(self.prefs.registration_email)
+    
     def _startJob(self, jobid, func):
         title = JOBID2TITLE[jobid]
         try:
@@ -129,6 +151,11 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         if result == QDialog.Accepted:
             self.addLocation(dialog.locationPath, dialog.locationName, dialog.isLocationRemovable)
     
+    def askForRegCode(self):
+        if self.reg.ask_for_code():
+            self._setup_as_registered()
+    
+    @demo_check
     def copyOrMove(self, copy):
         def onNeedCd(location):
             # We can't do anything GUI related in a separate thread with Qt. Since copy/move
@@ -184,6 +211,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
             return
         self.removeLocation(location)
     
+    @demo_check
     def renameInRespectiveLocations(self):
         def do(j):
             MusicGuruBase.RenameInRespectiveLocations(self, j)
@@ -249,6 +277,10 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
     
     #--- Events
     def applicationFinishedLaunching(self):
+        self.reg = Registration(self)
+        self.set_registration(self.prefs.registration_code, self.prefs.registration_email)
+        if not self.registered:
+            self.reg.show_nag()
         self.mainWindow.show()
         self.showLocationPanel()
         self.showDetailsPanel()

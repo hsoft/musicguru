@@ -103,6 +103,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionShowHelp"/>
+    <addaction name="actionRegister"/>
     <addaction name="actionCheckForUpdate"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -283,6 +284,11 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionRegister">
+   <property name="text">
+    <string>Register musicGuru</string>
    </property>
   </action>
  </widget>

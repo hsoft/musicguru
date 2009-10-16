@@ -54,6 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionCopyToOtherLocation, SIGNAL('triggered()'), self.copyToOtherLocationTriggered)
         self.connect(self.actionMoveToOtherLocation, SIGNAL('triggered()'), self.moveToOtherLocationTriggered)
         self.connect(self.actionShowHelp, SIGNAL('triggered()'), self.showHelpTriggered)
+        self.connect(self.actionRegister, SIGNAL('triggered()'), self.registerTrigerred)
         self.connect(self.actionCheckForUpdate, SIGNAL('triggered()'), self.checkForUpdateTriggered)
         self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutTriggered)
     
@@ -175,6 +176,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.browserView.setCurrentIndex(index)
                 self.browserView.edit(index)
                 break
+    
+    def registerTrigerred(self):
+        self.app.askForRegCode()
     
     def removeEmptyFoldersTriggered(self):
         self.app.removeEmptyFolders()
