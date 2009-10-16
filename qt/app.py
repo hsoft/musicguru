@@ -11,7 +11,7 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import SIGNAL, Qt, QObject
-from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog
+from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog, QDialog
 
 from hsutil import job
 from qtlib.progress import Progress
@@ -24,6 +24,7 @@ from locations_panel import LocationsPanel
 from details_panel import DetailsPanel
 from ignore_box import IgnoreBox
 from disk_needed_dialog import DiskNeededDialog
+from add_location_dialog import AddLocationDialog
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
@@ -45,6 +46,7 @@ class MusicGuru(MusicGuruBase, QObject):
         MusicGuruBase.__init__(self, appdata)
         QObject.__init__(self)
         self.selectedBoardItems = []
+        self.selectedLocation = None
         self.mainWindow = MainWindow(app=self)
         self.locationsPanel = LocationsPanel(app=self)
         self.detailsPanel = DetailsPanel(app=self)
@@ -74,6 +76,12 @@ class MusicGuru(MusicGuruBase, QObject):
             QMessageBox.warning(self.mainWindow, "Add Location", error_msg)
             return
         self._startJob(JOB_ADD, do)
+    
+    def addLocationPrompt(self):
+        dialog = AddLocationDialog(self)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            self.addLocation(dialog.locationPath, dialog.locationName, dialog.isLocationRemovable)
     
     def copyOrMove(self, copy):
         def onNeedCd(location):
@@ -118,6 +126,18 @@ class MusicGuru(MusicGuruBase, QObject):
         self.emit(SIGNAL('locationsChanged()'))
         self.emit(SIGNAL('boardChanged()'))
     
+    def removeLocationPrompt(self):
+        location = self.selectedLocation
+        if location is None:
+            return
+        title = "Remove location"
+        msg = "Do you really want to remove location {0}?".format(location.name)
+        buttons = QMessageBox.Yes | QMessageBox.No
+        answer = QMessageBox.question(self.mainWindow, title, msg, buttons, QMessageBox.Yes)
+        if answer != QMessageBox.Yes:
+            return
+        self.removeLocation(location)
+    
     def renameInRespectiveLocations(self):
         def do(j):
             MusicGuruBase.RenameInRespectiveLocations(self, j)
@@ -127,6 +147,9 @@ class MusicGuru(MusicGuruBase, QObject):
     def selectBoardItems(self, items):
         self.selectedBoardItems = items
         self.emit(SIGNAL('boardSelectionChanged()'))
+    
+    def selectLocation(self, location):
+        self.selectedLocation = location
     
     def showDetailsPanel(self):
         self.detailsPanel.show()

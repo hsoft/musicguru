@@ -11,12 +11,11 @@
 from __future__ import unicode_literals
 
 from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QWidget, QDialog, QHeaderView, QFileDialog, QMessageBox
+from PyQt4.QtGui import QWidget, QHeaderView, QFileDialog
 
 from hsutil.path import Path
 
 import mg_rc
-from add_location_dialog import AddLocationDialog
 from ui.locations_panel_ui import Ui_LocationsPanel
 from locations_model import LocationsModel
 
@@ -63,10 +62,7 @@ class LocationsPanel(QWidget, Ui_LocationsPanel):
     
     #--- Events
     def addButtonClicked(self):
-        dialog = AddLocationDialog(self.app)
-        result = dialog.exec_()
-        if result == QDialog.Accepted:
-            self.app.addLocation(dialog.locationPath, dialog.locationName, dialog.isLocationRemovable)
+        self.app.addLocationPrompt()
     
     def changePathButtonClicked(self):
         location = self._selectedLocation()
@@ -82,17 +78,9 @@ class LocationsPanel(QWidget, Ui_LocationsPanel):
         self.app.updateLocation(location)
     
     def removeButtonClicked(self):
-        location = self._selectedLocation()
-        if location is None:
-            return
-        title = "Remove location"
-        msg = "Do you really want to remove location {0}?".format(location.name)
-        buttons = QMessageBox.Yes | QMessageBox.No
-        answer = QMessageBox.question(self, title, msg, buttons, QMessageBox.Yes)
-        if answer != QMessageBox.Yes:
-            return
-        self.app.removeLocation(location)
+        self.app.removeLocationPrompt()
     
     def selectionChanged(self, selected, deselected):
+        self.app.selectLocation(self._selectedLocation())
         self._updateLocationInfo()
     

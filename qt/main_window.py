@@ -34,6 +34,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
         self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
         self.connect(self.actionShowIgnoreBox, SIGNAL('triggered()'), self.showIgnoreBoxTriggered)
+        self.connect(self.actionAddLocation, SIGNAL('triggered()'), self.addLocationTriggered)
+        self.connect(self.actionRemoveLocation, SIGNAL('triggered()'), self.removeLocationTriggered)
+        self.connect(self.actionUpdateLocation, SIGNAL('triggered()'), self.updateLocationTriggered)
         self.connect(self.actionNewFolder, SIGNAL('triggered()'), self.newFolderTriggered)
         self.connect(self.actionRemoveEmptyFolders, SIGNAL('triggered()'), self.removeEmptyFoldersTriggered)
         self.connect(self.actionRenameSelected, SIGNAL('triggered()'), self.renameSelectedTriggered)
@@ -114,6 +117,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionUndoSplit.setEnabled(not boardEmpty and boardIsSplit)
     
     #--- Actions
+    def addLocationTriggered(self):
+        self.app.addLocationPrompt()
+    
     def copyToOtherLocationTriggered(self):
         self.app.copyOrMove(copy=True)
     
@@ -155,6 +161,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def removeEmptyFoldersTriggered(self):
         self.app.removeEmptyFolders()
     
+    def removeLocationTriggered(self):
+        self.app.removeLocationPrompt()
+    
     def renameInRespectiveLocationsTriggered(self):
         self.app.renameInRespectiveLocations()
     
@@ -193,6 +202,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def undoSplitTriggered(self):
         self.app.undoSplit()
+    
+    def updateLocationTriggered(self):
+        if self.app.selectedLocation is not None:
+            self.app.updateLocation(self.app.selectedLocation)
     
     #--- Events
     def boardChanged(self):
