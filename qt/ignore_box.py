@@ -32,6 +32,8 @@ class IgnoreBox(QWidget, Ui_IgnoreBox):
         self.boxModel = IgnoreBoxModel(app)
         self._setupUi()
         
+        self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
+        
     def _setupUi(self):
         self.setupUi(self)
         self.browserView.setModel(self.boxModel)
@@ -39,4 +41,11 @@ class IgnoreBox(QWidget, Ui_IgnoreBox):
         h.setResizeMode(QHeaderView.Fixed)
         h.resizeSection(1, 120)
         h.setResizeMode(0, QHeaderView.Stretch)
+    
+    #--- Events
+    def browserSelectionChanged(self, selected, deselected):
+        selectedIndexes = self.browserView.selectionModel().selectedRows()
+        nodes = [index.internalPointer() for index in selectedIndexes]
+        items = [node.ref for node in nodes]
+        self.app.selectBoardItems(items)
     
