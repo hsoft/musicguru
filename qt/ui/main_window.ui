@@ -64,6 +64,7 @@
     <addaction name="actionAddLocation"/>
     <addaction name="actionRemoveLocation"/>
     <addaction name="actionUpdateLocation"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuActions">
     <property name="title">
@@ -102,6 +103,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionShowHelp"/>
+    <addaction name="actionCheckForUpdate"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
@@ -271,6 +273,16 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionCheckForUpdate">
+   <property name="text">
+    <string>Check For Update</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
    </property>
   </action>
  </widget>

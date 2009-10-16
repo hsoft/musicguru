@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import Qt, SIGNAL, QModelIndex
+from PyQt4.QtCore import Qt, SIGNAL, QModelIndex, QProcess, QCoreApplication
 from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog
 
 from hsutil.conflict import is_conflicted
@@ -31,12 +31,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.app, SIGNAL('boardChanged()'), self.boardChanged)
         
         # Actions
+        self.connect(self.actionActions, SIGNAL('triggered()'), self.actionsTriggered)
+        self.connect(self.actionMaterialize, SIGNAL('triggered()'), self.materializeTriggered)
         self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
         self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
         self.connect(self.actionShowIgnoreBox, SIGNAL('triggered()'), self.showIgnoreBoxTriggered)
         self.connect(self.actionAddLocation, SIGNAL('triggered()'), self.addLocationTriggered)
         self.connect(self.actionRemoveLocation, SIGNAL('triggered()'), self.removeLocationTriggered)
         self.connect(self.actionUpdateLocation, SIGNAL('triggered()'), self.updateLocationTriggered)
+        self.connect(self.actionQuit, SIGNAL('triggered()'), QCoreApplication.instance().quit)
         self.connect(self.actionNewFolder, SIGNAL('triggered()'), self.newFolderTriggered)
         self.connect(self.actionRemoveEmptyFolders, SIGNAL('triggered()'), self.removeEmptyFoldersTriggered)
         self.connect(self.actionRenameSelected, SIGNAL('triggered()'), self.renameSelectedTriggered)
@@ -51,6 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionCopyToOtherLocation, SIGNAL('triggered()'), self.copyToOtherLocationTriggered)
         self.connect(self.actionMoveToOtherLocation, SIGNAL('triggered()'), self.moveToOtherLocationTriggered)
         self.connect(self.actionShowHelp, SIGNAL('triggered()'), self.showHelpTriggered)
+        self.connect(self.actionCheckForUpdate, SIGNAL('triggered()'), self.checkForUpdateTriggered)
         self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutTriggered)
     
     def _setupUi(self):
@@ -122,8 +126,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def aboutTriggered(self):
         self.app.showAboutBox()
     
+    def actionsTriggered(self):
+        self.actionsButton.showMenu()
+    
     def addLocationTriggered(self):
         self.app.addLocationPrompt()
+    
+    def checkForUpdateTriggered(self):
+        QProcess.execute('updater.exe', ['/checknow'])
     
     def copyToOtherLocationTriggered(self):
         self.app.copyOrMove(copy=True)
@@ -133,6 +143,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = dialog.exec_()
         if result == QDialog.Accepted:
             self.app.massRename(dialog.model, dialog.whitespace)
+    
+    def materializeTriggered(self):
+        self.materializeButton.showMenu()
     
     def moveConflictsTriggered(self):
         self.app.moveConflicts()
