@@ -10,10 +10,11 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import SIGNAL, Qt, QObject
+from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog, QDialog
 
 from hsutil import job
+from qtlib.app import Application as ApplicationBase
 from qtlib.progress import Progress
 
 from musicguru.app import MusicGuru as MusicGuruBase
@@ -33,18 +34,20 @@ JOB_SPLIT = 'job_split'
 JOB_MATERIALIZE = 'job_materialize'
 
 JOBID2TITLE = {
-    JOB_UPDATE: "Updating location",
+    JOB_UPDATE: "Updating location(s)",
     JOB_ADD: "Adding location",
     JOB_MASS_RENAME: "Renaming",
     JOB_SPLIT: "Splitting",
     JOB_MATERIALIZE: "Materializing",
 }
 
-class MusicGuru(MusicGuruBase, QObject):
+class MusicGuru(MusicGuruBase, ApplicationBase):
+    LOGO_NAME = 'mg_logo'
+    
     def __init__(self):
         appdata = unicode(QDesktopServices.storageLocation(QDesktopServices.DataLocation))
         MusicGuruBase.__init__(self, appdata)
-        QObject.__init__(self)
+        ApplicationBase.__init__(self)
         self.selectedBoardItems = []
         self.selectedLocation = None
         self.mainWindow = MainWindow(app=self)
@@ -52,9 +55,9 @@ class MusicGuru(MusicGuruBase, QObject):
         self.detailsPanel = DetailsPanel(app=self)
         self.ignoreBox = IgnoreBox(app=self)
         self.progress = Progress(self.mainWindow)
-        self.mainWindow.show()
         
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
+        self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
     
     #--- Private
     def _placeDetailsPanel(self):
@@ -223,6 +226,12 @@ class MusicGuru(MusicGuruBase, QObject):
         self.board.Unsplit()
         self.emit(SIGNAL('boardChanged()'))
     
+    def updateCollection(self):
+        def do(j):
+            self.collection.update_volumes(j)
+        
+        self._startJob(JOB_UPDATE, do)
+    
     def updateLocation(self, location):
         def do(j):
             location.update(None, j)
@@ -230,6 +239,12 @@ class MusicGuru(MusicGuruBase, QObject):
         self._startJob(JOB_UPDATE, do)
     
     #--- Events
+    def applicationFinishedLaunching(self):
+        self.mainWindow.show()
+        self.showLocationPanel()
+        self.showDetailsPanel()
+        self.updateCollection()
+    
     def jobFinished(self, jobid):
         if jobid in (JOB_UPDATE, JOB_ADD):
             self.emit(SIGNAL('locationsChanged()'))
