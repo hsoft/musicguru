@@ -11,6 +11,8 @@
 from PyQt4.QtCore import Qt, SIGNAL, QModelIndex
 from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog
 
+from hsutil.conflict import is_conflicted
+
 import mg_rc
 from board_model import BoardModel
 from mass_rename_dialog import MassRenameDialog
@@ -23,8 +25,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app = app
         self.boardModel = BoardModel(self.app)
         self._setupUi()
+        self._refreshActionsState()
         
         self.connect(self.browserView.selectionModel(), SIGNAL('selectionChanged(QItemSelection,QItemSelection)'), self.browserSelectionChanged)
+        self.connect(self.app, SIGNAL('boardChanged()'), self.boardChanged)
+        
+        # Actions
         self.connect(self.actionShowLocations, SIGNAL('triggered()'), self.showLocationsTriggered)
         self.connect(self.actionShowDetails, SIGNAL('triggered()'), self.showDetailsTriggered)
         self.connect(self.actionShowIgnoreBox, SIGNAL('triggered()'), self.showIgnoreBoxTriggered)
@@ -85,6 +91,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.materializeButton = button
         self.toolBar.insertWidget(self.actionMaterialize, button) # the action is a placeholder
         self.toolBar.removeAction(self.actionMaterialize)
+    
+    def _refreshActionsState(self):
+        boardEmpty = len(self.app.board) == 0
+        hasConflicts = len(self.app.board.allconflicts) > 0
+        hasSelection = len(self.app.selectedBoardItems) > 0
+        selectedIsConflicted = False
+        if hasSelection:
+            node = self.app.selectedBoardItems[0]
+            selectedIsConflicted = is_conflicted(node.name)
+        boardIsSplit = self.app.board.splitted
+        for action in [self.actionMassRename, self.actionNewFolder, self.actionRemoveEmptyFolders, 
+            self.actionRenameInRespectiveLocations, self.actionCopyToOtherLocation, 
+            self.actionMoveToOtherLocation]:
+            action.setEnabled(not boardEmpty)
+        self.actionMoveConflicts.setEnabled(not boardEmpty and hasConflicts)
+        self.actionMoveConflictsAndOriginals.setEnabled(not boardEmpty and hasConflicts)
+        self.actionSwitchConflictAndOriginal.setEnabled(not boardEmpty and selectedIsConflicted)
+        self.actionRenameSelected.setEnabled(not boardEmpty and hasSelection)
+        self.actionMoveSelectedToIgnoreBox.setEnabled(not boardEmpty and hasSelection)
+        self.actionSplit.setEnabled(not boardEmpty and not boardIsSplit)
+        self.actionUndoSplit.setEnabled(not boardEmpty and boardIsSplit)
     
     #--- Actions
     def copyToOtherLocationTriggered(self):
@@ -168,9 +195,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.app.undoSplit()
     
     #--- Events
+    def boardChanged(self):
+        self.app.selectBoardItems([])
+        self._refreshActionsState()
+    
     def browserSelectionChanged(self, selected, deselected):
         selectedIndexes = self.browserView.selectionModel().selectedRows()
         nodes = [index.internalPointer() for index in selectedIndexes]
         items = [node.ref for node in nodes]
         self.app.selectBoardItems(items)
+        self._refreshActionsState()
     

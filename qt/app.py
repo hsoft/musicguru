@@ -44,12 +44,12 @@ class MusicGuru(MusicGuruBase, QObject):
         appdata = unicode(QDesktopServices.storageLocation(QDesktopServices.DataLocation))
         MusicGuruBase.__init__(self, appdata)
         QObject.__init__(self)
+        self.selectedBoardItems = []
         self.mainWindow = MainWindow(app=self)
         self.locationsPanel = LocationsPanel(app=self)
         self.detailsPanel = DetailsPanel(app=self)
         self.ignoreBox = IgnoreBox(app=self)
         self.progress = Progress(self.mainWindow)
-        self.selectedBoardItems = []
         self.mainWindow.show()
         
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
