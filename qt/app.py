@@ -15,6 +15,7 @@ from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog
 
 from hsutil import job
 from qtlib.app import Application as ApplicationBase
+from qtlib.about_box import AboutBox
 from qtlib.progress import Progress
 
 from musicguru.app import MusicGuru as MusicGuruBase
@@ -55,6 +56,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         self.detailsPanel = DetailsPanel(app=self)
         self.ignoreBox = IgnoreBox(app=self)
         self.progress = Progress(self.mainWindow)
+        self.aboutBox = AboutBox(self.mainWindow, self)
         
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
@@ -195,11 +197,18 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
     def selectLocation(self, location):
         self.selectedLocation = location
     
+    def showAboutBox(self):
+        self.aboutBox.show()
+    
     def showDetailsPanel(self):
         self._placeLocationsPanel()
         self._placeDetailsPanel()
         self.detailsPanel.show()
         self.detailsPanel.activateWindow()
+    
+    def showHelp(self):
+        url = QUrl.fromLocalFile(op.abspath('help/intro.htm'))
+        QDesktopServices.openUrl(url)
     
     def showIgnoreBox(self):
         self._placeIgnoreBox()

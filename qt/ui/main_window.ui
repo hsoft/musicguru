@@ -97,10 +97,18 @@
     <addaction name="actionCopyToOtherLocation"/>
     <addaction name="actionMoveToOtherLocation"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionShowHelp"/>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuActions"/>
    <addaction name="menuMaterialize"/>
    <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -251,6 +259,19 @@
   <action name="actionMoveToOtherLocation">
    <property name="text">
     <string>Move to Other Location</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About musicGuru</string>
+   </property>
+  </action>
+  <action name="actionShowHelp">
+   <property name="text">
+    <string>musicGuru Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>

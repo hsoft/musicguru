@@ -50,6 +50,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionRenameInRespectiveLocations, SIGNAL('triggered()'), self.renameInRespectiveLocationsTriggered)
         self.connect(self.actionCopyToOtherLocation, SIGNAL('triggered()'), self.copyToOtherLocationTriggered)
         self.connect(self.actionMoveToOtherLocation, SIGNAL('triggered()'), self.moveToOtherLocationTriggered)
+        self.connect(self.actionShowHelp, SIGNAL('triggered()'), self.showHelpTriggered)
+        self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutTriggered)
     
     def _setupUi(self):
         self.setupUi(self)
@@ -117,6 +119,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionUndoSplit.setEnabled(not boardEmpty and boardIsSplit)
     
     #--- Actions
+    def aboutTriggered(self):
+        self.app.showAboutBox()
+    
     def addLocationTriggered(self):
         self.app.addLocationPrompt()
     
@@ -177,6 +182,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def showDetailsTriggered(self):
         self.app.showDetailsPanel()
+    
+    def showHelpTriggered(self):
+        self.app.showHelp()
     
     def showIgnoreBoxTriggered(self):
         self.app.showIgnoreBox()
