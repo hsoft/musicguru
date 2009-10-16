@@ -8,7 +8,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from PyQt4.QtCore import SIGNAL
+from PyQt4.QtCore import SIGNAL, Qt
 from PyQt4.QtGui import QWidget, QHeaderView
 
 from fs_model import FSModel, IGNORE_BOX_NAME
@@ -36,6 +36,7 @@ class IgnoreBox(QWidget, Ui_IgnoreBox):
         
     def _setupUi(self):
         self.setupUi(self)
+        self.setWindowFlags(Qt.Tool)
         self.browserView.setModel(self.boxModel)
         h = self.browserView.header()
         h.setResizeMode(QHeaderView.Fixed)

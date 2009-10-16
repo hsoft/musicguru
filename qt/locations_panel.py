@@ -10,7 +10,7 @@
 
 from __future__ import unicode_literals
 
-from PyQt4.QtCore import SIGNAL
+from PyQt4.QtCore import SIGNAL, Qt
 from PyQt4.QtGui import QWidget, QHeaderView, QFileDialog
 
 from hsutil.path import Path
@@ -34,6 +34,7 @@ class LocationsPanel(QWidget, Ui_LocationsPanel):
     
     def _setupUi(self):
         self.setupUi(self)
+        self.setWindowFlags(Qt.Tool)
         self.locationsView.setModel(self.locationsModel)
         h = self.locationsView.horizontalHeader()
         h.setResizeMode(QHeaderView.Fixed)
