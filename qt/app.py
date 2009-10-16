@@ -57,6 +57,47 @@ class MusicGuru(MusicGuruBase, QObject):
         self.connect(self.progress, SIGNAL('finished(QString)'), self.jobFinished)
     
     #--- Private
+    def _placeDetailsPanel(self):
+        # locations panel must be placed first
+        if self.detailsPanel.isVisible():
+            return
+        desktop = QApplication.desktop()
+        w = self.locationsPanel.width()
+        h = self.detailsPanel.height()
+        x = self.locationsPanel.x()
+        windowBottom = self.locationsPanel.frameGeometry().y() + self.locationsPanel.frameGeometry().height()
+        y = windowBottom
+        self.detailsPanel.move(x, y)
+        self.detailsPanel.resize(w, h)
+    
+    def _placeIgnoreBox(self):
+        if self.ignoreBox.isVisible():
+            return
+        desktop = QApplication.desktop()
+        windowWidth = self.mainWindow.frameGeometry().width()
+        frameWidth = self.ignoreBox.frameGeometry().width() - self.ignoreBox.width()
+        w = windowWidth - frameWidth
+        h = self.ignoreBox.height()
+        x = self.mainWindow.x()
+        windowBottom = self.mainWindow.frameGeometry().y() + self.mainWindow.frameGeometry().height()
+        y = min(windowBottom, desktop.height() - h)
+        self.ignoreBox.move(x, y)
+        self.ignoreBox.resize(w, h)
+    
+    def _placeLocationsPanel(self):
+        if self.locationsPanel.isVisible():
+            return
+        desktop = QApplication.desktop()
+        w = self.locationsPanel.width()
+        windowHeight = self.mainWindow.frameGeometry().height()
+        frameHeight = self.locationsPanel.frameGeometry().height() - self.locationsPanel.height()
+        h = windowHeight - frameHeight - self.detailsPanel.frameGeometry().height()
+        windowRight = self.mainWindow.frameGeometry().x() + self.mainWindow.frameGeometry().width()
+        x = min(windowRight, desktop.width() - w)
+        y = self.mainWindow.y()
+        self.locationsPanel.move(x, y)
+        self.locationsPanel.resize(w, h)
+    
     def _startJob(self, jobid, func):
         title = JOBID2TITLE[jobid]
         try:
@@ -152,30 +193,18 @@ class MusicGuru(MusicGuruBase, QObject):
         self.selectedLocation = location
     
     def showDetailsPanel(self):
+        self._placeLocationsPanel()
+        self._placeDetailsPanel()
         self.detailsPanel.show()
         self.detailsPanel.activateWindow()
     
     def showIgnoreBox(self):
-        if not self.ignoreBox.isVisible():
-            desktop = QApplication.desktop()
-            w = self.mainWindow.width()
-            h = self.ignoreBox.height()
-            x = self.mainWindow.x()
-            y = min(self.mainWindow.y() + self.mainWindow.height(), desktop.height() - h)
-            self.ignoreBox.move(x, y)
-            self.ignoreBox.resize(w, h)
+        self._placeIgnoreBox()
         self.ignoreBox.show()
         self.ignoreBox.activateWindow()
     
     def showLocationPanel(self):
-        if not self.locationsPanel.isVisible():
-            desktop = QApplication.desktop()
-            w = self.locationsPanel.width()
-            h = self.mainWindow.height()
-            x = min(self.mainWindow.x() + self.mainWindow.width(), desktop.width() - w)
-            y = self.mainWindow.y()
-            self.locationsPanel.move(x, y)
-            self.locationsPanel.resize(w, h)
+        self._placeLocationsPanel()
         self.locationsPanel.show()
         self.locationsPanel.activateWindow()
     
