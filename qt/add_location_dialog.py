@@ -57,7 +57,7 @@ class AddRemovableDriveGroupBox(QGroupBox, Ui_AddRemovableDriveGroupBox):
         
     def _updateDriveList(self):
         self._drives = platform.getDriveList()
-        names = [name for path, name in self._drives]
+        names = [name for path, name in self._drives if name]
         self.driveList.clear()
         self.driveList.addItems(names)
         if self._selectedDrive in self._drives:
