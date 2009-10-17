@@ -121,6 +121,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
     def _setup_as_registered(self):
         self.prefs.registration_code = self.registration_code
         self.prefs.registration_email = self.registration_email
+        self.prefs.save()
         self.mainWindow.actionRegister.setVisible(False)
         self.aboutBox.registerButton.hide()
         self.aboutBox.registeredEmailLabel.setText(self.prefs.registration_email)
