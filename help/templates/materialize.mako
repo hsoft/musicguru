@@ -21,7 +21,7 @@ Copy songs in a single location
 
 This is quite like **Move renamed songs in one location**, except that **everything** is copied instead of moved, not just the removable medias.
 
-Record songs to CD/DVD
+Record songs to CD/DVD (OS X only)
 -----
 
 This will record your design board into CDs or DVDs. You **must** have used the **Split into CD/DVD** feature to use this option. The first screen after clicking **Next** is a screen giving 2 options, as well as a summary of the to-be-recorded CDs. The first option is **Add recorded Cds to your collection**. If you select it, there will be one location created in your musicGuru database for each CD recorded. The second option is **Recorded CDs overwrite any location with the same name**. musicGuru can't have 2 location with the same name. Thus, if you select this option and one of the recorded CDs have the same name as an existing location, the new location from the recorded CD will overwrite the old one. If you don't select the option, no new location will be added if there is a conflict.

@@ -1,8 +1,11 @@
-- date: 2008-11-08
-  description: "<ul>\n\t\t\t\t\t\t<li><b>Added</b> support for AIFF files.</li>\n\t\
-    \t\t\t\t\t<li><b>Improved</b> MPEG files duration detection.</li>\n\t\t      \
-    \      </ul>"
+- date: 2009-10-17
   version: 1.3.5
+  description: "Windows version ported to Qt."
+- date: 2008-11-08
+  version: 1.3.5
+  description: |
+    * **Added** support for AIFF files.
+    * **Improved** MPEG files duration detection.
 - date: 2008-01-16
   description: "<ul>\n\t\t\t\t\t\t<li><b>Improved</b> the Mass Rename panel. The custom\
     \ model is now remembered between runs.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> an\
