@@ -34,14 +34,18 @@ JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
 JOB_MASS_RENAME = 'job_mass_rename'
 JOB_SPLIT = 'job_split'
-JOB_MATERIALIZE = 'job_materialize'
+JOB_MATERIALIZE_RENAME = 'job_materialize_rename'
+JOB_MATERIALIZE_COPY = 'job_materialize_copy'
+JOB_MATERIALIZE_MOVE = 'job_materialize_move'
 
 JOBID2TITLE = {
     JOB_UPDATE: "Updating location(s)",
     JOB_ADD: "Adding location",
     JOB_MASS_RENAME: "Renaming",
     JOB_SPLIT: "Splitting",
-    JOB_MATERIALIZE: "Materializing",
+    JOB_MATERIALIZE_RENAME: "Renaming",
+    JOB_MATERIALIZE_COPY: "Copying",
+    JOB_MATERIALIZE_MOVE: "Moving",
 }
 
 def demo_check(method):
@@ -172,7 +176,8 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         flags = QFileDialog.ShowDirsOnly
         dirpath = unicode(QFileDialog.getExistingDirectory(self.mainWindow, title, '', flags))
         if dirpath:
-            self._startJob(JOB_MATERIALIZE, do)
+            jobid = JOB_MATERIALIZE_COPY if copy else JOB_MATERIALIZE_MOVE
+            self._startJob(jobid, do)
     
     def massRename(self, model, whitespace):
         def do(j):
@@ -217,7 +222,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         def do(j):
             MusicGuruBase.RenameInRespectiveLocations(self, j)
         
-        self._startJob(JOB_MATERIALIZE, do)
+        self._startJob(JOB_MATERIALIZE_RENAME, do)
     
     def selectBoardItems(self, items):
         self.selectedBoardItems = items
@@ -292,4 +297,9 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
             self.emit(SIGNAL('locationsChanged()'))
         if jobid in (JOB_MASS_RENAME, JOB_SPLIT):
             self.emit(SIGNAL('boardChanged()'))
+        if jobid in (JOB_MATERIALIZE_RENAME, JOB_MATERIALIZE_MOVE):
+            self.board.Empty()
+            self.emit(SIGNAL('locationsChanged()'))
+            self.emit(SIGNAL('boardChanged()'))
+            self.emit(SIGNAL('ignoreBoxChanged()'))
     
