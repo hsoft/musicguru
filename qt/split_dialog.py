@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QDialog
 
-from musicguru.design import SplittingPanel
+from core.design import SplittingPanel
 
 from ui.split_dialog_ui import Ui_SplitDialog
 

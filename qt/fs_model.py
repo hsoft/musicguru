@@ -19,7 +19,7 @@ from hsutil.path import Path
 from hsutil.str import format_size, format_time, FT_MINUTES
 from qtlib.tree_model import TreeNode, TreeModel
 
-from musicguru.fs_utils import smart_move
+from core.fs_utils import smart_move
 
 MIME_PATHS = 'application/musicguru.paths'
 DESIGN_BOARD_NAME = '<design board>'

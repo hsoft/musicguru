@@ -21,8 +21,8 @@ from qtlib.about_box import AboutBox
 from qtlib.progress import Progress
 from qtlib.reg import Registration
 
-from musicguru.app import MusicGuru as MusicGuruBase
-from musicguru.fs_utils import smart_move
+from core.app import MusicGuru as MusicGuruBase
+from core.fs_utils import smart_move
 
 from main_window import MainWindow
 from locations_panel import LocationsPanel

@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QDialog
 
-from musicguru.design import MassRenamePanel
+from core.design import MassRenamePanel
 
 from ui.mass_rename_dialog_ui import Ui_MassRenameDialog
 
