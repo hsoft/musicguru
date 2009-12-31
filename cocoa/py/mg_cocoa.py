@@ -12,12 +12,12 @@ from AppKit import *
 
 from hsutil import job
 
-from musicguru import app_cocoa, design
+from core import app_cocoa, design
 
 # Fix py2app imports which chokes on relative imports
-from musicguru import app, fs_utils, sqlfs
-from musicguru.sqlfs import _sql, music, strings, utils
-from hsfs import auto, manual, stats, tree, utils, music
+from core import app, fs_utils, sqlfs
+from core.sqlfs import _sql, music, strings, utils
+from hsfs import auto, stats, tree, music
 from hsfs.phys import music
 from hsmedia import aiff, flac, genres, id3v1, id3v2, mp4, mpeg, ogg, wma
 
