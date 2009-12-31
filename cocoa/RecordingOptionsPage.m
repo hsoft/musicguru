@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import "RecordingOptionsPage.h"
 #import "PyMusicGuru.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/Utils.h"
 
 @implementation RecordingOptionsPage
 - (id)init

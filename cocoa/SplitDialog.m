@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "SplitDialog.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/Utils.h"
 
 @implementation SplitDialog
 - (id)initWithPySplitPanel:(PySplitPanel *)aPy

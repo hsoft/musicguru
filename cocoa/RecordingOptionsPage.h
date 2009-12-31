@@ -8,7 +8,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 #import <Cocoa/Cocoa.h>
 #import "Wizard.h"
-#import "cocoalib/Table.h"
+#import "../cocoalib/Table.h"
 
 @interface RecordingOptionsPage : WizPage
 {

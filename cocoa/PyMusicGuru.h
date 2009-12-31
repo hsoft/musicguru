@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "cocoalib/PyApp.h"
+#import "../cocoalib/PyApp.h"
 
 @interface PyMassRenamePanel : NSObject
 - (void)changeExampleSong;

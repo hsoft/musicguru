@@ -7,9 +7,9 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MaterializeWizard.h"
-#import "cocoalib/Dialogs.h"
-#import "cocoalib/Utils.h"
-#import "cocoalib/RegistrationInterface.h"
+#import "../cocoalib/Dialogs.h"
+#import "../cocoalib/Utils.h"
+#import "../cocoalib/RegistrationInterface.h"
 #import "DiskNeededPanel.h"
 #import "Consts.h"
 

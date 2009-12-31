@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "Wizard.h"
-#import "cocoalib/Dialogs.h"
+#import "../cocoalib/Dialogs.h"
 
 @implementation WizPage
 - (id)init

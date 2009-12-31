@@ -6,9 +6,9 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import "cocoalib/Dialogs.h"
-#import "cocoalib/ProgressController.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/Dialogs.h"
+#import "../cocoalib/ProgressController.h"
+#import "../cocoalib/Utils.h"
 #import "AppDelegate.h"
 #import "MassRenameDialog.h"
 #import "SplitDialog.h"

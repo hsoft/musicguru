@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "MaterializeChoicePage.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/Utils.h"
 #import "PyMusicGuru.h"
 
 @implementation MaterializeChoicePage

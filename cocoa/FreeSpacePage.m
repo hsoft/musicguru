@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "FreeSpacePage.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/Utils.h"
 
 @implementation FreeSpacePage
 - (id)init

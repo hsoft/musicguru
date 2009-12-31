@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "cocoalib/Table.h"
+#import "../cocoalib/Table.h"
 #import "AddLocationWindow.h"
 #import "PyMusicGuru.h"
 

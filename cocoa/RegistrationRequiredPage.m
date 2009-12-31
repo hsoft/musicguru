@@ -7,8 +7,8 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "RegistrationRequiredPage.h"
-#import "cocoalib/RegistrationInterface.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/RegistrationInterface.h"
+#import "../cocoalib/Utils.h"
 #import "Consts.h"
 
 @implementation RegistrationRequiredPage

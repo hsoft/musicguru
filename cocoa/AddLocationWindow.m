@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "AddLocationWindow.h"
-#import "cocoalib/Dialogs.h"
+#import "../cocoalib/Dialogs.h"
 
 @implementation AddLocationWindow
 

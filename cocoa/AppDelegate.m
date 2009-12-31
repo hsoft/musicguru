@@ -7,10 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "AppDelegate.h"
-#import "cocoalib/ProgressController.h"
-#import "cocoalib/RegistrationInterface.h"
-#import "cocoalib/Dialogs.h"
-#import "cocoalib/Utils.h"
+#import "../cocoalib/ProgressController.h"
+#import "../cocoalib/RegistrationInterface.h"
+#import "../cocoalib/Dialogs.h"
+#import "../cocoalib/Utils.h"
 #import "Consts.h"
 
 @implementation AppDelegate
