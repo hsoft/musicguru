@@ -3,11 +3,13 @@ syntax: glob
 *.pyc
 .DS_Store
 *.tm_build_errors
+*.mode1v3
+*.pbxuser
+build
 conf.yaml
 cocoa/Info.plist
 cocoa/build
-cocoa/py/build
-cocoa/py/dist
+cocoa/mg_cocoa.plugin
 qt/*_rc.py
 qt/ui/*_ui.py
 help/musicguru_help
