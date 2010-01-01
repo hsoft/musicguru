@@ -159,7 +159,7 @@
 		CE5E602409CD8EAB0024A9E6 /* PyMusicGuru.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = PyMusicGuru.h; sourceTree = "<group>"; };
 		CE79F7BF0986839000CD4AB7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CE79F7C00986839000CD4AB7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mg_cocoa.plugin; path = py/dist/mg_cocoa.plugin; sourceTree = "<group>"; };
+		CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mg_cocoa.plugin; sourceTree = "<group>"; };
 		CE86506209CEEDE900F40C01 /* musicguru.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = musicguru.icns; sourceTree = SOURCE_ROOT; };
 		CE90AF2209D083D7005185D9 /* music_note_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = music_note_32.png; path = ../images/music_note_32.png; sourceTree = SOURCE_ROOT; };
 		CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
