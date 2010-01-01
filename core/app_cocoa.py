@@ -12,14 +12,13 @@ import os.path as op
 from threading import Thread
 import tempfile
 
-from AppKit import *
 import DiscRecording
 import DiscRecordingUI
 
 import hsfs as fs
-from hsfs import phys
 from hsutil import cocoa
 from hsutil.conflict import is_conflicted
+from hsutil.misc import cond, dedupe
 from hsutil.path import Path
 from hsutil.str import format_size, format_time, FT_MINUTES
 

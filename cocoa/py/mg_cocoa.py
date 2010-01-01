@@ -8,7 +8,6 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import sys
-print sys.path
 import objc
 from AppKit import *
 
