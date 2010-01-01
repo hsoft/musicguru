@@ -156,7 +156,8 @@ http://www.hardcoded.net/licenses/bsd_license
     [self setBuffer:nil];
     if (_children == nil)
         return; // nothing cached
-    [_children release];
+    // autorelease prevent crashes in some cases.
+    [_children autorelease];
     _children = nil;
     _maxLevel = -1;
 }

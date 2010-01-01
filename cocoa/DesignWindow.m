@@ -314,15 +314,14 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
 {
     [[aNotification object] removeFromSuperview];
     NSString *oldName = [[_editedNode buffer] objectAtIndex:0];
-    NSString *newName = [py renameNode:[Utils indexPath2Array:[_editedNode indexPath]] to:[[aNotification object] stringValue]];
+    NSString *newName = [py renameNode:p2a([_editedNode indexPath]) to:[[aNotification object] stringValue]];
     if (![newName isEqual:oldName])
     {
-        if ([_editedNode parent])
-            [browserOutline reloadItem:[_editedNode parent] reloadChildren:YES];
-        else
-            [browserOutline reloadData];
+        [browserOutline reloadData];
         _editedNode = [browserOutline findNodeWithName:newName inParentNode:[_editedNode parent]];
-        [browserOutline selectRowIndexes:[NSIndexSet indexSetWithIndex:[browserOutline rowForItem:_editedNode]] byExtendingSelection:NO];
+        int newRow = [browserOutline rowForItem:_editedNode];
+        [browserOutline selectRowIndexes:[NSIndexSet indexSetWithIndex:newRow] byExtendingSelection:NO];
+        [browserOutline scrollRowToVisible:newRow];
         [self refreshStats];
     }
     [[self window] makeFirstResponder:browserOutline];
