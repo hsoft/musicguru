@@ -23,6 +23,6 @@ if __name__ == "__main__":
     app.setWindowIcon(QIcon(QPixmap(":/mg_logo")))
     QCoreApplication.setOrganizationName('Hardcoded Software')
     QCoreApplication.setApplicationName('musicGuru')
-    QCoreApplication.setApplicationVersion('1.3.5')
+    QCoreApplication.setApplicationVersion(MusicGuru.VERSION)
     mgapp = MusicGuru()
     sys.exit(app.exec_())
