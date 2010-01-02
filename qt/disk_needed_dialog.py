@@ -33,7 +33,8 @@ class DiskNeededDialog(QDialog, Ui_DiskNeededDialog):
     
     def _updateDriveList(self):
         self._drives = platform.getDriveList()
-        names = [name for path, name in self._drives]
+        # Sometimes, name is None, so we have to fallback to path
+        names = [(name if name else path) for path, name in self._drives]
         self.driveList.clear()
         self.driveList.addItems(names)
         if self._selectedDrive in self._drives:
