@@ -38,7 +38,7 @@ def main():
         if not dev:
             print "Building help index"
             help_path = op.abspath('help/musicguru_help')
-            os.system('open /Developer/Applications/Utilities/Help\\ Indexer.app --args {0}'.format(help_path))
+            os.system('open -a /Developer/Applications/Utilities/Help\\ Indexer.app {0}'.format(help_path))
         
         print "Building mg_cocoa.plugin"
         if op.exists('build'):
