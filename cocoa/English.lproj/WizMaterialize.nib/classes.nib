@@ -1,0 +1,89 @@
+{
+    IBClasses = (
+        {CLASS = DraggingOutlineView; LANGUAGE = ObjC; SUPERCLASS = NSOutlineView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {evaluateFreeSpace = id; }; 
+            CLASS = FreeSpacePage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                freeSpaceImage = NSButton; 
+                freeSpaceLabel = NSTextField; 
+                messageLabel = NSTextField; 
+                minimumLabel = NSTextField; 
+                recommendedLabel = NSTextField; 
+            }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = InsertBlankDiskPage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {messageLabel = NSTextField; }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            ACTIONS = {choosePath = id; locationSwitchChange = id; }; 
+            CLASS = LocationChoicePage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                locationSelector = NSComboBox; 
+                newLocationSwitch = NSButton; 
+                newNameText = NSTextField; 
+                newPathText = NSTextField; 
+                pathChooseButton = NSButton; 
+            }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = MaterializeChoicePage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {typeSelector = NSMatrix; }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = MaterializeWizard; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                freeSpacePage = FreeSpacePage; 
+                insertBlankDiskPage = InsertBlankDiskPage; 
+                materializeChoicePage = MaterializeChoicePage; 
+                pathChoicePage = PathChoicePage; 
+                recordingOptionsPage = RecordingOptionsPage; 
+                registrationRequiredPage = RegistrationRequiredPage; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {choosePath = id; }; 
+            CLASS = PathChoicePage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {pathText = NSTextField; }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = RecordingOptionsPage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {addRecordedSwitch = NSButton; cdTable = NSTableView; }; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            ACTIONS = {buyNow = id; enterCode = id; }; 
+            CLASS = RegistrationRequiredPage; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = WizPage; 
+        }, 
+        {
+            CLASS = TableView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {py = PyApp; }; 
+            SUPERCLASS = NSTableView; 
+        }, 
+        {
+            CLASS = WizPage; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {page = NSView; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

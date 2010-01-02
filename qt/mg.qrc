@@ -1,0 +1,15 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file alias="mg_logo">../images/mg_logo.ico</file>
+    <file alias="mg_logo_big">../images/mg_logo_big.png</file>
+    <file alias="locations">../images/locations_32.png</file>
+    <file alias="details">../images/info_32.png</file>
+    <file alias="ignore_box">../images/ignore_box_32.png</file>
+    <file alias="actions">../images/actions_32.png</file>
+    <file alias="materialize">../images/materialize_32.png</file>
+    <file alias="folder">../images/folder_16.png</file>
+    <file alias="folder_conflict">../images/folder_conflict_16.png</file>
+    <file alias="song">../images/song_16.png</file>
+    <file alias="song_conflict">../images/song_conflict_16.png</file>
+</qresource>
+</RCC>

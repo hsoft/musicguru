@@ -1,0 +1,29 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                addLocation = id; 
+                changeLocationPath = id; 
+                markLocation = id; 
+                removeLocation = id; 
+            }; 
+            CLASS = LocationPanel; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                changeLocationPathButton = NSButton; 
+                locationsTable = TableView; 
+                pathLabel = NSTextField; 
+                typeLabel = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = TableView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {py = PyApp; }; 
+            SUPERCLASS = NSTableView; 
+        }
+    ); 
+    IBVersion = 1; 
+}
