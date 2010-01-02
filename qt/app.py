@@ -61,7 +61,7 @@ def demo_check(method):
     return wrapper
 
 class MusicGuru(MusicGuruBase, ApplicationBase):
-    VERSION = '1.3.5'
+    VERSION = '1.3.6'
     LOGO_NAME = 'mg_logo'
     DEMO_LIMIT_DESC = "In the demo version, it's not possible to materialize designs."
     
