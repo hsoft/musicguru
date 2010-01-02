@@ -31,6 +31,6 @@
 	<key>SUCheckAtStartup</key>
 	<false/>
 	<key>SUFeedURL</key>
-	<string>http://www.hardcoded.net/updates/musicguru.xml</string>
+	<string>http://www.hardcoded.net/updates/musicguru.appcast</string>
 </dict>
 </plist>
