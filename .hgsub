@@ -1,5 +1,5 @@
-hsutil = http://hg.hardcoded.net/hsutil
-hsfs = http://hg.hardcoded.net/hsfs
-hsmedia = http://hg.hardcoded.net/hsmedia
-hsdocgen = http://hg.hardcoded.net/hsdocgen
-qtlib = http://hg.hardcoded.net/qtlib
+hsutil = https://hsoft@hg.hardcoded.net/hsutil
+hsdocgen = https://hsoft@hg.hardcoded.net/hsdocgen
+hsmedia = https://hsoft@hg.hardcoded.net/hsmedia
+hsfs = https://hsoft@hg.hardcoded.net/hsfs
+qtlib = https://hsoft@hg.hardcoded.net/qtlib
