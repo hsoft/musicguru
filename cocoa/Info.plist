@@ -28,6 +28,8 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>© Hardcoded Software, 2010</string>
 	<key>SUCheckAtStartup</key>
 	<false/>
 	<key>SUFeedURL</key>
