@@ -17,6 +17,11 @@ import mg_rc
 
 from app import MusicGuru
 
+# cx_Freeze workarounds
+import hsfs.tree
+import os
+os.environ['QT_PLUGIN_PATH'] = 'qt4_plugins'
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(QPixmap(":/mg_logo")))
