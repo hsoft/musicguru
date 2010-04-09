@@ -11,6 +11,7 @@ import objc
 from AppKit import *
 
 from hsutil import job
+from hsutil.cocoa.inter import PyRegistrable
 
 from core import app_cocoa, design
 
@@ -87,113 +88,113 @@ class PySplitPanel(NSObject):
 class PyApp(NSObject):
     pass #fake class
 
-class PyMusicGuru(NSObject):
+class PyMusicGuru(PyRegistrable):
     def init(self):
         self = super(PyMusicGuru,self).init()
-        self.app = app_cocoa.MusicGuru()
+        self.py = app_cocoa.MusicGuru()
         return self
     
     #---Locations
     def addLocationWithPath_name_removeable_(self, path, name, removeable):
-        return self.app.AddLocation(path, name, removeable)
+        return self.py.AddLocation(path, name, removeable)
     
     def canAddLocationWithPath_name_(self,path,name):
-        return self.app.CanAddLocation(path,name)
+        return self.py.CanAddLocation(path,name)
     
     def setPath_ofLocationNamed_(self, path, name):
-        self.app.set_location_path(name, path)
+        self.py.set_location_path(name, path)
     
     def locationNamesInBoard_writable_(self,in_board,writable):
-        return self.app.GetLocationNames(in_board,writable)
+        return self.py.GetLocationNames(in_board,writable)
     
     def removeLocationNamed_(self,name):
-        self.app.RemoveLocationNamed(name)
+        self.py.RemoveLocationNamed(name)
     
     def toggleLocation_(self,index):
-        self.app.ToggleLocationIndex(index)
+        self.py.ToggleLocationIndex(index)
     
     def updateLocationNamed_(self, name):
-        self.app.update_location(name)
+        self.py.update_location(name)
     
     #---Board
     def conflictCount(self):
-        return len(self.app.board.allconflicts)
+        return len(self.py.board.allconflicts)
     
     def emptyBoard(self):
-        self.app.board.Empty()
+        self.py.board.Empty()
     
     def getBoardStats(self):
-        return self.app.board.stats_line
+        return self.py.board.stats_line
     
     def getMassRenamePanel(self):
         result = PyMassRenamePanel.alloc().init()
-        result.setRefDir(self.app.board)
+        result.setRefDir(self.py.board)
         return result
     
     def getSplitPanel(self):
         result = PySplitPanel.alloc().init()
-        result.setRefDir(self.app.board)
+        result.setRefDir(self.py.board)
         return result
     
     def isNodeConflicted_(self,node_path):
-        return self.app.IsNodeConflicted(node_path)
+        return self.py.IsNodeConflicted(node_path)
     
     def isBoardSplitted(self):
-        return self.app.board.splitted
+        return self.py.board.splitted
     
     def massRenameWithModel_whitespaceType_(self, model, whitespace):
-        self.app.MassRename(model, whitespace)
+        self.py.MassRename(model, whitespace)
     
     def moveConflicts(self):
         #Returns true is at least one conflict has been moved
-        return self.app.board.MoveConflicts()
+        return self.py.board.MoveConflicts()
     
     def moveConflictsAndOriginals(self):
         #Returns true is at least one conflict has been moved
-        return self.app.board.MoveConflicts(True)
+        return self.py.board.MoveConflicts(True)
     
     def moveToIgnoreBox_(self,node_paths):
-        self.app.MoveToIgnoreBox(node_paths)
+        self.py.MoveToIgnoreBox(node_paths)
     
     def newFolderIn_(self,node_path):
-        return self.app.CreateFolderInNode(node_path)
+        return self.py.CreateFolderInNode(node_path)
     
     def performDragFrom_withNodes_to_withNode_(self,source_tag,source_node_paths,dest_tag,dest_node_path):
-        return self.app.PerformDrag(source_tag,source_node_paths,dest_tag,dest_node_path)
+        return self.py.PerformDrag(source_tag,source_node_paths,dest_tag,dest_node_path)
     
     def removeEmptyFolders(self):
-        self.app.RemoveEmptyDirs()
+        self.py.RemoveEmptyDirs()
     
     def renameNode_to_(self,node_path,new_name):
-        return self.app.RenameNode(node_path,new_name)
+        return self.py.RenameNode(node_path,new_name)
     
     def selectBoardSongs_(self,node_paths):
-        self.app.SelectBoardSongs(node_paths)
+        self.py.SelectBoardSongs(node_paths)
     
     def splitWithModel_capacity_groupingLevel_(self, model, capacity, grouping_level):
-        if self.app.board.splitted:
+        if self.py.board.splitted:
             return
-        self.app.Split(model, capacity, grouping_level)
+        self.py.Split(model, capacity, grouping_level)
     
     def switchConflictAndOriginal_(self,node_path):
-        self.app.SwitchConflictAndOriginal(node_path)
+        self.py.SwitchConflictAndOriginal(node_path)
     
     def unsplit(self):
-        self.app.board.Unsplit()
+        self.py.board.Unsplit()
     
     #---Materialize
     def copyOrMove_toPath_onNeedCDPanel_(self,copy,destination,panel):
-        self.app.CopyOrMove(copy, destination, panel)
+        self.py.CopyOrMove(copy, destination, panel)
     
     def renameInRespectiveLocations(self):
-        self.app.RenameInRespectiveLocations()
+        self.py.RenameInRespectiveLocations()
     
     #---Misc
     def isNodeContainer_(self,node_path):
-        return self.app.IsNodeContainer(node_path)
+        return self.py.IsNodeContainer(node_path)
     
     def updateCollection(self):
-        self.app.UpdateCollection()
+        self.py.UpdateCollection()
     
     #---Data
     @objc.signature('i@:i')
@@ -202,32 +203,32 @@ class PyMusicGuru(NSObject):
     
     @objc.signature('@@:i@')
     def getOutlineView_childCountsForPath_(self, tag, node_path):
-        return self.app.GetOutlineViewChildCounts(tag, node_path)
+        return self.py.GetOutlineViewChildCounts(tag, node_path)
     
     def getOutlineView_valuesForIndexes_(self,tag,node_path):
-        return self.app.GetOutlineViewValues(tag,node_path)
+        return self.py.GetOutlineViewValues(tag,node_path)
     
     def getOutlineView_markedAtIndexes_(self,tag,node_path):
         return False
     
     def getTableViewCount_(self,tag):
-        return self.app.GetTableViewCount(tag)
+        return self.py.GetTableViewCount(tag)
     
     def getTableViewMarkedIndexes_(self,tag):
-        return self.app.GetTableViewMarkedIndexes(tag)
+        return self.py.GetTableViewMarkedIndexes(tag)
     
     def getTableView_valuesForRow_(self,tag,row):
-        return self.app.GetTableViewValues(tag,row)
+        return self.py.GetTableViewValues(tag,row)
     
     #---Worker
     def getJobProgress(self):
-        return self.app.progress.last_progress
+        return self.py.progress.last_progress
     
     def getJobDesc(self):
-        return self.app.progress.last_desc
+        return self.py.progress.last_desc
     
     def cancelJob(self):
-        self.app.progress.job_cancelled = True
+        self.py.progress.job_cancelled = True
     
     def jobCompleted_(self, jobid):
         pass
@@ -235,19 +236,5 @@ class PyMusicGuru(NSObject):
     #---Registration
     def appName(self):
         return "musicGuru"
-    
-    def demoLimitDescription(self):
-        return "In the demo version, it's not possible to materialize designs."
-    
-    @objc.signature('i@:')
-    def isRegistered(self):
-        return self.app.registered
-    
-    @objc.signature('i@:@@')
-    def isCodeValid_withEmail_(self, code, email):
-        return self.app.is_code_valid(code, email)
-    
-    def setRegisteredCode_andEmail_(self, code, email):
-        self.app.set_registration(code, email)
     
 
