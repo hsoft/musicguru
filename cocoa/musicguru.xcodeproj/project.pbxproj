@@ -11,13 +11,11 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		CE20F4260F594A7A00115114 /* Wizard.m in Sources */ = {isa = PBXBuildFile; fileRef = CE20F4230F594A7A00115114 /* Wizard.m */; };
-		CE20F4270F594A7A00115114 /* WizCommonPages.m in Sources */ = {isa = PBXBuildFile; fileRef = CE20F4250F594A7A00115114 /* WizCommonPages.m */; };
-		CE20F4290F594A9C00115114 /* wizard_64.png in Resources */ = {isa = PBXBuildFile; fileRef = CE20F4280F594A9C00115114 /* wizard_64.png */; };
-		CE20F42E0F594AB200115114 /* wiz_common.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE20F42A0F594AB200115114 /* wiz_common.nib */; };
-		CE20F42F0F594AB200115114 /* wizard.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE20F42C0F594AB200115114 /* wizard.nib */; };
-		CE20F4420F594BD700115114 /* MessagePage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE20F43F0F594BD700115114 /* MessagePage.m */; };
-		CE20F4430F594BD700115114 /* ProgressPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE20F4410F594BD700115114 /* ProgressPage.m */; };
+		CE28DB23116F0B6100A93DD8 /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */; };
+		CE28DB24116F0B6100A93DD8 /* progress.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB21116F0B6100A93DD8 /* progress.xib */; };
+		CE28DB25116F0B6100A93DD8 /* registration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB22116F0B6100A93DD8 /* registration.xib */; };
+		CE28DB2A116F0B7300A93DD8 /* Outline.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28DB27116F0B7300A93DD8 /* Outline.m */; };
+		CE28DB2B116F0B7300A93DD8 /* Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28DB29116F0B7300A93DD8 /* Table.m */; };
 		CE2CD3CD0A9480C700C0DA8D /* LocationPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE2CD3CB0A9480C700C0DA8D /* LocationPanel.nib */; };
 		CE2CD3D80A94822200C0DA8D /* LocationPanel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE2CD3D60A94822200C0DA8D /* LocationPanel.h */; };
 		CE2CD3D90A94822200C0DA8D /* LocationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2CD3D70A94822200C0DA8D /* LocationPanel.m */; };
@@ -28,15 +26,10 @@
 		CE86506309CEEDE900F40C01 /* musicguru.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE86506209CEEDE900F40C01 /* musicguru.icns */; };
 		CE90AF2309D083D7005185D9 /* music_note_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE90AF2209D083D7005185D9 /* music_note_32.png */; };
 		CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */; };
-		CEA0E9BD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m */; };
 		CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */; };
-		CEA0E9BF0FE1210400ABA3F7 /* Outline.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B10FE1210400ABA3F7 /* Outline.m */; };
 		CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */; };
 		CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */; };
-		CEA0E9C20FE1210400ABA3F7 /* Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B90FE1210400ABA3F7 /* Table.m */; };
 		CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9BB0FE1210400ABA3F7 /* Utils.m */; };
-		CEA0E9D60FE12F3200ABA3F7 /* progress.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEA0E9D20FE12F3200ABA3F7 /* progress.nib */; };
-		CEA0E9D70FE12F3200ABA3F7 /* registration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEA0E9D40FE12F3200ABA3F7 /* registration.nib */; };
 		CEB4E7F309CEF34E00A27957 /* Design.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEB4E7F109CEF34E00A27957 /* Design.nib */; };
 		CEB4E7FC09CEF4CE00A27957 /* DesignWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */; };
 		CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */; };
@@ -49,38 +42,17 @@
 		CECA229509CDB95400D48E88 /* AddLocationWindow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CECA229309CDB95400D48E88 /* AddLocationWindow.h */; };
 		CECA229609CDB95400D48E88 /* AddLocationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CECA229409CDB95400D48E88 /* AddLocationWindow.m */; };
 		CECCBD78098945A2007E0658 /* add_music_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD77098945A2007E0658 /* add_music_32.png */; };
-		CECCBD86098945D9007E0658 /* add_music_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD85098945D9007E0658 /* add_music_48.png */; };
 		CECCBD88098945DD007E0658 /* design_board_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD87098945DD007E0658 /* design_board_32.png */; };
 		CECCBD8A098945E2007E0658 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD89098945E2007E0658 /* gear.png */; };
-		CECCBD8C098945E8007E0658 /* green.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD8B098945E8007E0658 /* green.tiff */; };
 		CECCBD8E098945ED007E0658 /* ignore_box_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD8D098945ED007E0658 /* ignore_box_32.png */; };
 		CECCBD90098945F1007E0658 /* info_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD8F098945F1007E0658 /* info_32.png */; };
 		CECCBD92098945FB007E0658 /* locations_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD91098945FB007E0658 /* locations_32.png */; };
-		CECCBD9409894601007E0658 /* materialize_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9309894601007E0658 /* materialize_32.png */; };
-		CECCBD9609894609007E0658 /* materialize_48.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9509894609007E0658 /* materialize_48.png */; };
-		CECCBD980989460F007E0658 /* red.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD970989460F007E0658 /* red.tiff */; };
 		CECCBD9A09894617007E0658 /* cdrom_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9909894617007E0658 /* cdrom_16.png */; };
 		CECCBD9C0989461D007E0658 /* folder_conflict_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9B0989461D007E0658 /* folder_conflict_16.png */; };
 		CECCBD9E09894623007E0658 /* folder_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9D09894623007E0658 /* folder_16.png */; };
 		CECCBDA00989462D007E0658 /* hdd_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9F0989462D007E0658 /* hdd_16.png */; };
 		CECCBDA209894634007E0658 /* song_conflict_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBDA109894634007E0658 /* song_conflict_16.png */; };
 		CECCBDA40989463C007E0658 /* song_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBDA30989463C007E0658 /* song_16.png */; };
-		CECCBDA609894642007E0658 /* yellow.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CECCBDA509894642007E0658 /* yellow.tiff */; };
-		CEDD20E809D42C03005F8BF5 /* WizMaterialize.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEDD20E609D42C03005F8BF5 /* WizMaterialize.nib */; };
-		CEDD20F309D42E55005F8BF5 /* MaterializeWizard.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD20F109D42E55005F8BF5 /* MaterializeWizard.h */; };
-		CEDD20F409D42E55005F8BF5 /* MaterializeWizard.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD20F209D42E55005F8BF5 /* MaterializeWizard.m */; };
-		CEDD20FC09D42E9D005F8BF5 /* FreeSpacePage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD20FA09D42E9D005F8BF5 /* FreeSpacePage.h */; };
-		CEDD20FD09D42E9D005F8BF5 /* FreeSpacePage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD20FB09D42E9D005F8BF5 /* FreeSpacePage.m */; };
-		CEDD210009D42EA2005F8BF5 /* InsertBlankDiskPage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD20FE09D42EA2005F8BF5 /* InsertBlankDiskPage.h */; };
-		CEDD210109D42EA2005F8BF5 /* InsertBlankDiskPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD20FF09D42EA2005F8BF5 /* InsertBlankDiskPage.m */; };
-		CEDD210409D42EA7005F8BF5 /* MaterializeChoicePage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD210209D42EA7005F8BF5 /* MaterializeChoicePage.m */; };
-		CEDD210509D42EA7005F8BF5 /* MaterializeChoicePage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD210309D42EA7005F8BF5 /* MaterializeChoicePage.h */; };
-		CEDD210809D42EAC005F8BF5 /* PathChoicePage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD210609D42EAC005F8BF5 /* PathChoicePage.m */; };
-		CEDD210909D42EAC005F8BF5 /* PathChoicePage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD210709D42EAC005F8BF5 /* PathChoicePage.h */; };
-		CEDD210C09D42EB1005F8BF5 /* RecordingOptionsPage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD210A09D42EB1005F8BF5 /* RecordingOptionsPage.h */; };
-		CEDD210D09D42EB1005F8BF5 /* RecordingOptionsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD210B09D42EB1005F8BF5 /* RecordingOptionsPage.m */; };
-		CEDD211009D42EB5005F8BF5 /* RegistrationRequiredPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD210E09D42EB5005F8BF5 /* RegistrationRequiredPage.m */; };
-		CEDD211109D42EB5005F8BF5 /* RegistrationRequiredPage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD210F09D42EB5005F8BF5 /* RegistrationRequiredPage.h */; };
 		CEDD211409D42EBD005F8BF5 /* DiskNeededPanel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */; };
 		CEDD211509D42EBD005F8BF5 /* DiskNeededPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */; };
 		CEE75A2409D5B5150027AF1D /* DiskNeeded.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEE75A2209D5B5150027AF1D /* DiskNeeded.nib */; };
@@ -105,13 +77,6 @@
 				CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */,
 				CEB960FB09D3078500852670 /* MassRenameDialog.h in CopyFiles */,
 				CEEF347C09D318B5003E55A9 /* SplitDialog.h in CopyFiles */,
-				CEDD20F309D42E55005F8BF5 /* MaterializeWizard.h in CopyFiles */,
-				CEDD20FC09D42E9D005F8BF5 /* FreeSpacePage.h in CopyFiles */,
-				CEDD210009D42EA2005F8BF5 /* InsertBlankDiskPage.h in CopyFiles */,
-				CEDD210509D42EA7005F8BF5 /* MaterializeChoicePage.h in CopyFiles */,
-				CEDD210909D42EAC005F8BF5 /* PathChoicePage.h in CopyFiles */,
-				CEDD210C09D42EB1005F8BF5 /* RecordingOptionsPage.h in CopyFiles */,
-				CEDD211109D42EB5005F8BF5 /* RegistrationRequiredPage.h in CopyFiles */,
 				CEDD211409D42EBD005F8BF5 /* DiskNeededPanel.h in CopyFiles */,
 				CE2CD3D80A94822200C0DA8D /* LocationPanel.h in CopyFiles */,
 				CE2CD62C0A94973500C0DA8D /* Consts.h in CopyFiles */,
@@ -140,17 +105,13 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* musicGuru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = musicGuru.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE20F4220F594A7A00115114 /* Wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wizard.h; sourceTree = "<group>"; };
-		CE20F4230F594A7A00115114 /* Wizard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wizard.m; sourceTree = "<group>"; };
-		CE20F4240F594A7A00115114 /* WizCommonPages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizCommonPages.h; sourceTree = "<group>"; };
-		CE20F4250F594A7A00115114 /* WizCommonPages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizCommonPages.m; sourceTree = "<group>"; };
-		CE20F4280F594A9C00115114 /* wizard_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wizard_64.png; path = ../images/wizard_64.png; sourceTree = "<group>"; };
-		CE20F42B0F594AB200115114 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/wiz_common.nib; sourceTree = "<group>"; };
-		CE20F42D0F594AB200115114 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/wizard.nib; sourceTree = "<group>"; };
-		CE20F43E0F594BD700115114 /* MessagePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePage.h; sourceTree = "<group>"; };
-		CE20F43F0F594BD700115114 /* MessagePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePage.m; sourceTree = "<group>"; };
-		CE20F4400F594BD700115114 /* ProgressPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressPage.h; sourceTree = "<group>"; };
-		CE20F4410F594BD700115114 /* ProgressPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressPage.m; sourceTree = "<group>"; };
+		CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorReportWindow.xib; sourceTree = "<group>"; };
+		CE28DB21116F0B6100A93DD8 /* progress.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = progress.xib; sourceTree = "<group>"; };
+		CE28DB22116F0B6100A93DD8 /* registration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = registration.xib; sourceTree = "<group>"; };
+		CE28DB26116F0B7300A93DD8 /* Outline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outline.h; sourceTree = "<group>"; };
+		CE28DB27116F0B7300A93DD8 /* Outline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outline.m; sourceTree = "<group>"; };
+		CE28DB28116F0B7300A93DD8 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
+		CE28DB29116F0B7300A93DD8 /* Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Table.m; sourceTree = "<group>"; };
 		CE2CD3CC0A9480C700C0DA8D /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/LocationPanel.nib; sourceTree = "<group>"; };
 		CE2CD3D60A94822200C0DA8D /* LocationPanel.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = LocationPanel.h; sourceTree = "<group>"; };
 		CE2CD3D70A94822200C0DA8D /* LocationPanel.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = LocationPanel.m; sourceTree = "<group>"; };
@@ -164,24 +125,16 @@
 		CE90AF2209D083D7005185D9 /* music_note_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = music_note_32.png; path = ../images/music_note_32.png; sourceTree = SOURCE_ROOT; };
 		CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
-		CEA0E9AC0FE1210400ABA3F7 /* NSCharacterSet_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSCharacterSet_Extensions.h; path = ../cocoalib/brsinglelineformatter/NSCharacterSet_Extensions.h; sourceTree = SOURCE_ROOT; };
-		CEA0E9AD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSCharacterSet_Extensions.m; path = ../cocoalib/brsinglelineformatter/NSCharacterSet_Extensions.m; sourceTree = SOURCE_ROOT; };
 		CEA0E9AE0FE1210400ABA3F7 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = ../cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
-		CEA0E9B00FE1210400ABA3F7 /* Outline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Outline.h; path = ../cocoalib/Outline.h; sourceTree = SOURCE_ROOT; };
-		CEA0E9B10FE1210400ABA3F7 /* Outline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Outline.m; path = ../cocoalib/Outline.m; sourceTree = SOURCE_ROOT; };
 		CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressController.h; path = ../cocoalib/ProgressController.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressController.m; path = ../cocoalib/ProgressController.m; sourceTree = SOURCE_ROOT; };
 		CEA0E9B40FE1210400ABA3F7 /* PyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyApp.h; path = ../cocoalib/PyApp.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = ../cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = ../cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = ../cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
-		CEA0E9B80FE1210400ABA3F7 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Table.h; path = ../cocoalib/Table.h; sourceTree = SOURCE_ROOT; };
-		CEA0E9B90FE1210400ABA3F7 /* Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Table.m; path = ../cocoalib/Table.m; sourceTree = SOURCE_ROOT; };
 		CEA0E9BA0FE1210400ABA3F7 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9BB0FE1210400ABA3F7 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
-		CEA0E9D30FE12F3200ABA3F7 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../cocoalib/English.lproj/progress.nib; sourceTree = "<group>"; };
-		CEA0E9D50FE12F3200ABA3F7 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../cocoalib/English.lproj/registration.nib; sourceTree = "<group>"; };
 		CEB4E7F209CEF34E00A27957 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Design.nib; sourceTree = "<group>"; };
 		CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DesignWindow.m; sourceTree = "<group>"; };
 		CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = DesignWindow.h; sourceTree = "<group>"; };
@@ -193,38 +146,17 @@
 		CECA229309CDB95400D48E88 /* AddLocationWindow.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = AddLocationWindow.h; sourceTree = "<group>"; };
 		CECA229409CDB95400D48E88 /* AddLocationWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = AddLocationWindow.m; sourceTree = "<group>"; };
 		CECCBD77098945A2007E0658 /* add_music_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_music_32.png; path = ../images/add_music_32.png; sourceTree = "<group>"; };
-		CECCBD85098945D9007E0658 /* add_music_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_music_48.png; path = ../images/add_music_48.png; sourceTree = "<group>"; };
 		CECCBD87098945DD007E0658 /* design_board_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = design_board_32.png; path = ../images/design_board_32.png; sourceTree = "<group>"; };
 		CECCBD89098945E2007E0658 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gear.png; path = ../images/gear.png; sourceTree = "<group>"; };
-		CECCBD8B098945E8007E0658 /* green.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = green.tiff; path = ../images/green.tiff; sourceTree = "<group>"; };
 		CECCBD8D098945ED007E0658 /* ignore_box_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ignore_box_32.png; path = ../images/ignore_box_32.png; sourceTree = "<group>"; };
 		CECCBD8F098945F1007E0658 /* info_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = info_32.png; path = ../images/info_32.png; sourceTree = "<group>"; };
 		CECCBD91098945FB007E0658 /* locations_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locations_32.png; path = ../images/locations_32.png; sourceTree = "<group>"; };
-		CECCBD9309894601007E0658 /* materialize_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = materialize_32.png; path = ../images/materialize_32.png; sourceTree = "<group>"; };
-		CECCBD9509894609007E0658 /* materialize_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = materialize_48.png; path = ../images/materialize_48.png; sourceTree = "<group>"; };
-		CECCBD970989460F007E0658 /* red.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = red.tiff; path = ../images/red.tiff; sourceTree = "<group>"; };
 		CECCBD9909894617007E0658 /* cdrom_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cdrom_16.png; path = ../images/cdrom_16.png; sourceTree = "<group>"; };
 		CECCBD9B0989461D007E0658 /* folder_conflict_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = folder_conflict_16.png; path = ../images/folder_conflict_16.png; sourceTree = "<group>"; };
 		CECCBD9D09894623007E0658 /* folder_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = folder_16.png; path = ../images/folder_16.png; sourceTree = "<group>"; };
 		CECCBD9F0989462D007E0658 /* hdd_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hdd_16.png; path = ../images/hdd_16.png; sourceTree = "<group>"; };
 		CECCBDA109894634007E0658 /* song_conflict_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = song_conflict_16.png; path = ../images/song_conflict_16.png; sourceTree = "<group>"; };
 		CECCBDA30989463C007E0658 /* song_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = song_16.png; path = ../images/song_16.png; sourceTree = "<group>"; };
-		CECCBDA509894642007E0658 /* yellow.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = yellow.tiff; path = ../images/yellow.tiff; sourceTree = "<group>"; };
-		CEDD20E709D42C03005F8BF5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/WizMaterialize.nib; sourceTree = "<group>"; };
-		CEDD20F109D42E55005F8BF5 /* MaterializeWizard.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = MaterializeWizard.h; sourceTree = "<group>"; };
-		CEDD20F209D42E55005F8BF5 /* MaterializeWizard.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = MaterializeWizard.m; sourceTree = "<group>"; };
-		CEDD20FA09D42E9D005F8BF5 /* FreeSpacePage.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = FreeSpacePage.h; sourceTree = "<group>"; };
-		CEDD20FB09D42E9D005F8BF5 /* FreeSpacePage.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = FreeSpacePage.m; sourceTree = "<group>"; };
-		CEDD20FE09D42EA2005F8BF5 /* InsertBlankDiskPage.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = InsertBlankDiskPage.h; sourceTree = "<group>"; };
-		CEDD20FF09D42EA2005F8BF5 /* InsertBlankDiskPage.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = InsertBlankDiskPage.m; sourceTree = "<group>"; };
-		CEDD210209D42EA7005F8BF5 /* MaterializeChoicePage.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = MaterializeChoicePage.m; sourceTree = "<group>"; };
-		CEDD210309D42EA7005F8BF5 /* MaterializeChoicePage.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = MaterializeChoicePage.h; sourceTree = "<group>"; };
-		CEDD210609D42EAC005F8BF5 /* PathChoicePage.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = PathChoicePage.m; sourceTree = "<group>"; };
-		CEDD210709D42EAC005F8BF5 /* PathChoicePage.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = PathChoicePage.h; sourceTree = "<group>"; };
-		CEDD210A09D42EB1005F8BF5 /* RecordingOptionsPage.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = RecordingOptionsPage.h; sourceTree = "<group>"; };
-		CEDD210B09D42EB1005F8BF5 /* RecordingOptionsPage.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = RecordingOptionsPage.m; sourceTree = "<group>"; };
-		CEDD210E09D42EB5005F8BF5 /* RegistrationRequiredPage.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = RegistrationRequiredPage.m; sourceTree = "<group>"; };
-		CEDD210F09D42EB5005F8BF5 /* RegistrationRequiredPage.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = RegistrationRequiredPage.h; sourceTree = "<group>"; };
 		CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = DiskNeededPanel.h; sourceTree = "<group>"; };
 		CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DiskNeededPanel.m; sourceTree = "<group>"; };
 		CEE75A2309D5B5150027AF1D /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/DiskNeeded.nib; sourceTree = "<group>"; };
@@ -253,6 +185,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CE28DB26116F0B7300A93DD8 /* Outline.h */,
+				CE28DB27116F0B7300A93DD8 /* Outline.m */,
+				CE28DB28116F0B7300A93DD8 /* Table.h */,
+				CE28DB29116F0B7300A93DD8 /* Table.m */,
 				CECA229309CDB95400D48E88 /* AddLocationWindow.h */,
 				CECA229409CDB95400D48E88 /* AddLocationWindow.m */,
 				CE79F7C00986839000CD4AB7 /* AppDelegate.h */,
@@ -261,11 +197,12 @@
 				CE2CD7450A94A6B600C0DA8D /* Consts.m */,
 				CEE8A7DA09CED2A0004911BA /* DetailsPanel.h */,
 				CEE8A7DB09CED2A0004911BA /* DetailsPanel.m */,
+				CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */,
+				CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */,
 				CE2CD3D60A94822200C0DA8D /* LocationPanel.h */,
 				CE2CD3D70A94822200C0DA8D /* LocationPanel.m */,
 				CE5E602409CD8EAB0024A9E6 /* PyMusicGuru.h */,
 				CEB4E80709CEF4F300A27957 /* Design */,
-				CEDD20F509D42E5E005F8BF5 /* Materialize */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -335,9 +272,6 @@
 				CE2CD3CB0A9480C700C0DA8D /* LocationPanel.nib */,
 				CEEF346809D31717003E55A9 /* MassRename.nib */,
 				CEEF347509D31827003E55A9 /* Split.nib */,
-				CEDD20E609D42C03005F8BF5 /* WizMaterialize.nib */,
-				CE20F42A0F594AB200115114 /* wiz_common.nib */,
-				CE20F42C0F594AB200115114 /* wizard.nib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -351,24 +285,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE28DB1F116F0B6100A93DD8 /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */,
+				CE28DB21116F0B6100A93DD8 /* progress.xib */,
+				CE28DB22116F0B6100A93DD8 /* registration.xib */,
+			);
+			name = xib;
+			path = ../cocoalib/xib;
+			sourceTree = "<group>";
+		};
 		CEA0E9A80FE120CD00ABA3F7 /* cocoalib */ = {
 			isa = PBXGroup;
 			children = (
-				CEA0E9D20FE12F3200ABA3F7 /* progress.nib */,
-				CEA0E9D40FE12F3200ABA3F7 /* registration.nib */,
+				CE28DB1F116F0B6100A93DD8 /* xib */,
 				CEA0E9A90FE1210400ABA3F7 /* brsinglelineformatter */,
 				CEA0E9AE0FE1210400ABA3F7 /* Dialogs.h */,
 				CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */,
-				CEA0E9B00FE1210400ABA3F7 /* Outline.h */,
-				CEA0E9B10FE1210400ABA3F7 /* Outline.m */,
 				CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */,
 				CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */,
 				CEA0E9B40FE1210400ABA3F7 /* PyApp.h */,
 				CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */,
 				CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */,
 				CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */,
-				CEA0E9B80FE1210400ABA3F7 /* Table.h */,
-				CEA0E9B90FE1210400ABA3F7 /* Table.m */,
 				CEA0E9BA0FE1210400ABA3F7 /* Utils.h */,
 				CEA0E9BB0FE1210400ABA3F7 /* Utils.m */,
 			);
@@ -380,8 +320,6 @@
 			children = (
 				CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */,
 				CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */,
-				CEA0E9AC0FE1210400ABA3F7 /* NSCharacterSet_Extensions.h */,
-				CEA0E9AD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m */,
 			);
 			name = brsinglelineformatter;
 			path = ../cocoalib/brsinglelineformatter;
@@ -403,59 +341,21 @@
 		CECCBD7A098945BD007E0658 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				CE20F4280F594A9C00115114 /* wizard_64.png */,
 				CE90AF2209D083D7005185D9 /* music_note_32.png */,
 				CECCBD77098945A2007E0658 /* add_music_32.png */,
-				CECCBD85098945D9007E0658 /* add_music_48.png */,
 				CECCBD87098945DD007E0658 /* design_board_32.png */,
 				CECCBD89098945E2007E0658 /* gear.png */,
-				CECCBD8B098945E8007E0658 /* green.tiff */,
 				CECCBD8D098945ED007E0658 /* ignore_box_32.png */,
 				CECCBD8F098945F1007E0658 /* info_32.png */,
 				CECCBD91098945FB007E0658 /* locations_32.png */,
-				CECCBD9309894601007E0658 /* materialize_32.png */,
-				CECCBD9509894609007E0658 /* materialize_48.png */,
-				CECCBD970989460F007E0658 /* red.tiff */,
 				CECCBD9909894617007E0658 /* cdrom_16.png */,
 				CECCBD9B0989461D007E0658 /* folder_conflict_16.png */,
 				CECCBD9D09894623007E0658 /* folder_16.png */,
 				CECCBD9F0989462D007E0658 /* hdd_16.png */,
 				CECCBDA109894634007E0658 /* song_conflict_16.png */,
 				CECCBDA30989463C007E0658 /* song_16.png */,
-				CECCBDA509894642007E0658 /* yellow.tiff */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		CEDD20F509D42E5E005F8BF5 /* Materialize */ = {
-			isa = PBXGroup;
-			children = (
-				CE20F43E0F594BD700115114 /* MessagePage.h */,
-				CE20F43F0F594BD700115114 /* MessagePage.m */,
-				CE20F4400F594BD700115114 /* ProgressPage.h */,
-				CE20F4410F594BD700115114 /* ProgressPage.m */,
-				CE20F4220F594A7A00115114 /* Wizard.h */,
-				CE20F4230F594A7A00115114 /* Wizard.m */,
-				CE20F4240F594A7A00115114 /* WizCommonPages.h */,
-				CE20F4250F594A7A00115114 /* WizCommonPages.m */,
-				CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */,
-				CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */,
-				CEDD20FA09D42E9D005F8BF5 /* FreeSpacePage.h */,
-				CEDD20FB09D42E9D005F8BF5 /* FreeSpacePage.m */,
-				CEDD20FE09D42EA2005F8BF5 /* InsertBlankDiskPage.h */,
-				CEDD20FF09D42EA2005F8BF5 /* InsertBlankDiskPage.m */,
-				CEDD210309D42EA7005F8BF5 /* MaterializeChoicePage.h */,
-				CEDD210209D42EA7005F8BF5 /* MaterializeChoicePage.m */,
-				CEDD20F109D42E55005F8BF5 /* MaterializeWizard.h */,
-				CEDD20F209D42E55005F8BF5 /* MaterializeWizard.m */,
-				CEDD210709D42EAC005F8BF5 /* PathChoicePage.h */,
-				CEDD210609D42EAC005F8BF5 /* PathChoicePage.m */,
-				CEDD210A09D42EB1005F8BF5 /* RecordingOptionsPage.h */,
-				CEDD210B09D42EB1005F8BF5 /* RecordingOptionsPage.m */,
-				CEDD210F09D42EB5005F8BF5 /* RegistrationRequiredPage.h */,
-				CEDD210E09D42EB5005F8BF5 /* RegistrationRequiredPage.m */,
-			);
-			name = Materialize;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -507,23 +407,17 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				CE79FA5D09869F6E00CD4AB7 /* mg_cocoa.plugin in Resources */,
 				CECCBD78098945A2007E0658 /* add_music_32.png in Resources */,
-				CECCBD86098945D9007E0658 /* add_music_48.png in Resources */,
 				CECCBD88098945DD007E0658 /* design_board_32.png in Resources */,
 				CECCBD8A098945E2007E0658 /* gear.png in Resources */,
-				CECCBD8C098945E8007E0658 /* green.tiff in Resources */,
 				CECCBD8E098945ED007E0658 /* ignore_box_32.png in Resources */,
 				CECCBD90098945F1007E0658 /* info_32.png in Resources */,
 				CECCBD92098945FB007E0658 /* locations_32.png in Resources */,
-				CECCBD9409894601007E0658 /* materialize_32.png in Resources */,
-				CECCBD9609894609007E0658 /* materialize_48.png in Resources */,
-				CECCBD980989460F007E0658 /* red.tiff in Resources */,
 				CECCBD9A09894617007E0658 /* cdrom_16.png in Resources */,
 				CECCBD9C0989461D007E0658 /* folder_conflict_16.png in Resources */,
 				CECCBD9E09894623007E0658 /* folder_16.png in Resources */,
 				CECCBDA00989462D007E0658 /* hdd_16.png in Resources */,
 				CECCBDA209894634007E0658 /* song_conflict_16.png in Resources */,
 				CECCBDA40989463C007E0658 /* song_16.png in Resources */,
-				CECCBDA609894642007E0658 /* yellow.tiff in Resources */,
 				CECA229209CDB69500D48E88 /* AddLocation.nib in Resources */,
 				CEE8A7D909CED1F9004911BA /* Details.nib in Resources */,
 				CE86506309CEEDE900F40C01 /* musicguru.icns in Resources */,
@@ -531,15 +425,12 @@
 				CE90AF2309D083D7005185D9 /* music_note_32.png in Resources */,
 				CEEF346A09D31717003E55A9 /* MassRename.nib in Resources */,
 				CEEF347709D31827003E55A9 /* Split.nib in Resources */,
-				CEDD20E809D42C03005F8BF5 /* WizMaterialize.nib in Resources */,
 				CEE75A2409D5B5150027AF1D /* DiskNeeded.nib in Resources */,
 				CEC9A8D209D86A6A0038B2D6 /* musicguru_help in Resources */,
 				CE2CD3CD0A9480C700C0DA8D /* LocationPanel.nib in Resources */,
-				CE20F4290F594A9C00115114 /* wizard_64.png in Resources */,
-				CE20F42E0F594AB200115114 /* wiz_common.nib in Resources */,
-				CE20F42F0F594AB200115114 /* wizard.nib in Resources */,
-				CEA0E9D60FE12F3200ABA3F7 /* progress.nib in Resources */,
-				CEA0E9D70FE12F3200ABA3F7 /* registration.nib in Resources */,
+				CE28DB23116F0B6100A93DD8 /* ErrorReportWindow.xib in Resources */,
+				CE28DB24116F0B6100A93DD8 /* progress.xib in Resources */,
+				CE28DB25116F0B6100A93DD8 /* registration.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,28 +448,16 @@
 				CEB4E7FC09CEF4CE00A27957 /* DesignWindow.m in Sources */,
 				CEB960FC09D3078500852670 /* MassRenameDialog.m in Sources */,
 				CEEF347D09D318B5003E55A9 /* SplitDialog.m in Sources */,
-				CEDD20F409D42E55005F8BF5 /* MaterializeWizard.m in Sources */,
-				CEDD20FD09D42E9D005F8BF5 /* FreeSpacePage.m in Sources */,
-				CEDD210109D42EA2005F8BF5 /* InsertBlankDiskPage.m in Sources */,
-				CEDD210409D42EA7005F8BF5 /* MaterializeChoicePage.m in Sources */,
-				CEDD210809D42EAC005F8BF5 /* PathChoicePage.m in Sources */,
-				CEDD210D09D42EB1005F8BF5 /* RecordingOptionsPage.m in Sources */,
-				CEDD211009D42EB5005F8BF5 /* RegistrationRequiredPage.m in Sources */,
 				CEDD211509D42EBD005F8BF5 /* DiskNeededPanel.m in Sources */,
 				CE2CD3D90A94822200C0DA8D /* LocationPanel.m in Sources */,
 				CE2CD7460A94A6B600C0DA8D /* Consts.m in Sources */,
-				CE20F4260F594A7A00115114 /* Wizard.m in Sources */,
-				CE20F4270F594A7A00115114 /* WizCommonPages.m in Sources */,
-				CE20F4420F594BD700115114 /* MessagePage.m in Sources */,
-				CE20F4430F594BD700115114 /* ProgressPage.m in Sources */,
 				CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */,
-				CEA0E9BD0FE1210400ABA3F7 /* NSCharacterSet_Extensions.m in Sources */,
 				CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */,
-				CEA0E9BF0FE1210400ABA3F7 /* Outline.m in Sources */,
 				CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */,
 				CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */,
-				CEA0E9C20FE1210400ABA3F7 /* Table.m in Sources */,
 				CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */,
+				CE28DB2A116F0B7300A93DD8 /* Outline.m in Sources */,
+				CE28DB2B116F0B7300A93DD8 /* Table.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,44 +480,12 @@
 			name = MainMenu.nib;
 			sourceTree = "<group>";
 		};
-		CE20F42A0F594AB200115114 /* wiz_common.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE20F42B0F594AB200115114 /* English */,
-			);
-			name = wiz_common.nib;
-			sourceTree = "<group>";
-		};
-		CE20F42C0F594AB200115114 /* wizard.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE20F42D0F594AB200115114 /* English */,
-			);
-			name = wizard.nib;
-			sourceTree = "<group>";
-		};
 		CE2CD3CB0A9480C700C0DA8D /* LocationPanel.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				CE2CD3CC0A9480C700C0DA8D /* English */,
 			);
 			name = LocationPanel.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CEA0E9D20FE12F3200ABA3F7 /* progress.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEA0E9D30FE12F3200ABA3F7 /* English */,
-			);
-			name = progress.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CEA0E9D40FE12F3200ABA3F7 /* registration.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEA0E9D50FE12F3200ABA3F7 /* English */,
-			);
-			name = registration.nib;
 			sourceTree = SOURCE_ROOT;
 		};
 		CEB4E7F109CEF34E00A27957 /* Design.nib */ = {
@@ -656,14 +503,6 @@
 			);
 			name = AddLocation.nib;
 			sourceTree = "<group>";
-		};
-		CEDD20E609D42C03005F8BF5 /* WizMaterialize.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEDD20E709D42C03005F8BF5 /* English */,
-			);
-			name = WizMaterialize.nib;
-			sourceTree = SOURCE_ROOT;
 		};
 		CEE75A2209D5B5150027AF1D /* DiskNeeded.nib */ = {
 			isa = PBXVariantGroup;
@@ -707,7 +546,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = musicGuru;
 				WRAPPER_EXTENSION = app;
 			};
@@ -716,14 +554,16 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = (
+					i386,
+					x86_64,
+					ppc,
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
 			name = Release;
 		};

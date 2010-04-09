@@ -63,20 +63,20 @@ http://www.hardcoded.net/licenses/hs_license
 - (void)switchConflictAndOriginal:(NSArray *)aNodePath;
 - (void)unsplit;
 //Materialize
-- (NSNumber *)addCurrentDiskToMPLOverwrite:(NSNumber *)aOverwrite; //Returns True if the location has been added.
-- (void)burnCurrentDiskWithWindow:(NSWindow *)aWindow;
-- (void)cleanBuffer;
 - (void)copyOrMove:(NSNumber *)aCopy toPath:(NSString *)aPath onNeedCDPanel:(id)aPanel;
-- (NSNumber *)ejectCDIfNotBlank; //Returns True if a blank CD is in the drive, False if not (and if it returns false, it means that the current CD has been ejected.)
-- (void)fetchSourceSongsWithNeedCDPanel:(id)aPanel;
-- (NSArray *)getBurnBufferSizes; // 0: Free Bytes on disk, 1: Minimum, 2: Recommended. 3,4,5: formatted sizes
-- (NSString *)getDestinationDiskName;
-- (NSNumber *)isFinishedBurning;
-- (NSNumber *)prepareBurning; //True: Uses buffering (show free disk space page) False: doesn't.
-- (void)prepareNextCDToBurn;
 - (void)renameInRespectiveLocations;
+//Data
+// 0 if none. Returning a max level saves a lot of childCountForIndexes: calls
+- (int)getOutlineViewMaxLevel:(int)tag;
+// returns an array of the counts of the subitems
+- (NSArray *)getOutlineView:(int)tag childCountsForPath:(NSArray *)indexPath;
+- (NSArray *)getOutlineView:(NSNumber *)tag valuesForIndexes:(NSArray *)indexPath;
+// 0 = unmarked, 1 = marked, 2 = unmarkable
+- (NSNumber *)getOutlineView:(NSNumber *)tag markedAtIndexes:(NSArray *)indexPath;
+
+- (NSNumber *)getTableViewCount:(NSNumber *)tag;
+- (NSArray *)getTableViewMarkedIndexes:(NSNumber *)tag;
+- (NSArray *)getTableView:(NSNumber *)tag valuesForRow:(NSNumber *)row;
 //Misc
 - (NSNumber *)isNodeContainer:(NSArray *)aNodePath;
-
-- (void)setProgressController:(id)progress;
 @end

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Created By: Virgil Dupras
 # Created On: 2006/11/18
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -9,7 +8,6 @@
 
 import os
 import os.path as op
-import tempfile
 import shutil
 
 import hsfs as fs
@@ -19,13 +17,12 @@ from hsutil.conflict import get_unconflicted_name, get_conflicted_name
 from hsutil.files import clean_empty_dirs
 from hsutil.job import JobCancelled
 from hsutil.misc import cond, tryint
-from hsutil.path import Path
 from hsutil.str import format_size, format_time, multi_replace, FT_MINUTES, FS_FORBIDDEN
 
 from hsutil.reg import RegistrableApplication
 
 from . import design
-from .fs_utils import Buffer, BatchOperation
+from .fs_utils import BatchOperation
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE_NORMAL
 
 class MusicGuru(RegistrableApplication):
@@ -135,20 +132,6 @@ class MusicGuru(RegistrableApplication):
         return original
     
     #---Materialize
-    def CleanBuffer(self,dest):
-        for location in self.board.locations:
-            location.mode = MODE_PHYSICAL
-        #Remove buffered and burned files
-        to_delete = self.buffer.PurgeBufferOf(dest)
-        for file in to_delete:
-            source = file[0]
-            source_path_str = str(source.original.path)
-            if os.path.exists(source_path_str):
-                os.remove(source_path_str)
-        clean_empty_dirs(self.collection.buffer_path)
-        for location in self.board.locations:
-            location.mode = MODE_NORMAL
-    
     def CopyOrMove(self,copy,destination,job,on_need_cd):
         job = job.start_subjob(2)
         for location in self.board.locations:
@@ -168,57 +151,6 @@ class MusicGuru(RegistrableApplication):
         except JobCancelled:
             for location in self.board.locations:
                 location.mode = MODE_NORMAL
-    
-    def FetchSourceSongs(self,cd,job,on_need_cd):
-        needed_songs = self.buffer.DoBufferingFor(cd)
-        needed_sources = self.buffer.GetSources(needed_songs)
-        j = job.start_subjob(len(needed_sources))
-        try:
-            for source in needed_sources:
-                cdrom_path = on_need_cd(source)
-                if not cdrom_path:
-                    return
-                songs_in_source = [song[0] for song in needed_songs if song[1] is source]
-                j.start_job(len(songs_in_source))
-                for song in songs_in_source:
-                    song_path = song.original.path[2:] #remove collection name and volume
-                    source_path = song_path
-                    dest_path = self.collection.buffer_path + source.name + song_path
-                    if not os.path.exists(str(dest_path[:-1])):
-                        os.makedirs(str(dest_path[:-1]))
-                    if os.path.exists(str(dest_path)):
-                        continue
-                    processed = False
-                    while cdrom_path and (not processed):
-                        try:
-                            shutil.copy(str(cdrom_path + source_path),str(dest_path))
-                            processed = True
-                        except (OSError,IOError):
-                            if os.path.exists(str(cdrom_path + source_path)):
-                                processed = True
-                            else:
-                                cdrom_path = on_need_cd(source)
-                                if not cdrom_path:
-                                    return
-                    j.add_progress()
-        except JobCancelled:
-            pass
-    
-    def PrepareBurning(self,free_bytes):
-        buffer_dir = tempfile.mkdtemp()
-        self.buffer = Buffer(int(free_bytes * 0.8))
-        self.collection.buffer_path = Path(buffer_dir)
-        cdroms = [l for l in self.board.locations if l.vol_type == VOLTYPE_CDROM]
-        if not cdroms:
-            return False
-        files = []
-        for song in self.board.iterallfiles():
-            original = song.original
-            location = original.parent_volume
-            if location in cdroms:
-                files.append((song,location,song.parents[1],song.size))
-        self.buffer.AddFiles(files)
-        return True
     
     def RenameInRespectiveLocations(self,job):
         #XXX Refactor: Return value isn't used in any gui port.

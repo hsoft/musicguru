@@ -83,9 +83,10 @@ http://www.hardcoded.net/licenses/hs_license
 {
     if ([[self py] isRegistered])
         return;
-    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC];
-    if ([ri enterCode] == NSOKButton)
+    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:py];
+    if ([ri enterCode] == NSOKButton) {
         [unlockMenuItem setTitle:@"Thanks for buying musicGuru!"];
+    }
     [ri release];
 }
 
@@ -124,7 +125,11 @@ http://www.hardcoded.net/licenses/hs_license
     else if (aTag == 9)
         return @selector(moveConflictsAndOriginals:);
     else if (aTag == 10)
-        return @selector(materialize:);
+        return @selector(materializeInPlace:);
+    else if (aTag == 11)
+        return @selector(copyToLocation:);
+    else if (aTag == 12)
+        return @selector(moveToLocation:);
     return nil;
 }
 
@@ -141,8 +146,9 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    if ([RegistrationInterface showNagWithApp:[self py] name:APPNAME limitDescription:LIMIT_DESC])
+    if ([RegistrationInterface showNagWithApp:py]) {
         [unlockMenuItem setTitle:@"Thanks for buying musicGuru!"];
+    }
     [[ProgressController mainProgressController] setWorker:py];
     [self updateCollection:self];
 }
@@ -164,6 +170,11 @@ http://www.hardcoded.net/licenses/hs_license
     {
         [_designWindow refresh];
     }
+    else if ((jobId == jobMaterializeInPlace) || (jobId == jobMaterializeMove)) {
+        [py emptyBoard];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MPLChangedNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:BoardLocationsChangedNotification object:self];
+    }
 }
 
 /* Delegate */
@@ -177,7 +188,7 @@ http://www.hardcoded.net/licenses/hs_license
     return NSTerminateNow;
 }
 
-- (BOOL)validateMenuItem:(id <NSMenuItem>)aMenuItem
+- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
     SEL action = [aMenuItem action];
     if (action == @selector(redirectToBoard:))

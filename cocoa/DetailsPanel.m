@@ -9,7 +9,7 @@ http://www.hardcoded.net/licenses/hs_license
 #import "DetailsPanel.h"
 
 @implementation DetailsPanel
-- (id)initWithPy:(PyApp *)aPy
+- (id)initWithPy:(PyMusicGuru *)aPy
 {
     self = [super initWithWindowNibName:@"Details"];
     [self window]; //So the detailsTable is initialized.

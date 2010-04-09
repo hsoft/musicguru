@@ -11,9 +11,6 @@ import os.path as op
 from threading import Thread
 import tempfile
 
-import DiscRecording
-import DiscRecordingUI
-
 import hsfs as fs
 from hsutil import cocoa
 from hsutil.conflict import is_conflicted
@@ -37,46 +34,6 @@ def WalkDir(base,node_path):
     items = base.dirs + base.files
     return WalkDir(items[node_path[0]],node_path[1:])
     
-def ConvertFS(directory):
-    if isinstance(directory,fs.manual.Directory):
-        root = DiscRecording.DRFolder.alloc().initWithName_(directory.name)
-        for child in directory:
-            if child.is_container:
-                folder = ConvertFS(child)
-                root.addChild_(folder)
-            else:
-                real_child = child.original
-                real_path = real_child.path
-                if op.exists(unicode(real_path)):
-                    file = DiscRecording.DRFile.fileWithPath_(unicode(real_path))
-                    file.setBaseName_(child.name)
-                    root.addChild_(file)
-    else:
-        root = DiscRecording.DRFolder.folderWithPath_(unicode(directory.path))
-    return root
-
-def GetFirstDevice(must_write_cd=False,must_write_dvd=False):
-    devices = DiscRecording.DRDevice.devices()
-    for device in devices:
-        if (not must_write_cd) or (device.info()['DRDeviceWriteCapabilitiesKey']['DRDeviceCanWriteCDKey']):
-            return device
-
-(CT_NONE,
- CT_BLANK,
- CT_NONBLANK) = range(3)
-
-def GetInsertedCDType(device):
-    if not device:
-        return CT_NONE
-    status = device.status()
-    if status['DRDeviceMediaStateKey'] == 'DRDeviceMediaStateMediaPresent':
-        if status['DRDeviceMediaInfoKey']['DRDeviceMediaIsBlankKey']:
-            return CT_BLANK
-        else:
-            return CT_NONBLANK
-    else:
-        return CT_NONE
-
 class MusicGuru(app.MusicGuru):
     def __init__(self):
         app.MusicGuru.__init__(self)
@@ -184,78 +141,20 @@ class MusicGuru(app.MusicGuru):
         self.progress.run_threaded(do)
     
     #---Materialize
-    def AddCurrentDisk(self,overwrite):
-        dest = self.board.dirs[self.current_burn_index]
-        if dest.name in self.collection:
-            if not overwrite:
-                return False
-            self.collection[dest.name].delete()
-        #Remove files that don't exist
-        for f in dest.allfiles:
-            if not op.exists(str(f.original.physical_path)):
-                f.delete()
-        self.collection.add_volume(dest,dest.name,sql.music.VOLTYPE_CDROM)
-        return True
-    
-    def BurnCurrentDisk(self,window):
-        dest = self.board.dirs[self.current_burn_index]
-        for location in self.board.locations:
-            location.mode = sql.music.MODE_PHYSICAL
-        device = GetFirstDevice(True)
-        burnfs = ConvertFS(dest)
-        track = DiscRecording.DRTrack.trackForRootFolder_(burnfs)
-        burn_session = DiscRecording.DRBurn.burnForDevice_(device)
-        burn_session.setProperties_({DiscRecording.DRBurnVerifyDiscKey: False});
-        panel = DiscRecordingUI.DRBurnProgressPanel.progressPanel().beginProgressSheetForBurn_layout_modalForWindow_(burn_session,track,window)
-        for location in self.board.locations:
-            location.mode = sql.music.MODE_NORMAL
-    
-    def CleanBuffer(self):
-        dest = self.board.dirs[self.current_burn_index]
-        super(MusicGuru,self).CleanBuffer(dest)
-    
-    def CopyOrMove(self,copy,destination,job,panel):
+    def CopyOrMove(self, copy, destination, panel):
         def on_need_cd(location):
             return panel.promptForDiskNamed_(location.name)
         
-        super(MusicGuru,self).CopyOrMove(copy,destination,job,on_need_cd)
-            
-    def EjectCDIfNotBlank(self):
-        device = GetFirstDevice(True)
-        if GetInsertedCDType(device) != CT_BLANK:
-            if device:
-                Thread(name="ejecting CD",target=device.ejectMedia).start()
-            return False
-        else:
-            return True
+        j = self.progress.create_job()
+        def do():
+            super(MusicGuru, self).CopyOrMove(copy, destination, j, on_need_cd)
+        self.progress.run_threaded(do)
     
-    def FetchSourceSongs(self,job,panel):
-        def on_need_cd(location):
-            return panel.promptForDiskNamed_(location.name)
-        
-        dest = self.board.dirs[self.current_burn_index]
-        super(MusicGuru,self).FetchSourceSongs(dest,job,on_need_cd)
-    
-    def GetBufferSizes(self):
-        buffer = self.buffer
-        disk_stat = os.statvfs(str(self.collection.buffer_path))
-        free_bytes = disk_stat.f_frsize * disk_stat.f_bavail
-        minimum = buffer.GetMinimumBytesRequired()
-        maximum = buffer.GetMaximumBytesRequired()
-        minimum = int(minimum*1.2)
-        maximum = max(maximum,minimum)
-        buffer.size = int(free_bytes * 0.8)
-        return [free_bytes,minimum,maximum,format_size(free_bytes,0,2),format_size(minimum,0,2),format_size(maximum,0,2)]
-    
-    def PrepareBurning(self):
-        self.current_burn_index = 0
-        #Getting available disk space on unix:
-        #os.statvfs(path) returns the fs stats of path in a structure.
-        #The numbers in that struct are in blocks. To get available bytes, we
-        #must do s.f_frsize * s.f_bavail (The struct is documented on python.org)
-        disk_stat = os.statvfs(tempfile.gettempdir())
-        free_bytes = disk_stat.f_frsize * disk_stat.f_bavail
-        return super(MusicGuru,self).PrepareBurning(free_bytes)
+    def RenameInRespectiveLocations(self):
+        j = self.progress.create_job()
+        def do():
+            super(MusicGuru, self).RenameInRespectiveLocations(j)
+        self.progress.run_threaded(do)
     
     #---Data
     def GetNodeData(self, node):

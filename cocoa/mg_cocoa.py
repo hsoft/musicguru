@@ -93,9 +93,6 @@ class PyMusicGuru(NSObject):
         self.app = app_cocoa.MusicGuru()
         return self
     
-    def __CreateJob(self):
-        return job.Job(1,lambda p:self.progress.pyUpdate_(p))
-    
     #---Locations
     def addLocationWithPath_name_removeable_(self, path, name, removeable):
         return self.app.AddLocation(path, name, removeable)
@@ -185,41 +182,11 @@ class PyMusicGuru(NSObject):
         self.app.board.Unsplit()
     
     #---Materialize
-    def addCurrentDiskToMPLOverwrite_(self,overwrite):
-        return self.app.AddCurrentDisk(overwrite)
-    
-    def burnCurrentDiskWithWindow_(self,window):
-        self.app.BurnCurrentDisk(window)
-    
-    def cleanBuffer(self):
-        self.app.CleanBuffer()
-    
     def copyOrMove_toPath_onNeedCDPanel_(self,copy,destination,panel):
-        self.app.CopyOrMove(copy,destination,self.__CreateJob(),panel)
-    
-    def ejectCDIfNotBlank(self):
-        return self.app.EjectCDIfNotBlank()
-    
-    def fetchSourceSongsWithNeedCDPanel_(self,panel):
-        self.app.FetchSourceSongs(self.__CreateJob(),panel)
-    
-    def getBurnBufferSizes(self):
-        return self.app.GetBufferSizes()
-    
-    def getDestinationDiskName(self):
-        return self.app.board.dirs[self.app.current_burn_index].name
-    
-    def isFinishedBurning(self):
-        return self.app.current_burn_index >= len(self.app.board.dirs)
-    
-    def prepareBurning(self):
-        return self.app.PrepareBurning()
-    
-    def prepareNextCDToBurn(self):
-        self.app.current_burn_index += 1
+        self.app.CopyOrMove(copy, destination, panel)
     
     def renameInRespectiveLocations(self):
-        self.app.RenameInRespectiveLocations(self.__CreateJob())
+        self.app.RenameInRespectiveLocations()
     
     #---Misc
     def isNodeContainer_(self,node_path):
@@ -262,7 +229,16 @@ class PyMusicGuru(NSObject):
     def cancelJob(self):
         self.app.progress.job_cancelled = True
     
+    def jobCompleted_(self, jobid):
+        pass
+    
     #---Registration
+    def appName(self):
+        return "musicGuru"
+    
+    def demoLimitDescription(self):
+        return "In the demo version, it's not possible to materialize designs."
+    
     @objc.signature('i@:')
     def isRegistered(self):
         return self.app.registered

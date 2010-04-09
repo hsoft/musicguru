@@ -13,12 +13,12 @@ http://www.hardcoded.net/licenses/hs_license
 #import "../cocoalib/Utils.h"
 
 @implementation LocationPanel
-- (id)initWithPy:(PyApp *)aPy
+- (id)initWithPy:(PyMusicGuru *)aPy
 {
     self = [super initWithWindowNibName:@"LocationPanel"];
     [self window]; //So the locationsTable is initialized.
     _addLocation = nil;
-    py = (PyMusicGuru *)aPy;
+    py = aPy;
     [locationsTable setPy:aPy];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MPLChanged:) name:MPLChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationTableSelectionChanged:) name:NSTableViewSelectionDidChangeNotification object:locationsTable];
@@ -32,14 +32,11 @@ http://www.hardcoded.net/licenses/hs_license
 {
     [locationsTable reloadData];
     NSIndexSet *marked = [locationsTable markedIndexes];
-    for (int i=0; i<[locationsTable numberOfRows]; i++)
-    {
-        if ([marked containsIndex:i])
-        {
+    for (int i=0; i<[locationsTable numberOfRows]; i++) {
+        if ([marked containsIndex:i]) {
             BOOL isRemovable = n2b([locationsTable bufferValueForRow:i column:3]);
             BOOL isAvailable = n2b([locationsTable bufferValueForRow:i column:4]);
-            if ((!isRemovable) && (!isAvailable))
-            {
+            if ((!isRemovable) && (!isAvailable)) {
                 NSString *name = [locationsTable bufferValueForRow:i column:0];
                 NSString *path = [locationsTable bufferValueForRow:i column:5];
                 NSString *message = [NSString stringWithFormat:@"The location '%@' at path '%@' is unreachable. You can't materialize your design.",name,path];
@@ -57,8 +54,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSString *path = @"";
     NSString *type = @"";
     BOOL canChangePath = NO;
-    if (i >= 0)
-    {
+    if (i >= 0) {
         BOOL isRemovable = n2b([locationsTable bufferValueForRow:i column:3]);
         path = [locationsTable bufferValueForRow:i column:5];
         type = isRemovable ? @"Removable (CD/DVD)" : @"Fixed (Hard disk)";
@@ -84,8 +80,7 @@ http://www.hardcoded.net/licenses/hs_license
     NSOpenPanel *op = [NSOpenPanel openPanel];
     [op setCanChooseFiles:NO];
     [op setCanChooseDirectories:YES];
-    if ([op runModalForTypes:nil] == NSOKButton)
-    {
+    if ([op runModalForTypes:nil] == NSOKButton) {
         NSString *name = [locationsTable bufferValueForRow:i column:0];
         NSString *newPath = [[op filenames] objectAtIndex:0];
         [py setPath:newPath ofLocationNamed:name];
@@ -99,8 +94,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (IBAction)markLocation:(id)sender
 {
-     if ([[py isBoardSplitted] boolValue])
-     {
+     if ([[py isBoardSplitted] boolValue]) {
          [Dialogs showMessage:@"You cannot add or remove locations to a splitted design board. Unsplit it before adding or removing locations."];
          return;
      }
@@ -115,8 +109,7 @@ http://www.hardcoded.net/licenses/hs_license
     if (i < 0)
         return;
     NSString *s = [[py getTableView:i2n(0) valuesForRow:i2n(i)] objectAtIndex:0];
-    if ([Dialogs askYesNo:[NSString stringWithFormat:@"Do you really want to remove location '%@' from your collection?",s]] == NSAlertFirstButtonReturn)
-    {
+    if ([Dialogs askYesNo:[NSString stringWithFormat:@"Do you really want to remove location '%@' from your collection?",s]] == NSAlertFirstButtonReturn) {
         [py removeLocationNamed:s];
         [[NSNotificationCenter defaultCenter] postNotificationName:MPLChangedNotification object:self];
     }
@@ -143,12 +136,11 @@ http://www.hardcoded.net/licenses/hs_license
     return @"";
 }
 
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     BOOL isRemovable = n2b([locationsTable bufferValueForRow:rowIndex column:3]);
     BOOL isAvailable = n2b([locationsTable bufferValueForRow:rowIndex column:4]);
-    if ([cell isKindOfClass:[NSTextFieldCell class]])
-    {
+    if ([cell isKindOfClass:[NSTextFieldCell class]]) {
         // Determine if the text color will be blue due to directory being reference.
         NSTextFieldCell *textCell = cell;
         if (isRemovable)

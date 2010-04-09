@@ -7,11 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "../cocoalib/Outline.h"
-#import "../cocoalib/Table.h"
+#import "Outline.h"
+#import "Table.h"
 #import "DetailsPanel.h"
 #import "PyMusicGuru.h"
-#import "MaterializeWizard.h"
 
 @interface DesignOutlineView : DraggableOutlineView
 {
@@ -35,12 +34,13 @@ http://www.hardcoded.net/licenses/hs_license
     NSTextField *_editor;
     long long _mediaCapacity;
     PyMusicGuru *py;
-    MaterializeWizard *_wiz;
 }
 - (id)initWithParentApp:(id)aApp;
 
 - (IBAction)massRename:(id)sender;
-- (IBAction)materialize:(id)sender;
+- (IBAction)materializeInPlace:(id)sender;
+- (IBAction)copyToLocation:(id)sender;
+- (IBAction)moveToLocation:(id)sender;
 - (IBAction)moveConflicts:(id)sender;
 - (IBAction)moveConflictsAndOriginals:(id)sender;
 - (IBAction)moveToIgnoreBox:(id)sender;
@@ -54,7 +54,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)switchConflictAndOriginal:(id)sender;
 - (IBAction)unsplit:(id)sender;
 
-- (void)materializeWizardCallback:(MaterializeWizard *)aWizard;
 - (void)refresh;
 - (void)refreshStats;
 - (void)setDetailsPanel:(DetailsPanel *)aDetailsPanel;

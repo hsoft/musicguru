@@ -7,15 +7,15 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "../cocoalib/PyApp.h"
-#import "../cocoalib/Table.h"
+#import "PyMusicGuru.h"
+#import "Table.h"
 
 
 @interface DetailsPanel : NSWindowController
 {
     IBOutlet TableView *detailsTable;
 }
-- (id)initWithPy:(PyApp *)aPy;
+- (id)initWithPy:(PyMusicGuru *)aPy;
 
 - (void)refresh;
 @end

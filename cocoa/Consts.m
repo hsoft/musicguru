@@ -15,3 +15,6 @@ NSString *jobUpdate = @"jobUpdate";
 NSString *jobAddLocation = @"jobAddLocation";
 NSString *jobMassRename = @"jobMassRename";
 NSString *jobSplit = @"jobSplit";
+NSString *jobMaterializeInPlace = @"jobMaterializeInPlace";
+NSString *jobMaterializeCopy = @"jobMaterializeCopy";
+NSString *jobMaterializeMove = @"jobMaterializeMove";

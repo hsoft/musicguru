@@ -6,20 +6,20 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/hs_license
 */
 
-#import "../cocoalib/Dialogs.h"
-#import "../cocoalib/ProgressController.h"
-#import "../cocoalib/Utils.h"
+#import "Dialogs.h"
+#import "ProgressController.h"
+#import "Utils.h"
 #import "AppDelegate.h"
 #import "MassRenameDialog.h"
 #import "SplitDialog.h"
 #import "Consts.h"
 #import "DesignWindow.h"
+#import "DiskNeededPanel.h"
 
 static NSString* tbbLocations   = @"tbbLocations";
 static NSString* tbbDetails     = @"tbbDetails";
 static NSString* tbbIgnoreBox   = @"tbbIgnoreBox";
 static NSString* tbbAction      = @"tbbAction";
-static NSString* tbbMaterialize = @"tbbMaterialize";
 
 @implementation DesignOutlineView
 - (NSColor *)determineDragCircleColor
@@ -41,20 +41,18 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
     NSMutableArray *sourceNodePaths = [NSMutableArray array];
     NSEnumerator *e = [aSourceNodes objectEnumerator];
     OVNode *node;
-    while (node = [e nextObject])
-    {
-        if ([(DesignOutlineView *)aSource alternateDragging])
-        {
+    while (node = [e nextObject]) {
+        if ([(DesignOutlineView *)aSource alternateDragging]) {
             //We must add *children* of dragged nodes
-            int childCount = [[aSource dataSource] outlineView:aSource numberOfChildrenOfItem:node];
-            for(int i=0;i<childCount;i++)
-            {
+            NSInteger childCount = [[aSource dataSource] outlineView:aSource numberOfChildrenOfItem:node];
+            for(NSInteger i=0;i<childCount;i++) {
                 OVNode *snode = [[aSource dataSource] outlineView:aSource child:i ofItem:node];
                 [sourceNodePaths addObject:p2a([snode indexPath])];
             }
         }
-        else
+        else {
             [sourceNodePaths addObject:p2a([node indexPath])];
+        }
     }
     if ((aDestNode) && (([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask) != 0))
         aDestNode = [aDestNode parent];
@@ -144,13 +142,51 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
     }
 }
 
-- (IBAction)materialize:(id)sender
+- (IBAction)materializeInPlace:(id)sender
 {
     if (![_app canMaterialize])
         return;
-    _wiz = [[MaterializeWizard alloc] initWithPy:py];
-    [_wiz setMediaCapacity:_mediaCapacity];
-    [_wiz runAsSessionWithCallback:@selector(materializeWizardCallback:) target:self];
+    NSString *msg = @"Your design will be materialized by renaming files in-place. Continue?";
+    if ([Dialogs askYesNo:msg] == NSAlertFirstButtonReturn) {
+        [[ProgressController mainProgressController] setJobDesc:@"Renaming..."];
+        [[ProgressController mainProgressController] setJobId:jobMaterializeInPlace];
+        [[ProgressController mainProgressController] showSheetForParent:[self window]];
+        [py renameInRespectiveLocations];
+    }
+}
+
+- (IBAction)copyToLocation:(id)sender
+{
+    if (![_app canMaterialize])
+        return;
+    NSOpenPanel *op = [NSOpenPanel openPanel];
+    [op setCanChooseFiles:NO];
+    [op setCanChooseDirectories:YES];
+    [op setCanCreateDirectories:YES];
+    if ([op runModalForTypes:nil] == NSOKButton) {
+        NSString *destPath = [[op filenames] objectAtIndex:0];
+        [[ProgressController mainProgressController] setJobDesc:@"Copying files"];
+        [[ProgressController mainProgressController] setJobId:jobMaterializeCopy];
+        [[ProgressController mainProgressController] showSheetForParent:[self window]];
+        [py copyOrMove:b2n(YES) toPath:destPath onNeedCDPanel:self];
+    }
+}
+
+- (IBAction)moveToLocation:(id)sender
+{
+    if (![_app canMaterialize])
+        return;
+    NSOpenPanel *op = [NSOpenPanel openPanel];
+    [op setCanChooseFiles:NO];
+    [op setCanChooseDirectories:YES];
+    [op setCanCreateDirectories:YES];
+    if ([op runModalForTypes:nil] == NSOKButton) {
+        NSString *destPath = [[op filenames] objectAtIndex:0];
+        [[ProgressController mainProgressController] setJobDesc:@"Moving files"];
+        [[ProgressController mainProgressController] setJobId:jobMaterializeMove];
+        [[ProgressController mainProgressController] showSheetForParent:[self window]];
+        [py copyOrMove:b2n(NO) toPath:destPath onNeedCDPanel:self];
+    }
 }
 
 - (IBAction)moveConflicts:(id)sender
@@ -280,17 +316,17 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
 }
 
 //Public
-- (void)materializeWizardCallback:(MaterializeWizard *)aWizard
-{
-    if ([_wiz collectionHasChanged])
-    {
-        [py emptyBoard];
-        [[NSNotificationCenter defaultCenter] postNotificationName:MPLChangedNotification object:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:BoardLocationsChangedNotification object:self];
-    }
-    [_wiz autorelease]; //autorelease: Let enough time to the wizard to finish it's operations if it has been cancelled in the middle of a getNextPage.
-    _wiz = nil;
-}
+// - (void)materializeWizardCallback:(MaterializeWizard *)aWizard
+// {
+//     if ([_wiz collectionHasChanged])
+//     {
+//         [py emptyBoard];
+//         [[NSNotificationCenter defaultCenter] postNotificationName:MPLChangedNotification object:self];
+//         [[NSNotificationCenter defaultCenter] postNotificationName:BoardLocationsChangedNotification object:self];
+//     }
+//     [_wiz autorelease]; //autorelease: Let enough time to the wizard to finish it's operations if it has been cancelled in the middle of a getNextPage.
+//     _wiz = nil;
+// }
 
 - (void)refresh
 {
@@ -353,6 +389,15 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
     }
 }
 
+- (NSString *)promptForDiskNamed:(NSString *)aDiskName
+{
+    NSString *r = [DiskNeededPanel promptForDiskNamed:aDiskName];
+    if ([r length])
+        return r;
+    else
+        return nil;
+}
+
 /* Notifications */
 - (void)BoardLocationsChanged:(NSNotification *)aNotification
 {
@@ -397,14 +442,6 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
         [tbi setMinSize:[actionMenuView frame].size];
         [tbi setMaxSize:[actionMenuView frame].size];
     }
-    else if (itemIdentifier == tbbMaterialize)
-    {
-        [tbi setLabel: @"Materialize"];
-        [tbi setToolTip: @"Apply changes you've made to your collection"];
-        [tbi setImage: [NSImage imageNamed: @"materialize_32"]];
-        [tbi setTarget: self];
-        [tbi setAction: @selector(materialize:)];
-    }
     [tbi setPaletteLabel: [tbi label]];
     return tbi;
 }
@@ -416,7 +453,6 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
         tbbDetails,
         tbbIgnoreBox,
         tbbAction,
-        tbbMaterialize,
         NSToolbarSeparatorItemIdentifier,
         NSToolbarSpaceItemIdentifier, 
         NSToolbarFlexibleSpaceItemIdentifier,
@@ -431,8 +467,6 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
         tbbIgnoreBox,
         NSToolbarSpaceItemIdentifier,
         tbbAction,
-        NSToolbarSpaceItemIdentifier,
-        tbbMaterialize,
         nil];
 }
 
@@ -441,7 +475,7 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
     return [self validateAction:[aItem action] fromToolbar:YES];
 }
 
-- (BOOL)validateMenuItem:(id <NSMenuItem>)aMenuItem
+- (BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
     return [self validateAction:[aMenuItem action] fromToolbar:NO];
 }
@@ -452,15 +486,16 @@ static NSString* tbbMaterialize = @"tbbMaterialize";
     if (
         (aAction == @selector(massRename:)) ||
         (aAction == @selector(split:)) ||
-        (aAction == @selector(materialize:)) ||
+        (aAction == @selector(materializeInPlace:)) ||
+        (aAction == @selector(copyToLocation:)) ||
+        (aAction == @selector(moveToLocation:)) ||
         (aAction == @selector(newFolder:)) ||
         (aAction == @selector(renameSelected:)) ||
         (aAction == @selector(moveToIgnoreBox:)) ||
         (aAction == @selector(removeEmptyFolders:)) ||
         (aAction == @selector(moveConflicts:)) ||
         (aAction == @selector(moveConflictsAndOriginals:)) ||
-        (aAction == @selector(switchConflictAndOriginal:)) ||
-        (aAction == @selector(materialize:))
+        (aAction == @selector(switchConflictAndOriginal:))
     )
         r = [browserOutline numberOfRows] > 0;
     if (r && ((aAction == @selector(moveConflicts:)) || (aAction == @selector(moveConflictsAndOriginals:))))

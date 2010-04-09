@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "../cocoalib/Table.h"
+#import "Table.h"
 #import "AddLocationWindow.h"
 #import "PyMusicGuru.h"
 
@@ -21,7 +21,7 @@ http://www.hardcoded.net/licenses/hs_license
     AddLocationWindow *_addLocation;
     PyMusicGuru *py;
 }
-- (id)initWithPy:(PyApp *)aPy;
+- (id)initWithPy:(PyMusicGuru *)aPy;
 - (BOOL)canMaterialize;
 - (void)updateLocationDetails;
 
