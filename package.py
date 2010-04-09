@@ -11,10 +11,12 @@ import sys
 import os
 import os.path as op
 import shutil
+import compileall
 
 import yaml
 
-from hsutil.build import print_and_do, build_dmg, add_to_pythonpath, copy_qt_plugins
+from hsutil.build import (print_and_do, build_dmg, add_to_pythonpath, copy_qt_plugins,
+    copy_packages, build_debian_changelog)
 
 def package_windows(dev):
     if sys.platform != "win32":
@@ -52,6 +54,24 @@ def package_windows(dev):
     os.remove('installer_tmp.aip')
     os.chdir(op.join('..', '..'))
 
+def package_debian():
+    if op.exists('build'):
+        shutil.rmtree('build')
+    add_to_pythonpath('qt')
+    from app import MusicGuru
+    destpath = op.join('build', 'musicguru-{0}'.format(MusicGuru.VERSION))
+    srcpath = op.join(destpath, 'src')
+    os.makedirs(destpath)
+    shutil.copytree('qt', srcpath)
+    copy_packages(['hsutil', 'hsmedia', 'hsfs', 'core', 'qtlib'], srcpath)
+    shutil.copytree('debian', op.join(destpath, 'debian'))
+    build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'musicguru', from_version='1.3.6')
+    shutil.copytree(op.join('help', 'musicguru_help'), op.join(srcpath, 'help'))
+    shutil.copy(op.join('images', 'mg_logo_big.png'), srcpath)
+    compileall.compile_dir(srcpath)
+    os.chdir(destpath)
+    os.system("dpkg-buildpackage")
+
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
@@ -62,6 +82,8 @@ def main():
     elif ui == 'qt':
         if sys.platform == "win32":
             package_windows(dev)
+        elif sys.platform == "linux2":
+            package_debian()
 
 if __name__ == '__main__':
     main()
