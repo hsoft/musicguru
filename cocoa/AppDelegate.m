@@ -99,6 +99,10 @@ http://www.hardcoded.net/licenses/hs_license
 /* Public */
 - (BOOL)canMaterialize
 {
+    if (![py isRegistered]) {
+        [Dialogs showMessage:@"You have to purchase musicGuru to materialize designs."];
+        return NO;
+    }
     return [_locationPanel canMaterialize];
 }
 

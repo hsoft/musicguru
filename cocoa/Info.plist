@@ -34,5 +34,7 @@
 	<false/>
 	<key>SUFeedURL</key>
 	<string>http://www.hardcoded.net/updates/musicguru.appcast</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 </dict>
 </plist>
