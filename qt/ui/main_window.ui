@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>622</width>
+    <height>448</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>musicGuru</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTreeView" name="browserView">
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::DragDrop</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
+      <property name="uniformRowHeights">
+       <bool>true</bool>
+      </property>
+      <attribute name="headerDefaultSectionSize">
+       <number>75</number>
+      </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>false</bool>
+      </attribute>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>622</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionAddLocation"/>
+    <addaction name="actionRemoveLocation"/>
+    <addaction name="actionUpdateLocation"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionNewFolder"/>
+    <addaction name="actionRemoveEmptyFolders"/>
+    <addaction name="actionRenameSelected"/>
+    <addaction name="actionMoveSelectedToIgnoreBox"/>
+    <addaction name="actionSwitchConflictAndOriginal"/>
+    <addaction name="separator"/>
+    <addaction name="actionMassRename"/>
+    <addaction name="actionSplit"/>
+    <addaction name="actionUndoSplit"/>
+    <addaction name="actionMoveConflicts"/>
+    <addaction name="actionMoveConflictsAndOriginals"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionShowLocations"/>
+    <addaction name="actionShowDetails"/>
+    <addaction name="actionShowIgnoreBox"/>
+   </widget>
+   <widget class="QMenu" name="menuMaterialize">
+    <property name="title">
+     <string>Materialize</string>
+    </property>
+    <addaction name="actionRenameInRespectiveLocations"/>
+    <addaction name="actionCopyToOtherLocation"/>
+    <addaction name="actionMoveToOtherLocation"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionShowHelp"/>
+    <addaction name="actionRegister"/>
+    <addaction name="actionCheckForUpdate"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuActions"/>
+   <addaction name="menuMaterialize"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionShowLocations"/>
+   <addaction name="actionShowDetails"/>
+   <addaction name="actionShowIgnoreBox"/>
+   <addaction name="actionActions"/>
+   <addaction name="actionMaterialize"/>
+  </widget>
+  <action name="actionAddLocation">
+   <property name="text">
+    <string>Add Location</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionRemoveLocation">
+   <property name="text">
+    <string>Remove Location</string>
+   </property>
+  </action>
+  <action name="actionUpdateLocation">
+   <property name="text">
+    <string>Update Location</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionMaterialize">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/materialize</normaloff>:/materialize</iconset>
+   </property>
+   <property name="text">
+    <string>Materialize</string>
+   </property>
+  </action>
+  <action name="actionNewFolder">
+   <property name="text">
+    <string>New Folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionRemoveEmptyFolders">
+   <property name="text">
+    <string>Remove Empty Folders</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionRenameSelected">
+   <property name="text">
+    <string>Rename Selected</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="actionMoveSelectedToIgnoreBox">
+   <property name="text">
+    <string>Move Selected to Ignore Box</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionSwitchConflictAndOriginal">
+   <property name="text">
+    <string>Switch Conflict And Original</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionMassRename">
+   <property name="text">
+    <string>Mass Rename</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionSplit">
+   <property name="text">
+    <string>Split Into CD/DVD</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionUndoSplit">
+   <property name="text">
+    <string>Undo Split</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionMoveConflicts">
+   <property name="text">
+    <string>Move Conflicts</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionMoveConflictsAndOriginals">
+   <property name="text">
+    <string>Move Conflicts and Originals</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
+  <action name="actionShowLocations">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/locations</normaloff>:/locations</iconset>
+   </property>
+   <property name="text">
+    <string>Locations</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionShowDetails">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/details</normaloff>:/details</iconset>
+   </property>
+   <property name="text">
+    <string>Details</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
+  </action>
+  <action name="actionShowIgnoreBox">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/ignore_box</normaloff>:/ignore_box</iconset>
+   </property>
+   <property name="text">
+    <string>Ignore Box</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+  </action>
+  <action name="actionActions">
+   <property name="icon">
+    <iconset resource="../mg.qrc">
+     <normaloff>:/actions</normaloff>:/actions</iconset>
+   </property>
+   <property name="text">
+    <string>Actions</string>
+   </property>
+  </action>
+  <action name="actionRenameInRespectiveLocations">
+   <property name="text">
+    <string>Rename in Respective Locations</string>
+   </property>
+  </action>
+  <action name="actionCopyToOtherLocation">
+   <property name="text">
+    <string>Copy to Other Location</string>
+   </property>
+  </action>
+  <action name="actionMoveToOtherLocation">
+   <property name="text">
+    <string>Move to Other Location</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About musicGuru</string>
+   </property>
+  </action>
+  <action name="actionShowHelp">
+   <property name="text">
+    <string>musicGuru Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionCheckForUpdate">
+   <property name="text">
+    <string>Check For Update</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionRegister">
+   <property name="text">
+    <string>Register musicGuru</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../mg.qrc"/>
+ </resources>
+ <connections/>
+</ui>

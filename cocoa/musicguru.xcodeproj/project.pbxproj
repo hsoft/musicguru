@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		CE28DB23116F0B6100A93DD8 /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */; };
+		CE28DB24116F0B6100A93DD8 /* progress.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB21116F0B6100A93DD8 /* progress.xib */; };
+		CE28DB25116F0B6100A93DD8 /* registration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB22116F0B6100A93DD8 /* registration.xib */; };
+		CE28DB2A116F0B7300A93DD8 /* Outline.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28DB27116F0B7300A93DD8 /* Outline.m */; };
+		CE28DB2B116F0B7300A93DD8 /* Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28DB29116F0B7300A93DD8 /* Table.m */; };
+		CE2CD3D80A94822200C0DA8D /* LocationPanel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE2CD3D60A94822200C0DA8D /* LocationPanel.h */; };
+		CE2CD3D90A94822200C0DA8D /* LocationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2CD3D70A94822200C0DA8D /* LocationPanel.m */; };
+		CE2CD62C0A94973500C0DA8D /* Consts.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE2CD62B0A94973500C0DA8D /* Consts.h */; };
+		CE2CD7460A94A6B600C0DA8D /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2CD7450A94A6B600C0DA8D /* Consts.m */; };
+		CE31A306116F302200AF3D6D /* AddLocation.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A2FE116F302200AF3D6D /* AddLocation.xib */; };
+		CE31A307116F302200AF3D6D /* Design.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A2FF116F302200AF3D6D /* Design.xib */; };
+		CE31A308116F302200AF3D6D /* Details.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A300116F302200AF3D6D /* Details.xib */; };
+		CE31A309116F302200AF3D6D /* DiskNeeded.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A301116F302200AF3D6D /* DiskNeeded.xib */; };
+		CE31A30A116F302200AF3D6D /* LocationPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A302116F302200AF3D6D /* LocationPanel.xib */; };
+		CE31A30B116F302200AF3D6D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A303116F302200AF3D6D /* MainMenu.xib */; };
+		CE31A30C116F302200AF3D6D /* MassRename.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A304116F302200AF3D6D /* MassRename.xib */; };
+		CE31A30D116F302200AF3D6D /* Split.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE31A305116F302200AF3D6D /* Split.xib */; };
+		CE79F7C10986839000CD4AB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE79F7BF0986839000CD4AB7 /* AppDelegate.m */; };
+		CE79FA5D09869F6E00CD4AB7 /* mg_cocoa.plugin in Resources */ = {isa = PBXBuildFile; fileRef = CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */; };
+		CE86506309CEEDE900F40C01 /* musicguru.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE86506209CEEDE900F40C01 /* musicguru.icns */; };
+		CE90AF2309D083D7005185D9 /* music_note_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CE90AF2209D083D7005185D9 /* music_note_32.png */; };
+		CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */; };
+		CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */; };
+		CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */; };
+		CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */; };
+		CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9BB0FE1210400ABA3F7 /* Utils.m */; };
+		CEB4E7FC09CEF4CE00A27957 /* DesignWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */; };
+		CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */; };
+		CEB960FB09D3078500852670 /* MassRenameDialog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEB960F909D3078500852670 /* MassRenameDialog.h */; };
+		CEB960FC09D3078500852670 /* MassRenameDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB960FA09D3078500852670 /* MassRenameDialog.m */; };
+		CEBF43380ADC3F580004F7F0 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBF43370ADC3F580004F7F0 /* Sparkle.framework */; };
+		CEBF43510ADC3FAB0004F7F0 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBF43370ADC3F580004F7F0 /* Sparkle.framework */; };
+		CEC9A8D209D86A6A0038B2D6 /* musicguru_help in Resources */ = {isa = PBXBuildFile; fileRef = CEC9A8BA09D86A6A0038B2D6 /* musicguru_help */; };
+		CECA229509CDB95400D48E88 /* AddLocationWindow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CECA229309CDB95400D48E88 /* AddLocationWindow.h */; };
+		CECA229609CDB95400D48E88 /* AddLocationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CECA229409CDB95400D48E88 /* AddLocationWindow.m */; };
+		CECCBD78098945A2007E0658 /* add_music_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD77098945A2007E0658 /* add_music_32.png */; };
+		CECCBD88098945DD007E0658 /* design_board_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD87098945DD007E0658 /* design_board_32.png */; };
+		CECCBD8A098945E2007E0658 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD89098945E2007E0658 /* gear.png */; };
+		CECCBD8E098945ED007E0658 /* ignore_box_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD8D098945ED007E0658 /* ignore_box_32.png */; };
+		CECCBD90098945F1007E0658 /* info_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD8F098945F1007E0658 /* info_32.png */; };
+		CECCBD92098945FB007E0658 /* locations_32.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD91098945FB007E0658 /* locations_32.png */; };
+		CECCBD9A09894617007E0658 /* cdrom_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9909894617007E0658 /* cdrom_16.png */; };
+		CECCBD9C0989461D007E0658 /* folder_conflict_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9B0989461D007E0658 /* folder_conflict_16.png */; };
+		CECCBD9E09894623007E0658 /* folder_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9D09894623007E0658 /* folder_16.png */; };
+		CECCBDA00989462D007E0658 /* hdd_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBD9F0989462D007E0658 /* hdd_16.png */; };
+		CECCBDA209894634007E0658 /* song_conflict_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBDA109894634007E0658 /* song_conflict_16.png */; };
+		CECCBDA40989463C007E0658 /* song_16.png in Resources */ = {isa = PBXBuildFile; fileRef = CECCBDA30989463C007E0658 /* song_16.png */; };
+		CEDD211409D42EBD005F8BF5 /* DiskNeededPanel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */; };
+		CEDD211509D42EBD005F8BF5 /* DiskNeededPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */; };
+		CEE8A7DC09CED2A0004911BA /* DetailsPanel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEE8A7DA09CED2A0004911BA /* DetailsPanel.h */; };
+		CEE8A7DD09CED2A0004911BA /* DetailsPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE8A7DB09CED2A0004911BA /* DetailsPanel.m */; };
+		CEEF347C09D318B5003E55A9 /* SplitDialog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEEF347A09D318B5003E55A9 /* SplitDialog.h */; };
+		CEEF347D09D318B5003E55A9 /* SplitDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEF347B09D318B5003E55A9 /* SplitDialog.m */; };
+		CEFDEC00116F5063006266D5 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CEFDEBFF116F5063006266D5 /* dsa_pub.pem */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE5E605C09CD90D90024A9E6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CECA229509CDB95400D48E88 /* AddLocationWindow.h in CopyFiles */,
+				CEE8A7DC09CED2A0004911BA /* DetailsPanel.h in CopyFiles */,
+				CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */,
+				CEB960FB09D3078500852670 /* MassRenameDialog.h in CopyFiles */,
+				CEEF347C09D318B5003E55A9 /* SplitDialog.h in CopyFiles */,
+				CEDD211409D42EBD005F8BF5 /* DiskNeededPanel.h in CopyFiles */,
+				CE2CD3D80A94822200C0DA8D /* LocationPanel.h in CopyFiles */,
+				CE2CD62C0A94973500C0DA8D /* Consts.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBF434D0ADC3F8B0004F7F0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CEBF43510ADC3FAB0004F7F0 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* musicGuru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = musicGuru.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorReportWindow.xib; sourceTree = "<group>"; };
+		CE28DB21116F0B6100A93DD8 /* progress.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = progress.xib; sourceTree = "<group>"; };
+		CE28DB22116F0B6100A93DD8 /* registration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = registration.xib; sourceTree = "<group>"; };
+		CE28DB26116F0B7300A93DD8 /* Outline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outline.h; sourceTree = "<group>"; };
+		CE28DB27116F0B7300A93DD8 /* Outline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outline.m; sourceTree = "<group>"; };
+		CE28DB28116F0B7300A93DD8 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
+		CE28DB29116F0B7300A93DD8 /* Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Table.m; sourceTree = "<group>"; };
+		CE2CD3D60A94822200C0DA8D /* LocationPanel.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = LocationPanel.h; sourceTree = "<group>"; };
+		CE2CD3D70A94822200C0DA8D /* LocationPanel.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = LocationPanel.m; sourceTree = "<group>"; };
+		CE2CD62B0A94973500C0DA8D /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = SOURCE_ROOT; };
+		CE2CD7450A94A6B600C0DA8D /* Consts.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = Consts.m; sourceTree = "<group>"; };
+		CE31A2FE116F302200AF3D6D /* AddLocation.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddLocation.xib; sourceTree = "<group>"; };
+		CE31A2FF116F302200AF3D6D /* Design.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Design.xib; sourceTree = "<group>"; };
+		CE31A300116F302200AF3D6D /* Details.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Details.xib; sourceTree = "<group>"; };
+		CE31A301116F302200AF3D6D /* DiskNeeded.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskNeeded.xib; sourceTree = "<group>"; };
+		CE31A302116F302200AF3D6D /* LocationPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationPanel.xib; sourceTree = "<group>"; };
+		CE31A303116F302200AF3D6D /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		CE31A304116F302200AF3D6D /* MassRename.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MassRename.xib; sourceTree = "<group>"; };
+		CE31A305116F302200AF3D6D /* Split.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Split.xib; sourceTree = "<group>"; };
+		CE5E602409CD8EAB0024A9E6 /* PyMusicGuru.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = PyMusicGuru.h; sourceTree = "<group>"; };
+		CE79F7BF0986839000CD4AB7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CE79F7C00986839000CD4AB7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mg_cocoa.plugin; sourceTree = "<group>"; };
+		CE86506209CEEDE900F40C01 /* musicguru.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = musicguru.icns; sourceTree = SOURCE_ROOT; };
+		CE90AF2209D083D7005185D9 /* music_note_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = music_note_32.png; path = ../images/music_note_32.png; sourceTree = SOURCE_ROOT; };
+		CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSingleLineFormatter.h; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BRSingleLineFormatter.m; path = ../cocoalib/brsinglelineformatter/BRSingleLineFormatter.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9AE0FE1210400ABA3F7 /* Dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dialogs.h; path = ../cocoalib/Dialogs.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dialogs.m; path = ../cocoalib/Dialogs.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressController.h; path = ../cocoalib/ProgressController.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressController.m; path = ../cocoalib/ProgressController.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9B40FE1210400ABA3F7 /* PyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyApp.h; path = ../cocoalib/PyApp.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = ../cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = ../cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = ../cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
+		CEA0E9BA0FE1210400ABA3F7 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
+		CEA0E9BB0FE1210400ABA3F7 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
+		CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DesignWindow.m; sourceTree = "<group>"; };
+		CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = DesignWindow.h; sourceTree = "<group>"; };
+		CEB960F909D3078500852670 /* MassRenameDialog.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = MassRenameDialog.h; sourceTree = SOURCE_ROOT; };
+		CEB960FA09D3078500852670 /* MassRenameDialog.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = MassRenameDialog.m; sourceTree = SOURCE_ROOT; };
+		CEBF43370ADC3F580004F7F0 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = /Library/Frameworks/Sparkle.framework; sourceTree = "<absolute>"; };
+		CEC9A8BA09D86A6A0038B2D6 /* musicguru_help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = musicguru_help; path = ../help/musicguru_help; sourceTree = "<group>"; };
+		CECA229309CDB95400D48E88 /* AddLocationWindow.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = AddLocationWindow.h; sourceTree = "<group>"; };
+		CECA229409CDB95400D48E88 /* AddLocationWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = AddLocationWindow.m; sourceTree = "<group>"; };
+		CECCBD77098945A2007E0658 /* add_music_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_music_32.png; path = ../images/add_music_32.png; sourceTree = "<group>"; };
+		CECCBD87098945DD007E0658 /* design_board_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = design_board_32.png; path = ../images/design_board_32.png; sourceTree = "<group>"; };
+		CECCBD89098945E2007E0658 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gear.png; path = ../images/gear.png; sourceTree = "<group>"; };
+		CECCBD8D098945ED007E0658 /* ignore_box_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ignore_box_32.png; path = ../images/ignore_box_32.png; sourceTree = "<group>"; };
+		CECCBD8F098945F1007E0658 /* info_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = info_32.png; path = ../images/info_32.png; sourceTree = "<group>"; };
+		CECCBD91098945FB007E0658 /* locations_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locations_32.png; path = ../images/locations_32.png; sourceTree = "<group>"; };
+		CECCBD9909894617007E0658 /* cdrom_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cdrom_16.png; path = ../images/cdrom_16.png; sourceTree = "<group>"; };
+		CECCBD9B0989461D007E0658 /* folder_conflict_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = folder_conflict_16.png; path = ../images/folder_conflict_16.png; sourceTree = "<group>"; };
+		CECCBD9D09894623007E0658 /* folder_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = folder_16.png; path = ../images/folder_16.png; sourceTree = "<group>"; };
+		CECCBD9F0989462D007E0658 /* hdd_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hdd_16.png; path = ../images/hdd_16.png; sourceTree = "<group>"; };
+		CECCBDA109894634007E0658 /* song_conflict_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = song_conflict_16.png; path = ../images/song_conflict_16.png; sourceTree = "<group>"; };
+		CECCBDA30989463C007E0658 /* song_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = song_16.png; path = ../images/song_16.png; sourceTree = "<group>"; };
+		CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = DiskNeededPanel.h; sourceTree = "<group>"; };
+		CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DiskNeededPanel.m; sourceTree = "<group>"; };
+		CEE8A7DA09CED2A0004911BA /* DetailsPanel.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = DetailsPanel.h; sourceTree = "<group>"; };
+		CEE8A7DB09CED2A0004911BA /* DetailsPanel.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DetailsPanel.m; sourceTree = "<group>"; };
+		CEEF347A09D318B5003E55A9 /* SplitDialog.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; path = SplitDialog.h; sourceTree = SOURCE_ROOT; };
+		CEEF347B09D318B5003E55A9 /* SplitDialog.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = SplitDialog.m; sourceTree = SOURCE_ROOT; };
+		CEFDEBFF116F5063006266D5 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				CEBF43380ADC3F580004F7F0 /* Sparkle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE28DB26116F0B7300A93DD8 /* Outline.h */,
+				CE28DB27116F0B7300A93DD8 /* Outline.m */,
+				CE28DB28116F0B7300A93DD8 /* Table.h */,
+				CE28DB29116F0B7300A93DD8 /* Table.m */,
+				CECA229309CDB95400D48E88 /* AddLocationWindow.h */,
+				CECA229409CDB95400D48E88 /* AddLocationWindow.m */,
+				CE79F7C00986839000CD4AB7 /* AppDelegate.h */,
+				CE79F7BF0986839000CD4AB7 /* AppDelegate.m */,
+				CE2CD62B0A94973500C0DA8D /* Consts.h */,
+				CE2CD7450A94A6B600C0DA8D /* Consts.m */,
+				CEE8A7DA09CED2A0004911BA /* DetailsPanel.h */,
+				CEE8A7DB09CED2A0004911BA /* DetailsPanel.m */,
+				CEDD211209D42EBD005F8BF5 /* DiskNeededPanel.h */,
+				CEDD211309D42EBD005F8BF5 /* DiskNeededPanel.m */,
+				CE2CD3D60A94822200C0DA8D /* LocationPanel.h */,
+				CE2CD3D70A94822200C0DA8D /* LocationPanel.m */,
+				CE5E602409CD8EAB0024A9E6 /* PyMusicGuru.h */,
+				CEB4E80709CEF4F300A27957 /* Design */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEBF43370ADC3F580004F7F0 /* Sparkle.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* musicGuru.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* musicguru_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				CEA0E9A80FE120CD00ABA3F7 /* cocoalib */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = musicguru_cocoa;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE31A2FD116F302200AF3D6D /* xib */,
+				CECCBD7A098945BD007E0658 /* images */,
+				CE79FA4D09869F6E00CD4AB7 /* mg_cocoa.plugin */,
+				CEC9A8BA09D86A6A0038B2D6 /* musicguru_help */,
+				CE86506209CEEDE900F40C01 /* musicguru.icns */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				CEFDEBFF116F5063006266D5 /* dsa_pub.pem */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE28DB1F116F0B6100A93DD8 /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */,
+				CE28DB21116F0B6100A93DD8 /* progress.xib */,
+				CE28DB22116F0B6100A93DD8 /* registration.xib */,
+			);
+			name = xib;
+			path = ../cocoalib/xib;
+			sourceTree = "<group>";
+		};
+		CE31A2FD116F302200AF3D6D /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				CE31A2FE116F302200AF3D6D /* AddLocation.xib */,
+				CE31A2FF116F302200AF3D6D /* Design.xib */,
+				CE31A300116F302200AF3D6D /* Details.xib */,
+				CE31A301116F302200AF3D6D /* DiskNeeded.xib */,
+				CE31A302116F302200AF3D6D /* LocationPanel.xib */,
+				CE31A303116F302200AF3D6D /* MainMenu.xib */,
+				CE31A304116F302200AF3D6D /* MassRename.xib */,
+				CE31A305116F302200AF3D6D /* Split.xib */,
+			);
+			path = xib;
+			sourceTree = "<group>";
+		};
+		CEA0E9A80FE120CD00ABA3F7 /* cocoalib */ = {
+			isa = PBXGroup;
+			children = (
+				CE28DB1F116F0B6100A93DD8 /* xib */,
+				CEA0E9A90FE1210400ABA3F7 /* brsinglelineformatter */,
+				CEA0E9AE0FE1210400ABA3F7 /* Dialogs.h */,
+				CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */,
+				CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */,
+				CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */,
+				CEA0E9B40FE1210400ABA3F7 /* PyApp.h */,
+				CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */,
+				CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */,
+				CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */,
+				CEA0E9BA0FE1210400ABA3F7 /* Utils.h */,
+				CEA0E9BB0FE1210400ABA3F7 /* Utils.m */,
+			);
+			name = cocoalib;
+			sourceTree = "<group>";
+		};
+		CEA0E9A90FE1210400ABA3F7 /* brsinglelineformatter */ = {
+			isa = PBXGroup;
+			children = (
+				CEA0E9AA0FE1210400ABA3F7 /* BRSingleLineFormatter.h */,
+				CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */,
+			);
+			name = brsinglelineformatter;
+			path = ../cocoalib/brsinglelineformatter;
+			sourceTree = SOURCE_ROOT;
+		};
+		CEB4E80709CEF4F300A27957 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */,
+				CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */,
+				CEB960F909D3078500852670 /* MassRenameDialog.h */,
+				CEB960FA09D3078500852670 /* MassRenameDialog.m */,
+				CEEF347A09D318B5003E55A9 /* SplitDialog.h */,
+				CEEF347B09D318B5003E55A9 /* SplitDialog.m */,
+			);
+			name = Design;
+			sourceTree = "<group>";
+		};
+		CECCBD7A098945BD007E0658 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CE90AF2209D083D7005185D9 /* music_note_32.png */,
+				CECCBD77098945A2007E0658 /* add_music_32.png */,
+				CECCBD87098945DD007E0658 /* design_board_32.png */,
+				CECCBD89098945E2007E0658 /* gear.png */,
+				CECCBD8D098945ED007E0658 /* ignore_box_32.png */,
+				CECCBD8F098945F1007E0658 /* info_32.png */,
+				CECCBD91098945FB007E0658 /* locations_32.png */,
+				CECCBD9909894617007E0658 /* cdrom_16.png */,
+				CECCBD9B0989461D007E0658 /* folder_conflict_16.png */,
+				CECCBD9D09894623007E0658 /* folder_16.png */,
+				CECCBD9F0989462D007E0658 /* hdd_16.png */,
+				CECCBDA109894634007E0658 /* song_conflict_16.png */,
+				CECCBDA30989463C007E0658 /* song_16.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* musicguru */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "musicguru" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				CE5E605C09CD90D90024A9E6 /* CopyFiles */,
+				CEBF434D0ADC3F8B0004F7F0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = musicguru;
+			productInstallPath = "$(HOME)/Applications";
+			productName = musicguru_cocoa;
+			productReference = 8D1107320486CEB800E47090 /* musicGuru.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "musicguru" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* musicguru_cocoa */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* musicguru */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE79FA5D09869F6E00CD4AB7 /* mg_cocoa.plugin in Resources */,
+				CECCBD78098945A2007E0658 /* add_music_32.png in Resources */,
+				CECCBD88098945DD007E0658 /* design_board_32.png in Resources */,
+				CECCBD8A098945E2007E0658 /* gear.png in Resources */,
+				CECCBD8E098945ED007E0658 /* ignore_box_32.png in Resources */,
+				CECCBD90098945F1007E0658 /* info_32.png in Resources */,
+				CECCBD92098945FB007E0658 /* locations_32.png in Resources */,
+				CECCBD9A09894617007E0658 /* cdrom_16.png in Resources */,
+				CECCBD9C0989461D007E0658 /* folder_conflict_16.png in Resources */,
+				CECCBD9E09894623007E0658 /* folder_16.png in Resources */,
+				CECCBDA00989462D007E0658 /* hdd_16.png in Resources */,
+				CECCBDA209894634007E0658 /* song_conflict_16.png in Resources */,
+				CECCBDA40989463C007E0658 /* song_16.png in Resources */,
+				CE86506309CEEDE900F40C01 /* musicguru.icns in Resources */,
+				CE90AF2309D083D7005185D9 /* music_note_32.png in Resources */,
+				CEC9A8D209D86A6A0038B2D6 /* musicguru_help in Resources */,
+				CE28DB23116F0B6100A93DD8 /* ErrorReportWindow.xib in Resources */,
+				CE28DB24116F0B6100A93DD8 /* progress.xib in Resources */,
+				CE28DB25116F0B6100A93DD8 /* registration.xib in Resources */,
+				CE31A306116F302200AF3D6D /* AddLocation.xib in Resources */,
+				CE31A307116F302200AF3D6D /* Design.xib in Resources */,
+				CE31A308116F302200AF3D6D /* Details.xib in Resources */,
+				CE31A309116F302200AF3D6D /* DiskNeeded.xib in Resources */,
+				CE31A30A116F302200AF3D6D /* LocationPanel.xib in Resources */,
+				CE31A30B116F302200AF3D6D /* MainMenu.xib in Resources */,
+				CE31A30C116F302200AF3D6D /* MassRename.xib in Resources */,
+				CE31A30D116F302200AF3D6D /* Split.xib in Resources */,
+				CEFDEC00116F5063006266D5 /* dsa_pub.pem in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				CE79F7C10986839000CD4AB7 /* AppDelegate.m in Sources */,
+				CECA229609CDB95400D48E88 /* AddLocationWindow.m in Sources */,
+				CEE8A7DD09CED2A0004911BA /* DetailsPanel.m in Sources */,
+				CEB4E7FC09CEF4CE00A27957 /* DesignWindow.m in Sources */,
+				CEB960FC09D3078500852670 /* MassRenameDialog.m in Sources */,
+				CEEF347D09D318B5003E55A9 /* SplitDialog.m in Sources */,
+				CEDD211509D42EBD005F8BF5 /* DiskNeededPanel.m in Sources */,
+				CE2CD3D90A94822200C0DA8D /* LocationPanel.m in Sources */,
+				CE2CD7460A94A6B600C0DA8D /* Consts.m in Sources */,
+				CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */,
+				CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */,
+				CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */,
+				CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */,
+				CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */,
+				CE28DB2A116F0B7300A93DD8 /* Outline.m in Sources */,
+				CE28DB2B116F0B7300A93DD8 /* Table.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = musicGuru;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					x86_64,
+					ppc,
+				);
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "musicguru" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "musicguru" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

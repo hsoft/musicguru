@@ -1,0 +1,124 @@
+- date: 2010-04-09
+  version: 1.4.0
+  description: |
+    * Now 64-bit under Mac OS X.
+    * Added Linux support.
+    * Improved the materialize process.
+    * Dropped OS X Tiger (10.4) support.
+- date: 2010-01-02
+  version: 1.3.6
+  description: |
+    * Fixed a crash on node rename in the Design Board. [OS X] (#8)
+    * Fixed a crash on Copy and Move materialize actions. [Windows]
+- date: 2009-10-17
+  version: 1.3.5
+  description: "Windows version ported to Qt."
+- date: 2008-11-08
+  version: 1.3.5
+  description: |
+    * **Added** support for AIFF files.
+    * **Improved** MPEG files duration detection.
+- date: 2008-01-16
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Improved</b> the Mass Rename panel. The custom\
+    \ model is now remembered between runs.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> an\
+    \ issue sometimes preventing the application from starting at all.</li>\n\t\t\t\
+    \t\t\t<li><b>Fixed</b> the collection update being launched on startup. It can\
+    \ now be cancelled.</li>\n\t\t            </ul>"
+  version: 1.3.4
+- date: 2007-10-19
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Added</b> a way to change the path of a location.</li>\n\
+    \t\t\t\t\t\t<li><b>Improved</b> the speed of the Update Collection process.</li>\n\
+    \t\t\t\t\t\t<li><b>Fixed</b> various crashes related to external drives.</li>\n\
+    \t\t\t\t\t\t<li><b>Fixed</b> Unsplit CD/DVD, which sometimes left the design board\
+    \ in a messy state.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> Split to DVD under Windows\
+    \ (It made musicGuru crash).</li>\n\t\t            </ul>"
+  version: 1.3.3
+- date: 2007-10-07
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Improved</b> UI responsiveness (using threads)\
+    \ under Mac OS X.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> some user interface annoyances\
+    \ under Windows</li>\n\t\t\t\t\t\t<li><b>Fixed</b> a bug with non-latin directory\
+    \ names.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> a bug on Add Location's cancel operation.</li>\n\
+    \t\t\t\t\t\t<li><b>Fixed</b> a small issue with AAC decoding.</li>\n\t\t\t\t\t\
+    \t<li><b>Fixed</b> a bug with Move operations to external drives.</li>\n\t\t \
+    \           </ul>"
+  version: 1.3.2
+- date: 2007-03-04
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Fixed</b> a bug with the move operation.</li>\n\
+    \t\t\t\t\t\t<li><b>Fixed</b> a bug where the tool windows would sometimes stop\
+    \ showing up (Windows).</li>\n\t\t\t\t\t\t<li><b>Fixed</b> keyboard navigation\
+    \ quirks (Windows).</li>\n\t\t            </ul>"
+  version: 1.3.1
+- date: 2006-12-08
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Changed</b> the Windows interface. It is\
+    \ now .NET based.</li>\n\t\t\t\t\t\t<li><b>Added</b> an auto-update feature to\
+    \ the windows version.</li>\n\t\t\t\t\t\t<li><b>Changed</b> the way Mass Rename\
+    \ handles empty tags. Instead of putting \"(none)\" where there is no tag, musicGuru\
+    \ just doesn't rename the file, and put it in the \"(not renamed)\" directory.</li>\n\
+    \t\t\t\t\t\t<li><b>Added</b> blue coloring for locations based on a removable\
+    \ media.</li>\n\t\t            </ul>"
+  version: 1.3.0
+- date: 2006-10-12
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Changed</b> the music collection format to\
+    \ a SQLite based format. It makes musicGuru generally faster.</li>\n\t\t\t\t\t\
+    \t<li><b>Added</b> an auto-update feature in the Mac OS X version (with Sparkle).</li>\n\
+    \t\t\t\t\t\t<li><b>Fixed</b> numerous small bugs.</li>\n\t\t            </ul>"
+  version: 1.2.0
+- date: 2006-09-04
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Fixed</b> a bug sometimes making the collection\
+    \ updating procedure to fail.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> a bug in the\
+    \ mp3 decoding unit.</li>\n\t\t            </ul>"
+  version: 1.1.3
+- date: 2006-08-26
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Improved</b> the speed of musicGuru when\
+    \ adding songs.</li>\n\t\t\t\t\t\t<li><b>Replaced</b> the 2 locations drawers\
+    \ by a single location panel under Mac OS X.</li>\n\t\t            </ul>"
+  version: 1.1.2
+- date: 2006-08-15
+  description: "<ul>\n\t\t\t\t\t\t<li><b>Improved</b> unicode support.</li>\n\t\t\t\
+    \t\t\t<li><b>Improved</b> MP3, WMA and AAC metadata decoding.</li>\n\t\t     \
+    \           <li>musicGuru is now a Universal application under Mac OS X.</li>\n\
+    \t\t            </ul>"
+  version: 1.1.1
+- date: 2006-03-28
+  description: "<ul>\n\t\t                <li><b>Improved</b> speed. Especially on\
+    \ Mac OS X.</li>\n\t\t\t\t\t\t<li><b>Improved</b> the Add Location interface.\
+    \ It went from a wizard to a simple dialog.</li>\n\t\t\t\t\t\t<li><b>Improved</b>\
+    \ progression feedback for Mass Rename and Split features.</li>\n\t\t\t\t\t\t\
+    <li><b>Improved</b> Design Board interface for the Windows version.</li>\n\t\t\
+    \t\t\t\t<li><b>Fixed</b> bug in the Split dialog.</li>\n\t\t\t\t\t\t<li><b>Fixed</b>\
+    \ bug in the CD recording process.</li>\t\n\t\t            </ul>"
+  version: 1.1.0
+- date: 2006-03-11
+  description: "<ul>\n\t\t                <li><b>Fixed</b> occasional problems when\
+    \ reading unicode in wma and mp3 files.</li>\n\t\t                <li><b>Fixed</b>\
+    \ unicode issues for Win98 users.</li>\n\t\t                <li><b>Fixed</b> a\
+    \ DLL dependency bug.</li>\n\t\t            </ul>"
+  version: 1.0.8
+- date: 2006-03-04
+  description: "<ul>\n\t\t                <li><b>Fixed</b> problems when reading some\
+    \ kind of wma files.</li>\n\t\t\t\t\t\t<li><b>Fixed</b> occasional errors when\
+    \ saving music collection.</li>\n\t\t            </ul>"
+  version: 1.0.4
+- date: 2006-01-28
+  description: "<ul>\n\t\t                <li><b>Added</b> a \"custom capacity\" option\
+    \ in the splitting panel.</li>\n\t\t                <li><b>Fixed</b> issues with\
+    \ disc recording.</li>\n\t\t                <li><b>Fixed</b> occasional innacuracies\
+    \ in the Info panel.</li>\n\t\t            </ul>"
+  version: 1.0.3
+- date: 2006-01-24
+  description: "<ul>\n\t\t            \t<li><b>Fixed</b> issues with the registration\
+    \ system.</li>\n\t\t            \t<li><b>Fixed</b> issues packaging issues in\
+    \ the windows MSI.</li>\n\t\t            </ul>"
+  version: 1.0.2
+- date: 2006-01-21
+  description: "<ul>\n\t\t                <li><b>Improved</b> memory usage of the\
+    \ Design Board.</li>\n\t\t                <li><b>Improved</b> the Design Board\
+    \ by making it case insensitive.</li>\n\t\t            \t<li><b>Fixed</b> issues\
+    \ with disc recording.</li>\n\t\t            \t<li><b>Fixed</b> issues with very\
+    \ long filenames in Windows.</li>\n\t\t            \t<li><b>Fixed</b> issues with\
+    \ the Splitting Options dialog.</li>\n\t\t            </ul>"
+  version: 1.0.1
+- date: 2006-01-17
+  description: "<ul>\n\t\t            \t<li>Initial release.</li>\n\t\t          \
+    \  </ul>"
+  version: 1.0.0
