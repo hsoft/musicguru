@@ -640,7 +640,7 @@ class TCSplit(TestCase):
         self.assert_(f4.name in splitter[2][0][0])
     
     def test_forbidden_chars(self):
-        ref = self.Gen([('a|:<>',1),('b?\\/*',1)])
+        ref = self.Gen([('a|:<>',1),('b?*',1)])
         splitter = Split(ref,'CD %item:first% - %item:last%',2)
         self.assertEqual('CD a - b',splitter[0].name)
     

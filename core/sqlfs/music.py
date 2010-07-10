@@ -51,7 +51,7 @@ class Volume(Directory):
         if self.mode == MODE_PHYSICAL:
             return self.physical_path
         elif self.mode == MODE_TOKEN:
-            return ('!%s' % self.name, )
+            return ('!%s' % self.value, )
         else:
             return super(Volume, self)._build_path()
     
