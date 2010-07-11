@@ -1,9 +1,3 @@
-<%!
-	title = 'How to build a music collection'
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 When you first open musicGuru, your collection is empty. So filling it up is the first thing you need to do.
 
 1. Click on **Add Songs**.

@@ -1,9 +1,3 @@
-<%!
-	title = 'Designing your collection'
-	selected_menu_item = 'Design'
-%>
-<%inherit file="/base_mg.mako"/>
-
 Once you've built your musicGuru collection, the fun begins. With the musicGuru Design Board, you can painlessly re-design your collection. One thing about the Design Board is important to remember: **This is virtual. No changes are made to your actual collection until you click the Materialize button.**
 
 What's the point of the Design Board?

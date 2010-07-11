@@ -1,9 +1,3 @@
-<%!
-	title = 'How to archive your music collection to CD'
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 It is assumed here that you have a part of your collection already recorded to CD, and that a part of the songs you have on CD is also on your hard drive (because yes, you **do** listen to the music you have!). What you want to do is to record a new set of CDs, that would be organized in a **CD A-Z** format (Example: CD A-C, CD C-F... CD R-Z), and would include both your already recorded songs and the songs you have on your hard drive. It is also assumed that you want the structure of your songs on your CDs to be **Artist/Album/Track - Artist - Title**.
 
 1. [Build your collection](build_music_collection.htm) and don't forget to add your CDs to it!

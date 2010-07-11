@@ -1,9 +1,3 @@
-<%!
-	title = 'How to resolve name conflicts'
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 When playing around with your design board, it might happen that 2 or more files fight for the same name, in the same directory. When this happens, these files are considered conflictual, and all files with the same name, except the first that was placed there, are given a conflict prefix ([000], [001], etc.). There are a few useful things you should know about conflicts.
 
 **Look at the location column**

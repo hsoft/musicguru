@@ -1,9 +1,3 @@
-<%!
-	title = 'Materializing your design'
-	selected_menu_item = 'Materialize'
-%>
-<%inherit file="/base_mg.mako"/>
-
 When you're finished with your design, it's time to materialize. There are 3 types of materialization.
 
 Materialize design in-place

@@ -1,9 +1,3 @@
-<%!
-	title = 'How to merge music collections'
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 Merging big collections is often a pain, because unless both collections have the exact same structure, you end up with a lot of duplicates, and an unorganized collection. While the current version of musicGuru doesn't allow advanced duplicates detection (it will once Mp3 Filter 5.x is out.), it does weed out the most evident ones (Files with the exact same artist, album etc..). The steps below assume that you already [built your collection](build_music_collection.htm), and that you want to merge another collection, not yet added, and copy only files you **do not have** from the other collection to yours.
 
 1. [Organize](organize_music_collection.htm) your own collection first!

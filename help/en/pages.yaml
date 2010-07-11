@@ -1,0 +1,59 @@
+- 
+    name: intro
+    title: Introduction to musicGuru
+    menutitle: Introduction
+- 
+    name: howto/index
+    title: How to...
+    menutitle: How To
+    menudesc: Quickly get into the action
+    subpages:
+        -
+            name: howto/archive_music_collection_to_cd
+            title: How to archive your music collection to CD
+        -
+            name: howto/archive_unarchived_songs_to_cd
+            title: How to archive songs that aren't archived yet
+        -
+            name: howto/build_music_collection
+            title: How to build a music collection
+        -
+            name: howto/merge_music_collections
+            title: How to merge music collections
+        -
+            name: howto/organize_music_collection
+            title: How to organize a music collection
+        -
+            name: howto/resolve_conflicts
+            title: How to resolve name conflicts
+- 
+    name: build
+    title: Building your collection
+    menutitle: Build
+- 
+    name: design
+    title: Designing your collection
+    menutitle: Design
+- 
+    name: materialize
+    title: Materializing your design
+    menutitle: Materialize
+- 
+    name: naming_models
+    title: Naming Models
+    menutitle: Naming Models
+    menudesc: How to design your own custom models
+- 
+    name: faq
+    title: Frequently Asked Questions
+    menutitle: F.A.Q.
+- 
+    name: versions
+    title: Version History
+    menutitle: Version History
+    menudesc: Changes musicGuru went through
+- 
+    name: credits
+    title: Credits
+    menutitle: Credits
+    menudesc: People who contributed to musicGuru

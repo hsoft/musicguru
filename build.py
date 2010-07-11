@@ -15,7 +15,7 @@ import shutil
 from setuptools import setup
 import yaml
 
-from hsdocgen import generate_help, filters
+from hsdocgen import helpgen
 from hsutil.build import add_to_pythonpath, print_and_do, build_all_qt_ui, copy_packages
 
 def main():
@@ -29,10 +29,10 @@ def main():
     
     print "Generating Help"
     windows = sys.platform == 'win32'
-    tix = filters.tixgen("https://hardcoded.lighthouseapp.com/projects/31701-musicguru/tickets/{0}")
+    profile = 'win_en' if windows else 'osx_en'
     basepath = op.abspath('help')
     destpath = op.abspath(op.join('help', 'musicguru_help'))
-    generate_help.main(basepath, destpath, force_render=not dev, tix=tix, windows=windows)
+    helpgen.gen(basepath, destpath, profile=profile)
     if ui == 'cocoa':
         if not dev:
             print "Building help index"

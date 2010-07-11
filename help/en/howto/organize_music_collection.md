@@ -1,9 +1,3 @@
-<%!
-	title = 'How to organize a music collection'
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 Before trying to organize your music collection, you must first [build it in musicGuru](build_music_collection.htm). Once you did that, you can follow the steps below. Note that the steps below gives you **one, vanilla flavored** way to organize your collection, but, with musicGuru, you can organize it in virtually any way.
 
 1. Click on **Design Board**.

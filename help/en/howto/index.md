@@ -1,9 +1,3 @@
-<%!
-	title = 'How To...'
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 This page contains a list of common situation where musicGuru can help you. Just click on a situation similar to yours and you will be taken to a page detailing every task you need to perform.
 
 * [How do I build a musicGuru collection?](build_music_collection.htm)

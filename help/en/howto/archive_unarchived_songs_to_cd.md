@@ -1,9 +1,3 @@
-<%!
-	title = "How to archive songs that aren't archived yet"
-	selected_menu_item = 'How To'
-%>
-<%inherit file="/base_mg.mako"/>
-
 So what you basically want to do is to add your collection on your hard drive at the same time as your CDs, mass rename everything, and remove all conflicts. For this purpose, the Move Conflicts feature doesn't work because it leaves the original there. This is why we will use Move Conflicts *and* Original. As said in [this How To](merge_music_collections.htm), the duplicate detection mechanism of musicGuru isn't very advanced yet, but it will be once Mp3 Filter 5 is out because musicGuru will intergrate features from it. Meanwhile, what you can do to detect duplicates that aren't found by the conflicts mechanism is to look at the Location column of your top level directories. If the column indicate that there are songs from both hard drive and CD locations in it, it is a good evidence that there might be duplicates in this folder, so you can investigate further.
 
 1. [Build your collection](build_music_collection.htm) and don't forget to add your CDs to it!

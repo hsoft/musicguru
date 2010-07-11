@@ -1,9 +1,3 @@
-<%!
-	title = 'Naming Models'
-	selected_menu_item = 'Naming Models'
-%>
-<%inherit file="/base_mg.mako"/>
-
 The **Mass Rename** and **Split into CD/DVD** features of the [Design Board](design.htm) both feature the possibility for you to define your own naming model.
 
 A naming model is a line of text containing **tokens**. A **token** is a word enclosed in two **%** signs. For example, **%artist%** is a token. A **token** can also have one or more **parameters**. A parameter is a word, following the token, but within the **%** signs, that is preceded with a **:** sign. For example, **%item:first%** is a token with one parameter and **%group:artist:elp:lower%** is a token with 3 parameters. Few tokens in musicGuru take parameters. In fact, only **item** and **group**.

@@ -1,9 +1,3 @@
-<%!
-	title = 'Building your collection'
-	selected_menu_item = 'Build'
-%>
-<%inherit file="/base_mg.mako"/>
-
 musicGuru manages your music collection through locations. A location is simply a place where you have music files. For example, your iTunes directory may be added as a location, as well as each of your CDs containing music files. It is important to note that locations in the musicGuru database are **virtual**. When you add, for example, a CD to your musicGuru database, files are not copied on your computer. musicGuru just read each file to record metadata (like artist/album/genre/etc..).
 
 The first time you start musicGuru, there is no location in its database. The first thing you need to do is to add a location. You can do so with **Menu|Build|Add Location**.
