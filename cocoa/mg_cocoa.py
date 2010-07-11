@@ -10,7 +10,7 @@ import sys
 import objc
 
 from hsutil import job
-from hsutil.cocoa.inter import PyRegistrable
+from hsutil.cocoa.inter import signature, PyRegistrable
 from hsutil.cocoa.objcmin import NSObject
 
 from core import app_cocoa, design
@@ -197,11 +197,11 @@ class PyMusicGuru(PyRegistrable):
         self.py.UpdateCollection()
     
     #---Data
-    @objc.signature('i@:i')
+    @signature('i@:i')
     def getOutlineViewMaxLevel_(self, tag):
         return 0 # no max level
     
-    @objc.signature('@@:i@')
+    @signature('@@:i@')
     def getOutlineView_childCountsForPath_(self, tag, node_path):
         return self.py.GetOutlineViewChildCounts(tag, node_path)
     

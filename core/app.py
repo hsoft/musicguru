@@ -26,7 +26,7 @@ from .fs_utils import BatchOperation
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE_NORMAL
 
 class MusicGuru(RegistrableApplication):
-    VERSION = '1.4.0'
+    VERSION = '1.4.1'
     DEMO_LIMIT_DESC = "In the demo version, it's not possible to materialize designs."
     
     def __init__(self, appdata=None):

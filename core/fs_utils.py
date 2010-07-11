@@ -226,7 +226,6 @@ class BatchOperation(object):
     #---Private
     def __Perform(self, copy=False, job=nulljob):
         try:
-            print 'hi'
             cd_operations = [t for t in self.name_list if t[0][0].startswith('!')]
             normal_operations = [t for t in self.name_list if t not in cd_operations]
             cds = dedupe(t[0][0][1:] for t in cd_operations)
@@ -274,15 +273,12 @@ class BatchOperation(object):
         return True
 
     def __ProcessNormalList(self, name_list, copy=False, job=nulljob):
-        print 'hello', repr(name_list), [p[0].bogus_encoding for p in name_list]
         name_list = [paths for paths in name_list if (paths[0] != paths[1]) and io.exists(paths[0])]
-        print 'hello', repr(name_list)
         conflicts = []
         tmpdir = None
         job.start_job(len(name_list))
         for source, dest in name_list:
             try:
-                print 'foo', repr(source), repr(dest)
                 if io.exists(dest):
                     if not tmpdir:
                         tmpdir = Path(tempfile.mkdtemp())
