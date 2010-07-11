@@ -148,7 +148,10 @@ class MusicGuru(RegistrableApplication):
                 bo.rename(job)
             for location in self.board.locations:
                 if location.vol_type != VOLTYPE_CDROM:
-                    clean_empty_dirs(location.path, files_to_delete=['.DS_Store'])
+                    try:
+                        clean_empty_dirs(location.path, files_to_delete=['.DS_Store'])
+                    except EnvironmentError:
+                        pass
                 location.mode = MODE_NORMAL
             self.collection.update_volumes(job)
         except JobCancelled:
@@ -168,7 +171,10 @@ class MusicGuru(RegistrableApplication):
                 source_list = [song for song in self.board.allfiles if location in song.original.parents]
                 bo = BatchOperation(source_list,destination)
                 bo.rename(j)
-                clean_empty_dirs(location.path, files_to_delete=['.DS_Store'])
+                try:
+                    clean_empty_dirs(location.path, files_to_delete=['.DS_Store'])
+                except EnvironmentError:
+                    pass
                 location.mode = MODE_NORMAL
             self.collection.update_volumes(j)
             return 0

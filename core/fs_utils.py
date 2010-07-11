@@ -6,15 +6,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-import os.path as op
-import os
-import sys
-import shutil
 import tempfile
 
 import hsfs as fs
-from hsutil import conflict
-from hsutil.job import nulljob, JobCancelled, Job
+from hsutil import conflict, io
+from hsutil.job import nulljob, JobCancelled
 from hsutil.misc import tryint, dedupe
 from hsutil.path import Path
 from hsutil.str import multi_replace, FS_FORBIDDEN, rem_file_ext, process_tokens
@@ -230,6 +226,7 @@ class BatchOperation(object):
     #---Private
     def __Perform(self, copy=False, job=nulljob):
         try:
+            print 'hi'
             cd_operations = [t for t in self.name_list if t[0][0].startswith('!')]
             normal_operations = [t for t in self.name_list if t not in cd_operations]
             cds = dedupe(t[0][0][1:] for t in cd_operations)
@@ -254,16 +251,16 @@ class BatchOperation(object):
     def __ProcessCDList(self, name_list, cd_path, cd_location, job=nulljob):
         job.start_job(len(name_list))
         for source, dest in name_list:
-            if not op.exists(unicode(dest[:-1])):
-                os.makedirs(unicode(dest[:-1]))
-            if not op.exists(unicode(dest)):
+            if not io.exists(dest[:-1]):
+                io.makedirs(dest[:-1])
+            if not io.exists(dest):
                 processed = False
                 while cd_path and (not processed):
                     try:
-                        shutil.copy(unicode(cd_path + source), unicode(dest))
+                        io.copy((cd_path + source), dest)
                         processed = True
-                    except (OSError, IOError), e:
-                        if op.exists(unicode(cd_path + source)):
+                    except (OSError, IOError):
+                        if io.exists(cd_path + source):
                             processed = True
                             #This is a very special case. It happens when the path on the
                             #CD is too long to be copied. It very seldom happens. Just skip the file.
@@ -277,33 +274,36 @@ class BatchOperation(object):
         return True
 
     def __ProcessNormalList(self, name_list, copy=False, job=nulljob):
-        name_list = [paths for paths in name_list if (paths[0] != paths[1]) and op.exists(unicode(paths[0]))]
+        print 'hello', repr(name_list), [p[0].bogus_encoding for p in name_list]
+        name_list = [paths for paths in name_list if (paths[0] != paths[1]) and io.exists(paths[0])]
+        print 'hello', repr(name_list)
         conflicts = []
         tmpdir = None
         job.start_job(len(name_list))
         for source, dest in name_list:
             try:
-                if op.exists(unicode(dest)):
+                print 'foo', repr(source), repr(dest)
+                if io.exists(dest):
                     if not tmpdir:
                         tmpdir = Path(tempfile.mkdtemp())
                     newdest = tmpdir + dest[self.destination:]
                     conflicts.append((newdest, dest, source))
                     dest = newdest
-                if not op.exists(unicode(dest[:-1])):
-                    os.makedirs(unicode(dest[:-1]))
+                if not io.exists(dest[:-1]):
+                    io.makedirs(dest[:-1])
                 if copy:
-                    shutil.copy(unicode(source), unicode(dest))
+                    io.copy(source, dest)
                 else:
-                    shutil.move(unicode(source), unicode(dest))
-            except (OSError, IOError), e:
+                    io.move(source, dest)
+            except (OSError, IOError) as e:
                 print "Warning: Error %r occured while processing %r to %r."\
                     % (e, unicode(source), unicode(dest))
             job.add_progress()
         for source, dest, old_source in conflicts:
-            if not op.exists(unicode(dest)):
-                os.rename(unicode(source), unicode(dest))
-            elif not op.exists(unicode(old_source)):
-                os.rename(unicode(source), unicode(old_source))
+            if not io.exists(dest):
+                io.rename(source, dest)
+            elif not io.exists(old_source):
+                io.rename(source, old_source)
 
     #---Public
     def copy(self, job=nulljob):
