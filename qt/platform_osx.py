@@ -10,6 +10,7 @@
 import os
 import os.path as op
 
+HELP_PATH = 'help'
 def getDriveList():
     names = os.listdir('/Volumes')
     return [(op.join('/Volumes', name), name) for name in names]

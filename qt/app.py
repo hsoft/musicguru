@@ -30,6 +30,7 @@ from ignore_box import IgnoreBox
 from disk_needed_dialog import DiskNeededDialog
 from add_location_dialog import AddLocationDialog
 from preferences import Preferences
+from platform import HELP_PATH
 
 JOB_UPDATE = 'job_update'
 JOB_ADD = 'job_add'
@@ -241,7 +242,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         self.detailsPanel.activateWindow()
     
     def showHelp(self):
-        url = QUrl.fromLocalFile(op.abspath('help/intro.htm'))
+        url = QUrl.fromLocalFile(op.join(op.abspath(HELP_PATH), 'intro.htm'))
         QDesktopServices.openUrl(url)
     
     def showIgnoreBox(self):

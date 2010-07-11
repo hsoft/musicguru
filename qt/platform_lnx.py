@@ -10,6 +10,7 @@
 import os
 import os.path as op
 
+HELP_PATH = '/usr/local/share/musicguru/help'
 def getDriveList():
     names = os.listdir(u'/mnt')
     return [(op.join(u'/mnt', name), name) for name in names]

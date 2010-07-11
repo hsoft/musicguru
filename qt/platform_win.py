@@ -9,6 +9,8 @@
 
 import wmi
 
+HELP_PATH = 'help'
+
 wmi_command = wmi.WMI()
 
 def getDriveList():
