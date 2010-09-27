@@ -11,10 +11,10 @@ import time
 from weakref import WeakValueDictionary
 
 import hsfs as fs
-from hsutil.job import nulljob, JobCancelled
+from hscommon.job import nulljob, JobCancelled
 from hsutil.misc import tryint
 from hsutil.str import multi_replace
-import hsutil.sqlite
+import hscommon.sqlite
 
 (NODE_TYPE_DIR,
 NODE_TYPE_FILE) = range(2)
@@ -224,7 +224,7 @@ class Root(Directory):
     def __init__(self, dbname=':memory:', dirname='', threaded=True):
         super(Root,self).__init__(None,dirname)
         if threaded:
-            self.con = hsutil.sqlite.ThreadedConn(dbname, False)
+            self.con = hscommon.sqlite.ThreadedConn(dbname, False)
         else:
             self.con = sqlite.connect(dbname)
         self.id = 0

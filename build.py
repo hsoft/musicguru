@@ -15,8 +15,8 @@ import shutil
 from setuptools import setup
 import yaml
 
-from hsdocgen import helpgen
-from hsutil.build import add_to_pythonpath, print_and_do, build_all_qt_ui, copy_packages
+from hscommon import helpgen
+from hscommon.build import add_to_pythonpath, print_and_do, build_all_qt_ui, copy_packages
 
 def main():
     conf = yaml.load(open('conf.yaml'))
@@ -44,7 +44,7 @@ def main():
             shutil.rmtree('build')
         os.mkdir('build')
         if not dev:
-            copy_packages(['core', 'hsutil', 'hsmedia', 'hsfs'], 'build')
+            copy_packages(['core', 'hsutil', 'hsaudiotag', 'hsfs', 'hscommon'], 'build')
         shutil.copy('cocoa/mg_cocoa.py', 'build')
         os.chdir('build')
         script_args = ['py2app', '-A'] if dev else ['py2app']

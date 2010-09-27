@@ -19,9 +19,9 @@ from nose.tools import eq_
 import hsfs.music
 from hsfs import phys
 from hsfs.tests.phys_test import create_fake_fs, create_unicode_test_dir
-from hsutil import job
 from hsutil.path import Path
 from hsutil.testcase import TestCase
+from hscommon import job
 
 from . import manualfs
 from .fs_utils import *

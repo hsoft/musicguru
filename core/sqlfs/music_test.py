@@ -12,11 +12,11 @@ import shutil
 
 from nose.tools import nottest
 
-import hsmedia.testcase
+import hsaudiotag.testcase
 from hsutil.testcase import TestCase
 from hsfs.phys import music
 from hsutil.path import Path
-from hsutil.job import Job, JobCancelled
+from hscommon.job import Job, JobCancelled
 
 from .. import manualfs
 from .music import *
@@ -182,7 +182,7 @@ class TCadd_volume(TestCase):
 
 class TCVolume_Update(TestCase):
     def test_that_ref_is_automatically_created(self):
-        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
+        ref_dir = hsaudiotag.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
         root = Root(threaded=False)
@@ -193,7 +193,7 @@ class TCVolume_Update(TestCase):
         self.assertEqual(3,v.filecount)
     
     def test_that_the_ref_create_is_a_music_dir(self):
-        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
+        ref_dir = hsaudiotag.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
         root = Root(threaded=False)
@@ -218,7 +218,7 @@ class TCVolume_Update(TestCase):
 
 class TCRoot_update_volumes(TestCase):
     def test_only_update_fixed_volumes(self):
-        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
+        ref_dir = hsaudiotag.testcase.TestCase.filepath('ogg')
         ref_dir = self.tmpdir(ref_dir)
         ref = music.Directory(None,ref_dir)
         root = Root(threaded=False)
@@ -254,7 +254,7 @@ class TCJobs(TestCase):
     
     def test_Root_update_volumes(self):
         root = Root(threaded=False)
-        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
+        ref_dir = hsaudiotag.testcase.TestCase.filepath('ogg')
         v = root.new_directory('foo')
         v.initial_path = Path(ref_dir)
         v.vol_type = VOLTYPE_FIXED
@@ -332,7 +332,7 @@ class TCvolume_path_mode(TestCase):
 
 class TCFileAttrs(TestCase):
     def test_has_music_attrs(self):
-        ref_dir = hsmedia.testcase.TestCase.filepath('ogg')
+        ref_dir = hsaudiotag.testcase.TestCase.filepath('ogg')
         ref = music.Directory(None,ref_dir)
         root = Root(threaded=False)
         v = root.add_volume(ref,'foo',VOLTYPE_FIXED)

@@ -12,8 +12,8 @@ import hsfs as fs
 import hsfs.music
 from hsfs.phys import music
 from hsutil import io
-from hsutil.job import nulljob, JobCancelled
 from hsutil.path import Path
+from hscommon.job import nulljob, JobCancelled
 
 class Node(object):
     @property

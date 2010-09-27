@@ -12,7 +12,7 @@ import gc
 
 from nose.tools import eq_, assert_raises
 
-from hsutil import job
+from hscommon import job
 from hsutil.decorators import log_calls
 from hsutil.path import Path
 

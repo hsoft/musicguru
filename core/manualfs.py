@@ -8,7 +8,7 @@
 # http://www.hardcoded.net/licenses/hs_license
 
 import hsfs as fs
-from hsutil import job
+from hscommon import job
 from hsutil.misc import nonone
 from hsutil.conflict import get_conflicted_name, is_conflicted
 

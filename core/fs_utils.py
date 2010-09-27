@@ -10,10 +10,10 @@ import tempfile
 
 import hsfs as fs
 from hsutil import conflict, io
-from hsutil.job import nulljob, JobCancelled
 from hsutil.misc import tryint, dedupe
 from hsutil.path import Path
 from hsutil.str import multi_replace, FS_FORBIDDEN, rem_file_ext, process_tokens
+from hscommon.job import nulljob, JobCancelled
 
 from .sqlfs.music import VOLTYPE_CDROM, MODE_TOKEN, MODE_NORMAL
 from .manualfs import AutoResolve

@@ -15,7 +15,7 @@ import compileall
 
 import yaml
 
-from hsutil.build import (print_and_do, build_dmg, add_to_pythonpath, copy_qt_plugins,
+from hscommon.build import (print_and_do, build_dmg, add_to_pythonpath, copy_qt_plugins,
     copy_packages, build_debian_changelog)
 
 def package_windows(dev):
@@ -63,7 +63,7 @@ def package_debian():
     srcpath = op.join(destpath, 'src')
     os.makedirs(destpath)
     shutil.copytree('qt', srcpath)
-    copy_packages(['hsutil', 'hsmedia', 'hsfs', 'core', 'qtlib'], srcpath)
+    copy_packages(['hsutil', 'hsaudiotag', 'hsfs', 'core', 'qtlib', 'hscommon'], srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
     build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'musicguru', from_version='1.3.6')
     shutil.copytree(op.join('help', 'musicguru_help'), op.join(srcpath, 'help'))

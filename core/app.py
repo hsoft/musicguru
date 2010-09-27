@@ -15,11 +15,10 @@ from hsfs import phys
 from hsfs.stats import StatsList
 from hsutil.conflict import get_unconflicted_name, get_conflicted_name
 from hsutil.files import clean_empty_dirs
-from hsutil.job import JobCancelled
 from hsutil.misc import cond, tryint
 from hsutil.str import format_size, format_time, multi_replace, FT_MINUTES, FS_FORBIDDEN
-
-from hsutil.reg import RegistrableApplication
+from hscommon.job import JobCancelled
+from hscommon.reg import RegistrableApplication
 
 from . import design
 from .fs_utils import BatchOperation

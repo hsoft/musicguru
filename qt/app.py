@@ -14,7 +14,7 @@ import os.path as op
 from PyQt4.QtCore import SIGNAL, QUrl
 from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog, QDialog
 
-from hsutil import job
+from hscommon import job
 from qtlib.app import Application as ApplicationBase
 from qtlib.about_box import AboutBox
 from qtlib.progress import Progress

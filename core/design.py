@@ -8,7 +8,8 @@
 
 import random
 
-from hsutil import job, conflict
+from hscommon import job
+from hsutil import conflict
 from hsutil.str import pluralize, format_size, format_time, FT_DECIMAL
 
 from . import fs_utils, manualfs

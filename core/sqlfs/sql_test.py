@@ -15,7 +15,7 @@ from nose.tools import eq_
 
 import hsfs as fs
 from .. import manualfs
-from hsutil.job import Job, JobCancelled
+from hscommon.job import Job, JobCancelled
 from hsutil.testcase import TestCase
 
 from ._sql import *
