@@ -20,7 +20,7 @@ from .manualfs import AutoResolve
 
 (WS_DONT_TOUCH,
  WS_SPACES_TO_UNDERSCORES,
- WS_UNDERSCORES_TO_SPACES) = range(3)
+ WS_UNDERSCORES_TO_SPACES) = list(range(3))
  
 def smart_move(items, dest, allow_merge=True):
     """move items into dest by taking care of name conflicts.
@@ -63,7 +63,7 @@ def RestructureDirectory(directory, namingmodel, whitespaces=WS_DONT_TOUCH, case
         if not letter:
             letter = 'a'
         result = 0
-        for i in xrange(len(steps) - 1):
+        for i in range(len(steps) - 1):
             start = steps[i]
             end = steps[i+1]
             if ord(letter) in range(ord(start), ord(end)):
@@ -95,7 +95,7 @@ def RestructureDirectory(directory, namingmodel, whitespaces=WS_DONT_TOUCH, case
         'track'    : lambda d: do_process('%02d' % d.track, False),
         'title'    : lambda d: do_process(d.title),
         'extension': lambda d: do_process(d.extension),
-        'oldpath'  : lambda d: do_process(unicode(d.parent.path), False),
+        'oldpath'  : lambda d: do_process(str(d.parent.path), False),
         'oldfilename': lambda d: do_process(rem_file_ext(d.name)),
         'group'    : handle_group,
         'firstletter': handle_firstletter,
@@ -292,8 +292,8 @@ class BatchOperation(object):
                 else:
                     io.move(source, dest)
             except (OSError, IOError) as e:
-                print "Warning: Error %r occured while processing %r to %r."\
-                    % (e, unicode(source), unicode(dest))
+                print("Warning: Error %r occured while processing %r to %r."\
+                    % (e, str(source), str(dest)))
             job.add_progress()
         for source, dest, old_source in conflicts:
             if not io.exists(dest):
@@ -366,7 +366,7 @@ class Buffer(object):
         return file
 
     def __GetContent(self):
-        return self.__content.values()
+        return list(self.__content.values())
 
     def __PurgeFile(self, file):
         try:
@@ -425,14 +425,14 @@ class Buffer(object):
 
     def GetMaximumBytesRequired(self):
         dest_sizes = []
-        for files in self.__destinations.values():
+        for files in list(self.__destinations.values()):
             size_sum = sum(f[3] for f in files)
             dest_sizes.append(size_sum)
         return sum(dest_sizes)
 
     def GetMinimumBytesRequired(self):
         dest_sizes = []
-        for files in self.__destinations.values():
+        for files in list(self.__destinations.values()):
             size_sum = sum(f[3] for f in files)
             dest_sizes.append(size_sum)
         return max(dest_sizes)

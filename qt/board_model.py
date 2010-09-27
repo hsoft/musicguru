@@ -23,7 +23,7 @@ class BoardModel(FSModel):
         node = index.internalPointer()
         if role == Qt.EditRole:
             if index.column() == 0:
-                value = unicode(value.toString())
+                value = str(value.toString())
                 self.app.RenameNode(node.ref, value)
                 node.invalidate()
                 return True

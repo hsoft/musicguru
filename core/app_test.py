@@ -21,9 +21,9 @@ class TCApp_GetLocationData(TestCase):
         # Let's fake its stats
         loc._Stats__stats = {'size': int(3.5 * 1024 * 1024 * 1024), 'filecount': 42}
         app = MusicGuru()
-        expected = ['foo', 42, '3.50', True, False, unicode(Path('/does/not/exist/foo'))]
+        expected = ['foo', 42, '3.50', True, False, str(Path('/does/not/exist/foo'))]
         result = app.GetLocationData(loc)
         self.assertEqual(expected, result)
         # The path supplied must be a unicode string, it is going through the pyobjc bridge
-        self.assert_(isinstance(result[5], unicode))
+        self.assert_(isinstance(result[5], str))
     

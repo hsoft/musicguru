@@ -33,11 +33,11 @@ class Directory(sql.Directory, Node):
     cls_file_class = File
 
 (VOLTYPE_CDROM,
-VOLTYPE_FIXED) = range(2)
+VOLTYPE_FIXED) = list(range(2))
 
 (MODE_NORMAL,
 MODE_PHYSICAL,
-MODE_TOKEN) = range(3)
+MODE_TOKEN) = list(range(3))
 
 class Volume(Directory):
     cls_dir_class = Directory
@@ -58,7 +58,7 @@ class Volume(Directory):
     #---Public
     def update(self, ref=None, job=nulljob):
         if ref is None:
-            ref = music.Directory(None, unicode(self.initial_path))
+            ref = music.Directory(None, str(self.initial_path))
         try:
             super(Volume, self).update(ref, job=job)
         except fs.InvalidPath:

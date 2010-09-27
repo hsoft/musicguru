@@ -80,7 +80,7 @@ class TCBoard(TestCase):
     def test_mass_rename(self):
         self.board.media_capacity = 700
         self.board.MassRename("%year% - %artist% - %title%",fs_utils.WS_SPACES_TO_UNDERSCORES)
-        self.assertEqual(u'2001 - Manu_Chao - La_Primavera._Bleh.mp3',self.board[0].name)
+        self.assertEqual('2001 - Manu_Chao - La_Primavera._Bleh.mp3',self.board[0].name)
         self.assertEqual(1,len(self.board.conflicts))
         self.assertEqual(False,self.board.splitted)
         not_renamed = self.board['(not renamed)']

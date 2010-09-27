@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 from PyQt4.QtCore import SIGNAL, Qt
 from PyQt4.QtGui import QWidget, QHeaderView, QFileDialog
@@ -49,7 +49,7 @@ class LocationsPanel(QWidget, Ui_LocationsPanel):
     def _updateLocationInfo(self):
         location = self._selectedLocation()
         if location is not None:
-            self.pathLabel.setText(unicode(location.physical_path))
+            self.pathLabel.setText(str(location.physical_path))
             type_desc = "Removable (CD/DVD)" if location.is_removable else "Fixed (Hard disk)"
             self.typeLabel.setText(type_desc)
             self.changePathButton.setEnabled(not location.is_removable)
@@ -70,7 +70,7 @@ class LocationsPanel(QWidget, Ui_LocationsPanel):
             return
         title = "Select a new root directory for this location"
         flags = QFileDialog.ShowDirsOnly
-        dirpath = unicode(QFileDialog.getExistingDirectory(self, title, '', flags))
+        dirpath = str(QFileDialog.getExistingDirectory(self, title, '', flags))
         if not dirpath:
             return
         location.initial_path = Path(dirpath)

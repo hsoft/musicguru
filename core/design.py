@@ -170,7 +170,7 @@ class MassRenamePanel(object):
         tmp.add_file_copy(self.example)
         renamed = fs_utils.RestructureDirectory(tmp,self.model,self.whitespace)
         file = renamed.allfiles[0]
-        return unicode(file.path[1:])
+        return str(file.path[1:])
     
     @property
     def example_before(self):
@@ -178,7 +178,7 @@ class MassRenamePanel(object):
             self.ChangeExample()
         if self.example is None:
             return ''
-        return unicode(self.example.path[1:])
+        return str(self.example.path[1:])
     
     @property
     def model(self):
@@ -215,7 +215,7 @@ class SplittingPanel(object):
         sample = [d for d in self.refdir.alldirs if len(list(d.parents)) == self.grouping_level]
         if sample:
             example = random.choice(sample)
-            return unicode(example.path)
+            return str(example.path)
         else:
             return '(No folder at this level)'
     

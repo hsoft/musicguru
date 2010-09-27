@@ -51,7 +51,7 @@ class Node(fs.Node):
         except fs.AlreadyExistsError:
             newname = parent._resolve_conflict(parent[name], self, name)
             if newname:
-                if isinstance(newname, basestring):
+                if isinstance(newname, str):
                     super(Node, self).__init__(parent, newname)
             else:
                 raise
@@ -62,7 +62,7 @@ class Node(fs.Node):
         except fs.AlreadyExistsError:
             newname = self.parent._resolve_conflict(self.parent[newname], self, newname)
             if newname:
-                if isinstance(newname, basestring):
+                if isinstance(newname, str):
                     super(Node, self)._set_name(newname)
             else:
                 raise
@@ -120,7 +120,7 @@ class Directory(fs.Directory, Node, _CopyOf):
         super(Directory, self).__init__(parent, dirname)
     
     def _do_hash(self, value):
-        if (not self.case_sensitive) and isinstance(value, basestring):
+        if (not self.case_sensitive) and isinstance(value, str):
             return value.lower()
         else:
             return value
@@ -153,7 +153,7 @@ class Directory(fs.Directory, Node, _CopyOf):
         if not newname:
             newname = child.name
         newname = self._conflict_check(newname, child)
-        if not isinstance(newname, basestring):
+        if not isinstance(newname, str):
             return child #Just don't perform the add, _resolve_conflict has taken 
                          #care of everything
         child.parent = None

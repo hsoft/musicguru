@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 import os.path as op
 
@@ -64,7 +64,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
     LOGO_NAME = 'mg_logo'
     
     def __init__(self):
-        appdata = unicode(QDesktopServices.storageLocation(QDesktopServices.DataLocation))
+        appdata = str(QDesktopServices.storageLocation(QDesktopServices.DataLocation))
         MusicGuruBase.__init__(self, appdata)
         ApplicationBase.__init__(self)
         self.prefs = Preferences()
@@ -175,7 +175,7 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         needCdDialog = DiskNeededDialog()
         title = "Choose a destination"
         flags = QFileDialog.ShowDirsOnly
-        dirpath = unicode(QFileDialog.getExistingDirectory(self.mainWindow, title, '', flags))
+        dirpath = str(QFileDialog.getExistingDirectory(self.mainWindow, title, '', flags))
         if dirpath:
             jobid = JOB_MATERIALIZE_COPY if copy else JOB_MATERIALIZE_MOVE
             self._startJob(jobid, do)

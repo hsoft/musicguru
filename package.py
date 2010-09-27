@@ -20,7 +20,7 @@ from hscommon.build import (print_and_do, build_dmg, add_to_pythonpath, copy_qt_
 
 def package_windows(dev):
     if sys.platform != "win32":
-        print "Qt packaging only works under Windows."
+        print("Qt packaging only works under Windows.")
         return
     add_to_pythonpath('.')
     add_to_pythonpath('qt')
@@ -76,7 +76,7 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    print "Packaging musicGuru with UI {0}".format(ui)
+    print("Packaging musicGuru with UI {0}".format(ui))
     if ui == 'cocoa':
         build_dmg('cocoa/build/Release/musicGuru.app', '.')
     elif ui == 'qt':

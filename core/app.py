@@ -89,12 +89,12 @@ class MusicGuru(RegistrableApplication):
                 new_info.append(('Songs',filecount))
                 output_stats(new_info,new_item)
         elif item.is_container:
-            new_info.append(('Path',unicode(item.path[1:])))
+            new_info.append(('Path',str(item.path[1:])))
             new_info.append(('Songs',item.get_stat('filecount')))
             output_stats(new_info,item)
         else:
             new_info.append(('Filename',item.name))
-            new_info.append(('Directory',unicode(item.parent.path[1:])))
+            new_info.append(('Directory',str(item.parent.path[1:])))
             new_info.append(('Title',item.title))
             new_info.append(('Artist',item.artist))
             new_info.append(('Album',item.album))

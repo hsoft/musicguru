@@ -22,12 +22,12 @@ def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
     dev = conf['dev']
-    print "Building musicGuru with UI {0}".format(ui)
+    print("Building musicGuru with UI {0}".format(ui))
     if dev:
-        print "Building in Dev mode"
+        print("Building in Dev mode")
     add_to_pythonpath('.')
     
-    print "Generating Help"
+    print("Generating Help")
     windows = sys.platform == 'win32'
     profile = 'win_en' if windows else 'osx_en'
     basepath = op.abspath('help')
@@ -35,11 +35,11 @@ def main():
     helpgen.gen(basepath, destpath, profile=profile)
     if ui == 'cocoa':
         if not dev:
-            print "Building help index"
+            print("Building help index")
             help_path = op.abspath('help/musicguru_help')
             os.system('open -a /Developer/Applications/Utilities/Help\\ Indexer.app {0}'.format(help_path))
         
-        print "Building mg_cocoa.plugin"
+        print("Building mg_cocoa.plugin")
         if op.exists('build'):
             shutil.rmtree('build')
         os.mkdir('build')
@@ -64,14 +64,14 @@ def main():
             pthpath = op.join(pluginpath, 'Contents/Resources/dev.pth')
             open(pthpath, 'w').write(op.abspath('.'))
         os.chdir('cocoa')
-        print "Building the XCode project"
+        print("Building the XCode project")
         os.system('xcodebuild')
         os.chdir('..')
     elif ui == 'qt':
         build_all_qt_ui(op.join('qtlib', 'ui'))
         build_all_qt_ui(op.join('qt', 'ui'))
         os.chdir('qt')
-        print_and_do("pyrcc4 mg.qrc > mg_rc.py")
+        print_and_do("pyrcc4 -py3 mg.qrc > mg_rc.py")
         os.chdir('..')
 
 if __name__ == '__main__':

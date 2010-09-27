@@ -32,7 +32,7 @@ class DetailsPanel(QWidget, Ui_DetailsPanel):
         self.tableWidget.setRowCount(len(info))
         for index, (name, value) in enumerate(info):
             self.tableWidget.setItem(index, 0, QTableWidgetItem(name))
-            self.tableWidget.setItem(index, 1, QTableWidgetItem(unicode(value)))
+            self.tableWidget.setItem(index, 1, QTableWidgetItem(str(value)))
     
     #--- Events
     def boardSelectionChanged(self):

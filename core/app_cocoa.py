@@ -23,10 +23,10 @@ from .fs_utils import smart_move
 
 (TAG_LOCATIONS,
 TAG_DETAILS,
-TAG_RECORDED_DISKS) = range(3)
+TAG_RECORDED_DISKS) = list(range(3))
 
 (TAG_DESIGN_BOARD,
-TAG_IGNORE_BOX) = range(2)
+TAG_IGNORE_BOX) = list(range(2))
 
 def WalkDir(base,node_path):
     if not node_path:
@@ -187,7 +187,7 @@ class MusicGuru(app.MusicGuru):
             format_size(location.get_stat('size'),2,3,False),
             location.is_removable,
             location.is_available,
-            unicode(location.physical_path)
+            str(location.physical_path)
         ]
     
     def GetOutlineViewChildCounts(self, tag, node_path):

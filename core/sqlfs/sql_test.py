@@ -24,7 +24,7 @@ INFO_SAMPLE = {
     'foo': 'bar',
     'baz': 42,
     'int_in_str': '42',
-    'long': 42L
+    'long': 42
 }
 
 class FakeFile(manualfs.File):
@@ -103,8 +103,8 @@ class TCDirectory(TestCase):
     
     def test_unicode(self):
         root = Root(threaded=False)
-        d = root.new_directory(u'foo\u00e9')
-        self.assertEqual(u'foo\u00e9',d.name)
+        d = root.new_directory('foo\u00e9')
+        self.assertEqual('foo\u00e9',d.name)
     
 
 class TCFile(TestCase):
@@ -211,8 +211,8 @@ class TCAttr_single(TestCase):
     def test_unicode(self):
         root = Root(threaded=False)
         f = root.new_file('foobar')
-        f._set_attr('foo',u'foo\u00e9')
-        self.assertEqual(u'foo\u00e9',f._get_attr('foo'))
+        f._set_attr('foo','foo\u00e9')
+        self.assertEqual('foo\u00e9',f._get_attr('foo'))
     
     def test_binary(self):
         root = Root(threaded=False)

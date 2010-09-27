@@ -18,7 +18,7 @@ from hscommon.build import add_to_pythonpath
 def main():
     conf = yaml.load(open('conf.yaml'))
     ui = conf['ui']
-    print "Running musicGuru with UI {0}".format(ui)
+    print("Running musicGuru with UI {0}".format(ui))
     if ui == 'cocoa':
         os.system('open cocoa/build/Release/musicGuru.app')
     elif ui == 'qt':

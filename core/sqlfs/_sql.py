@@ -17,11 +17,11 @@ from hsutil.str import multi_replace
 import hscommon.sqlite
 
 (NODE_TYPE_DIR,
-NODE_TYPE_FILE) = range(2)
+NODE_TYPE_FILE) = list(range(2))
 
 (ATTR_TYPE_INT,
 ATTR_TYPE_STR,
-ATTR_TYPE_BINARY) = range(3)
+ATTR_TYPE_BINARY) = list(range(3))
 
 def db_to_value(value_type,value):
     if value_type == ATTR_TYPE_INT:
@@ -38,18 +38,21 @@ def value_to_db(value):
     elif value_type == ATTR_TYPE_BINARY:
         value = ''.join(['%02x' % ord(char) for char in value])
     else:
-        if isinstance(value,basestring):
+        if isinstance(value,str):
             value = multi_replace(value,['\n','\r'],'')
         else:
             value = str(value)
     return value
 
 def get_value_type(value):
-    if isinstance(value,(int,long)):
+    if isinstance(value, (int, float)):
         return ATTR_TYPE_INT
     try:
-        if not isinstance(value,unicode):
-            unicode(str(value),'utf-8')
+        if not isinstance(value, str):
+            if isinstance(value, bytes):
+                return value.decode('utf-8')
+            else:
+                return str(value)
         return ATTR_TYPE_STR
     except UnicodeDecodeError:
         return ATTR_TYPE_BINARY
@@ -91,7 +94,7 @@ class Node(object):
         All values already in the db for self.id are deleted before the insertion of the new 
         values.
         """
-        for key, value in attrs.items():
+        for key, value in list(attrs.items()):
             self._set_attr(key, value, False)
         if commit:
             self.con.commit()
@@ -191,10 +194,11 @@ class Directory(fs.Directory,Node):
                         new = self[reffile.name]
                     except KeyError:
                         new = self.new_file(reffile.name, commit=False)
-                    if (new.mtime == 0) or (reffile.mtime > new.mtime):
+                    new_mtime = float(new.mtime) # in old databases, mtime is stored as string 
+                    if (new_mtime == 0) or (reffile.mtime > new_mtime):
                         attrnames = self.root._attrs_to_read
                         if attrnames is None:
-                            attrnames = reffile.INITIAL_INFO.keys()
+                            attrnames = list(reffile.INITIAL_INFO.keys())
                         attrs = {}
                         for attrname in attrnames:
                             try:

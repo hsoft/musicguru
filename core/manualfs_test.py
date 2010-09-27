@@ -31,13 +31,13 @@ class TestDir(Directory):
 
 def BuildBigSample():
     root = TestDir(None,'root')
-    for i in xrange(SUBDIR_COUNT):
+    for i in range(SUBDIR_COUNT):
         root.AddFile('file%d' % i)
         xDir1 = root.AddDir('dir%d' % i)
-        for j in xrange(SUBDIR_COUNT):
+        for j in range(SUBDIR_COUNT):
             xDir1.AddFile('file%d' % j)
             xDir2 = xDir1.AddDir('dir%d%d' % (i,j))
-            for k in xrange(SUBDIR_COUNT):
+            for k in range(SUBDIR_COUNT):
                 xDir2.AddFile('file%d' % k)
                 xDir2.AddDir('dir%d%d%d' % (i,j,k))
     return root
@@ -360,7 +360,7 @@ def test_job_cancelled():
     #The exception must go through, and the directory must NOT be added.
     test = Directory(None,'')
     root = Directory(None,'')
-    for i in xrange(50):
+    for i in range(50):
         root.new_file('foo%d' % i)
     test.add_dir_copy(root,'dir1')
     eq_(1, len(test))

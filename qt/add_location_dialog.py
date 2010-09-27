@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 from PyQt4.QtCore import SIGNAL, QTimer
 from PyQt4.QtGui import QDialog, QGroupBox, QFileDialog
@@ -31,14 +31,14 @@ class AddFixedDriveGroupBox(QGroupBox, Ui_AddFixedDriveGroupBox):
     def chooseButtonClicked(self):
         title = "Select a folder to add"
         flags = QFileDialog.ShowDirsOnly
-        dirpath = unicode(QFileDialog.getExistingDirectory(self, title, '', flags))
+        dirpath = str(QFileDialog.getExistingDirectory(self, title, '', flags))
         if dirpath:
             self.pathField.setText(dirpath)
     
     def pathFieldChanged(self, newText):
-        path = Path(unicode(newText))
+        path = Path(str(newText))
         name = path[-1] if path else ''
-        self.emit(SIGNAL('locationChanged(QString,QString)'), unicode(newText), name)
+        self.emit(SIGNAL('locationChanged(QString,QString)'), str(newText), name)
     
 
 class AddRemovableDriveGroupBox(QGroupBox, Ui_AddRemovableDriveGroupBox):
@@ -110,12 +110,12 @@ class AddLocationDialog(QDialog, Ui_AddLocationDialog):
     
     #--- Events
     def locationChanged(self, newPath, newName):
-        self.locationPath = unicode(newPath)
+        self.locationPath = str(newPath)
         self.isLocationRemovable = self.removableDriveButton.isChecked()
         self.nameField.setText(newName)
     
     def nameFieldChanged(self, newText):
-        self.locationName = unicode(newText)
+        self.locationName = str(newText)
     
     def radioButtonToggled(self, checked):
         self._updateVisibleGroupBox()

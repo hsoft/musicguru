@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 from PyQt4.QtCore import Qt, SIGNAL, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
@@ -167,7 +167,7 @@ class FSModel(TreeModel):
             destNode = parentIndex.internalPointer()
         else:
             destNode = self
-        paths = unicode(mimeData.data(MIME_PATHS), 'utf-8').split('\n')
+        paths = str(mimeData.data(MIME_PATHS), 'utf-8').split('\n')
         sourceItems = set(find_path(Path(path)) for path in paths)
         sourceItems = set(item for item in sourceItems if item.parent not in sourceItems | set([destNode.ref]))
         if not sourceItems:
@@ -206,7 +206,7 @@ class FSModel(TreeModel):
     
     def mimeData(self, indexes):
         nodes = dedupe(index.internalPointer() for index in indexes)
-        paths = [unicode(self.name + node.ref.path) for node in nodes]
+        paths = [str(self.name + node.ref.path) for node in nodes]
         data = '\n'.join(paths).encode('utf-8')
         mimeData = QMimeData()
         mimeData.setData(MIME_PATHS, QByteArray(data))

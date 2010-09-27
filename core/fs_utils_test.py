@@ -8,7 +8,7 @@
 
 import os.path as op
 import os
-from StringIO import StringIO
+from io import StringIO
 import sys
 import weakref
 import gc
@@ -141,7 +141,7 @@ class TCGetNewName(TestCase):
         dir = manualfs.Directory(None, 'foo')
         result = hsfs.music._File(dir,'bar.mp3')
         result._read_all_info()
-        for key, value in attrs.items():
+        for key, value in list(attrs.items()):
             setattr(result, key, value)
         return result
 
@@ -224,7 +224,7 @@ class TCRestructureDirectory(TestCase):
     def Gen(self,attrs,parent,name):
         result = hsfs.music._File(parent,name + '.mp3')
         result._read_all_info()
-        for key, value in attrs.items():
+        for key, value in list(attrs.items()):
             setattr(result, key, value)
         return result
     
@@ -977,7 +977,7 @@ class TCBatchOperation(TestCase):
         rootpath = Path(self.tmpdir())
         source = rootpath + 'zerofile'
         dest = rootpath + 'foo_zero'
-        open(unicode(source), 'w').close() # He want the file to exist so the move call is made.
+        open(str(source), 'w').close() # He want the file to exist so the move call is made.
         try:
             bo._BatchOperation__ProcessNormalList([(source, dest)], False)
         except OSError:
@@ -991,7 +991,7 @@ class TCBatchOperation_unicode(TestCase):
         self.mock(sys, 'getfilesystemencoding', lambda: 'ascii') # force a failure on any non-ascii char
         testpath = self.tmppath()
         create_unicode_test_dir(testpath)
-        sourcedir = phys.Directory(None, unicode(testpath))
+        sourcedir = phys.Directory(None, str(testpath))
         copy = manualfs.Directory(None, '')
         copy.copy(sourcedir)
         destpath = Path(self.tmpdir())

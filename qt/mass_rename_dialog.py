@@ -7,7 +7,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from __future__ import unicode_literals
+
 
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QDialog
@@ -50,7 +50,7 @@ class MassRenameDialog(QDialog, Ui_MassRenameDialog, MassRenamePanel):
         self._changeExample()
     
     def customModelChanged(self, newText):
-        self.custom_model = unicode(newText)
+        self.custom_model = str(newText)
         self._updateExamples()
     
     def modelToggled(self, checked):
