@@ -10,7 +10,7 @@
 import weakref
 import gc
 
-from nose.tools import eq_, assert_raises
+from hsutil.testutil import eq_, assert_raises
 
 from hscommon import job
 from hsutil.decorators import log_calls

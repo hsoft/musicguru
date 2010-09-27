@@ -14,16 +14,16 @@ import weakref
 import gc
 import shutil
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 import hsfs.music
 from hsfs import phys
 from hsfs.tests.phys_test import create_fake_fs, create_unicode_test_dir
 from hsutil.path import Path
-from hsutil.testcase import TestCase
-from hscommon import job
+from hscommon.job import Job
 
 from . import manualfs
+from .testcase import TestCase
 from .fs_utils import *
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
 
@@ -460,7 +460,7 @@ class TCRestructureDirectory(TestCase):
             return True
         
         self.progress = 0
-        j = job.Job(1,do_progress)
+        j = Job(1,do_progress)
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist','title' :'t1'}
         file = self.Gen(attrs,dir,'foobar')

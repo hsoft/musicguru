@@ -9,8 +9,7 @@
 import sqlite3 as sqlite
 import os.path as op
 
-from hsutil.testcase import TestCase
-
+from ..testcase import TestCase
 from .strings import *
 
 class TCEmptyBuffer(TestCase):

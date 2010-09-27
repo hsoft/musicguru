@@ -10,7 +10,20 @@ from hsutil.testcase import TestCase as TestCaseBase
 from hsutil.path import Path
 
 class TestCase(TestCaseBase):
+    def tearDown(self):
+        if hasattr(self, '_created_directories'):
+            self.global_teardown()
+    
     @classmethod
     def datadirpath(cls):
         return Path(__file__)[:-1] + 'testdata'
     
+    def tmpdir(self, *args, **kwargs):
+        if not hasattr(self, '_created_directories'):
+            self.global_setup()
+        return TestCaseBase.tmpdir(self, *args, **kwargs)
+    
+    def mock(self, *args, **kwargs):
+        if not hasattr(self, '_created_directories'):
+            self.global_setup()
+        return TestCaseBase.mock(self, *args, **kwargs)

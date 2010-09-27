@@ -6,8 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/hs_license
 
-from hsutil.testcase import TestCase
-
+from ..testcase import TestCase
 from ._sql import *
 from .utils import *
 

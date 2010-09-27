@@ -11,13 +11,13 @@ import os.path as op
 import time
 import weakref
 
-from nose.tools import eq_
+from hsutil.testutil import eq_
 
 import hsfs as fs
 from .. import manualfs
 from hscommon.job import Job, JobCancelled
-from hsutil.testcase import TestCase
 
+from ..testcase import TestCase
 from ._sql import *
 
 INFO_SAMPLE = {
