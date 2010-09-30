@@ -1,3 +1,7 @@
+- date: 2010-09-30
+  version: 1.4.2
+  description: |
+    * Re-licensed musicGuru to BSD and made it [Fairware](http://open.hardcoded.net/about/)
 - date: 2010-07-11
   version: 1.4.1
   description: |

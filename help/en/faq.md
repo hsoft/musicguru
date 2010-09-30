@@ -6,10 +6,6 @@ musicGuru is a tool helping you in the high level management of your music colle
 
 MP3, WMA, AAC (iTunes format), AAC Lossless, OGG, FLAC.
 
-### How much does musicGuru cost, and how can I buy it?
-
-musicGuru costs $14.95. You can buy it at the [Hardcoded Software purchase page](http://www.hardcoded.net/purchase.htm).
-
 ### What is the first thing I should do when I first open musicGuru?
 
 You should first [build](build.htm) your musicGuru collection, then [design](design.htm) it, and then [materialize](materialize.htm) your design.
