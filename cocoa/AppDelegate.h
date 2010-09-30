@@ -15,7 +15,6 @@ http://www.hardcoded.net/licenses/hs_license
 @interface AppDelegate : NSObject
 {
     IBOutlet PyMusicGuru *py;
-    IBOutlet NSMenuItem *unlockMenuItem;
     
     DesignWindow *_designWindow;
     DetailsPanel *_detailsPanel;
@@ -30,7 +29,6 @@ http://www.hardcoded.net/licenses/hs_license
 - (IBAction)showDetails:(id)sender;
 - (IBAction)showIgnoreBox:(id)sender;
 - (IBAction)showLocations:(id)sender;
-- (IBAction)unlockApp:(id)sender;
 - (IBAction)updateCollection:(id)sender;
 
 /* Public */

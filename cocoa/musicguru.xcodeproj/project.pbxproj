@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		CE1AAFF9125470C200507F4B /* FairwareReminder.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1AAFF7125470C200507F4B /* FairwareReminder.xib */; };
+		CE1AAFFD125470D300507F4B /* HSFairwareReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1AAFFB125470D300507F4B /* HSFairwareReminder.m */; };
 		CE28DB23116F0B6100A93DD8 /* ErrorReportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */; };
 		CE28DB24116F0B6100A93DD8 /* progress.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB21116F0B6100A93DD8 /* progress.xib */; };
-		CE28DB25116F0B6100A93DD8 /* registration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE28DB22116F0B6100A93DD8 /* registration.xib */; };
 		CE28DB2A116F0B7300A93DD8 /* Outline.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28DB27116F0B7300A93DD8 /* Outline.m */; };
 		CE28DB2B116F0B7300A93DD8 /* Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28DB29116F0B7300A93DD8 /* Table.m */; };
 		CE2CD3D80A94822200C0DA8D /* LocationPanel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE2CD3D60A94822200C0DA8D /* LocationPanel.h */; };
@@ -33,7 +34,6 @@
 		CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AB0FE1210400ABA3F7 /* BRSingleLineFormatter.m */; };
 		CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */; };
 		CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */; };
-		CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */; };
 		CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E9BB0FE1210400ABA3F7 /* Utils.m */; };
 		CEB4E7FC09CEF4CE00A27957 /* DesignWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */; };
 		CEB4E7FD09CEF4CE00A27957 /* DesignWindow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEB4E7FB09CEF4CE00A27957 /* DesignWindow.h */; };
@@ -103,9 +103,12 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* musicGuru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = musicGuru.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE1AAFF8125470C200507F4B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../cocoalib/en.lproj/FairwareReminder.xib; sourceTree = SOURCE_ROOT; };
+		CE1AAFFA125470D300507F4B /* HSFairwareReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSFairwareReminder.h; path = ../cocoalib/HSFairwareReminder.h; sourceTree = SOURCE_ROOT; };
+		CE1AAFFB125470D300507F4B /* HSFairwareReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSFairwareReminder.m; path = ../cocoalib/HSFairwareReminder.m; sourceTree = SOURCE_ROOT; };
+		CE1AAFFC125470D300507F4B /* PyFairware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyFairware.h; path = ../cocoalib/PyFairware.h; sourceTree = SOURCE_ROOT; };
 		CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorReportWindow.xib; sourceTree = "<group>"; };
 		CE28DB21116F0B6100A93DD8 /* progress.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = progress.xib; sourceTree = "<group>"; };
-		CE28DB22116F0B6100A93DD8 /* registration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = registration.xib; sourceTree = "<group>"; };
 		CE28DB26116F0B7300A93DD8 /* Outline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Outline.h; sourceTree = "<group>"; };
 		CE28DB27116F0B7300A93DD8 /* Outline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Outline.m; sourceTree = "<group>"; };
 		CE28DB28116F0B7300A93DD8 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
@@ -135,9 +138,6 @@
 		CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressController.h; path = ../cocoalib/ProgressController.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressController.m; path = ../cocoalib/ProgressController.m; sourceTree = SOURCE_ROOT; };
 		CEA0E9B40FE1210400ABA3F7 /* PyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyApp.h; path = ../cocoalib/PyApp.h; sourceTree = SOURCE_ROOT; };
-		CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PyRegistrable.h; path = ../cocoalib/PyRegistrable.h; sourceTree = SOURCE_ROOT; };
-		CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationInterface.h; path = ../cocoalib/RegistrationInterface.h; sourceTree = SOURCE_ROOT; };
-		CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationInterface.m; path = ../cocoalib/RegistrationInterface.m; sourceTree = SOURCE_ROOT; };
 		CEA0E9BA0FE1210400ABA3F7 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = ../cocoalib/Utils.h; sourceTree = SOURCE_ROOT; };
 		CEA0E9BB0FE1210400ABA3F7 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = ../cocoalib/Utils.m; sourceTree = SOURCE_ROOT; };
 		CEB4E7FA09CEF4CE00A27957 /* DesignWindow.m */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.objc; path = DesignWindow.m; sourceTree = "<group>"; };
@@ -281,9 +281,9 @@
 		CE28DB1F116F0B6100A93DD8 /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				CE1AAFF7125470C200507F4B /* FairwareReminder.xib */,
 				CE28DB20116F0B6100A93DD8 /* ErrorReportWindow.xib */,
 				CE28DB21116F0B6100A93DD8 /* progress.xib */,
-				CE28DB22116F0B6100A93DD8 /* registration.xib */,
 			);
 			name = xib;
 			path = ../cocoalib/xib;
@@ -313,10 +313,10 @@
 				CEA0E9AF0FE1210400ABA3F7 /* Dialogs.m */,
 				CEA0E9B20FE1210400ABA3F7 /* ProgressController.h */,
 				CEA0E9B30FE1210400ABA3F7 /* ProgressController.m */,
+				CE1AAFFA125470D300507F4B /* HSFairwareReminder.h */,
+				CE1AAFFB125470D300507F4B /* HSFairwareReminder.m */,
+				CE1AAFFC125470D300507F4B /* PyFairware.h */,
 				CEA0E9B40FE1210400ABA3F7 /* PyApp.h */,
-				CEA0E9B50FE1210400ABA3F7 /* PyRegistrable.h */,
-				CEA0E9B60FE1210400ABA3F7 /* RegistrationInterface.h */,
-				CEA0E9B70FE1210400ABA3F7 /* RegistrationInterface.m */,
 				CEA0E9BA0FE1210400ABA3F7 /* Utils.h */,
 				CEA0E9BB0FE1210400ABA3F7 /* Utils.m */,
 			);
@@ -397,6 +397,13 @@
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "musicguru" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* musicguru_cocoa */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -429,7 +436,6 @@
 				CEC9A8D209D86A6A0038B2D6 /* musicguru_help in Resources */,
 				CE28DB23116F0B6100A93DD8 /* ErrorReportWindow.xib in Resources */,
 				CE28DB24116F0B6100A93DD8 /* progress.xib in Resources */,
-				CE28DB25116F0B6100A93DD8 /* registration.xib in Resources */,
 				CE31A306116F302200AF3D6D /* AddLocation.xib in Resources */,
 				CE31A307116F302200AF3D6D /* Design.xib in Resources */,
 				CE31A308116F302200AF3D6D /* Details.xib in Resources */,
@@ -439,6 +445,7 @@
 				CE31A30C116F302200AF3D6D /* MassRename.xib in Resources */,
 				CE31A30D116F302200AF3D6D /* Split.xib in Resources */,
 				CEFDEC00116F5063006266D5 /* dsa_pub.pem in Resources */,
+				CE1AAFF9125470C200507F4B /* FairwareReminder.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,14 +469,26 @@
 				CEA0E9BC0FE1210400ABA3F7 /* BRSingleLineFormatter.m in Sources */,
 				CEA0E9BE0FE1210400ABA3F7 /* Dialogs.m in Sources */,
 				CEA0E9C00FE1210400ABA3F7 /* ProgressController.m in Sources */,
-				CEA0E9C10FE1210400ABA3F7 /* RegistrationInterface.m in Sources */,
 				CEA0E9C30FE1210400ABA3F7 /* Utils.m in Sources */,
 				CE28DB2A116F0B7300A93DD8 /* Outline.m in Sources */,
 				CE28DB2B116F0B7300A93DD8 /* Table.m in Sources */,
+				CE1AAFFD125470D300507F4B /* HSFairwareReminder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CE1AAFF7125470C200507F4B /* FairwareReminder.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE1AAFF8125470C200507F4B /* en */,
+			);
+			name = FairwareReminder.xib;
+			path = ../cocoalib/xib;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4C08A954540054247B /* Release */ = {

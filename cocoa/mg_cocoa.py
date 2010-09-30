@@ -10,7 +10,7 @@ import sys
 import objc
 
 from hscommon import job
-from hscommon.cocoa.inter import signature, PyRegistrable
+from hscommon.cocoa.inter import signature, PyFairware
 from hscommon.cocoa.objcmin import NSObject
 
 from core import app_cocoa, design
@@ -88,7 +88,7 @@ class PySplitPanel(NSObject):
 class PyApp(NSObject):
     pass #fake class
 
-class PyMusicGuru(PyRegistrable):
+class PyMusicGuru(PyFairware):
     def init(self):
         self = super(PyMusicGuru,self).init()
         self.py = app_cocoa.MusicGuru()

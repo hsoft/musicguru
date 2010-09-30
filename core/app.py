@@ -26,10 +26,9 @@ from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE
 
 class MusicGuru(RegistrableApplication):
     VERSION = '1.4.1'
-    DEMO_LIMIT_DESC = "In the demo version, it's not possible to materialize designs."
     
     def __init__(self, appdata=None):
-        RegistrableApplication.__init__(self, appid=2)
+        RegistrableApplication.__init__(self, appid=3)
         if appdata is None:
             appdata = op.expanduser(op.join('~', '.hsoftdata', 'musicguru'))
         self.appdata = appdata

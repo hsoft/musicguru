@@ -7,10 +7,10 @@ http://www.hardcoded.net/licenses/hs_license
 */
 
 #import "AppDelegate.h"
-#import "../cocoalib/ProgressController.h"
-#import "../cocoalib/RegistrationInterface.h"
-#import "../cocoalib/Dialogs.h"
-#import "../cocoalib/Utils.h"
+#import "ProgressController.h"
+#import "HSFairwareReminder.h"
+#import "Dialogs.h"
+#import "Utils.h"
 #import "Consts.h"
 
 @implementation AppDelegate
@@ -79,17 +79,6 @@ http://www.hardcoded.net/licenses/hs_license
     [_locationPanel showWindow:self];
 }
 
-- (IBAction)unlockApp:(id)sender
-{
-    if ([[self py] isRegistered])
-        return;
-    RegistrationInterface *ri = [[RegistrationInterface alloc] initWithApp:py];
-    if ([ri enterCode] == NSOKButton) {
-        [unlockMenuItem setTitle:@"Thanks for buying musicGuru!"];
-    }
-    [ri release];
-}
-
 - (IBAction)updateCollection:(id)sender
 {
     [self showLocations:sender];
@@ -99,10 +88,6 @@ http://www.hardcoded.net/licenses/hs_license
 /* Public */
 - (BOOL)canMaterialize
 {
-    if (![py isRegistered]) {
-        [Dialogs showMessage:@"You have to purchase musicGuru to materialize designs."];
-        return NO;
-    }
     return [_locationPanel canMaterialize];
 }
 
@@ -150,9 +135,7 @@ http://www.hardcoded.net/licenses/hs_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    if ([RegistrationInterface showNagWithApp:py]) {
-        [unlockMenuItem setTitle:@"Thanks for buying musicGuru!"];
-    }
+    [HSFairwareReminder showNagWithApp:py];
     [[ProgressController mainProgressController] setWorker:py];
     [self updateCollection:self];
 }
