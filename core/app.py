@@ -25,7 +25,7 @@ from .fs_utils import BatchOperation
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE_NORMAL
 
 class MusicGuru(RegistrableApplication):
-    VERSION = '1.4.2'
+    VERSION = '1.4.3'
     
     def __init__(self, appdata=None):
         RegistrableApplication.__init__(self, appid=3)
