@@ -7,8 +7,11 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import Qt, SIGNAL, QModelIndex, QProcess, QCoreApplication
-from PyQt4.QtGui import QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog
+import os.path as op
+
+from PyQt4.QtCore import Qt, SIGNAL, QModelIndex, QProcess, QCoreApplication, QUrl
+from PyQt4.QtGui import (QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog,
+    QDesktopServices)
 
 from hsutil.conflict import is_conflicted
 
@@ -55,6 +58,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect(self.actionShowHelp, SIGNAL('triggered()'), self.showHelpTriggered)
         self.connect(self.actionRegister, SIGNAL('triggered()'), self.registerTrigerred)
         self.connect(self.actionCheckForUpdate, SIGNAL('triggered()'), self.checkForUpdateTriggered)
+        self.connect(self.actionOpenDebugLog, SIGNAL('triggered()'), self.openDebugLogTriggered)
         self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutTriggered)
     
     def _setupUi(self):
@@ -175,6 +179,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.browserView.setCurrentIndex(index)
                 self.browserView.edit(index)
                 break
+    
+    def openDebugLogTriggered(self):
+        debugLogPath = op.join(self.app.appdata, 'debug.log')
+        url = QUrl.fromLocalFile(debugLogPath)
+        QDesktopServices.openUrl(url)
     
     def registerTrigerred(self):
         self.app.askForRegCode()

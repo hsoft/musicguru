@@ -68,7 +68,6 @@ def main():
         os.system('xcodebuild')
         os.chdir('..')
     elif ui == 'qt':
-        build_all_qt_ui(op.join('qtlib', 'ui'))
         build_all_qt_ui(op.join('qt', 'ui'))
         os.chdir('qt')
         print_and_do("pyrcc4 -py3 mg.qrc > mg_rc.py")

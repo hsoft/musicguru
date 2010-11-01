@@ -7,9 +7,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 import os.path as op
+import logging
 
 from PyQt4.QtCore import SIGNAL, QUrl
 from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog, QDialog
@@ -57,6 +56,9 @@ class MusicGuru(MusicGuruBase, ApplicationBase):
         appdata = str(QDesktopServices.storageLocation(QDesktopServices.DataLocation))
         MusicGuruBase.__init__(self, appdata)
         ApplicationBase.__init__(self)
+        if not op.exists(appdata):
+            os.makedirs(appdata)
+        logging.basicConfig(filename=op.join(appdata, 'debug.log'), level=logging.WARNING)
         self.prefs = Preferences()
         self.prefs.load()
         self.selectedBoardItems = []
