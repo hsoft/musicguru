@@ -353,6 +353,16 @@ class TCUpdate_initial(TestCase):
             pass
         self.assertEqual(0,len(root))
     
+    def test_ignore_unencodable_names(self):
+        # When the ref has unencodable names, ignore them
+        ref = manualfs.Directory()
+        ref.cls_file_class = FakeFile
+        ref.new_file('foo')
+        ref.new_file('foo\udcf1bar') # this can't be encoded to utf-8. something about surrogates
+        root = Root(threaded=False)
+        root.update(ref) # no crash
+        eq_(len(root.allfiles), 1)
+    
 
 class TCUpdate_subsequent(TestCase):
     #Test what happens when Update is called a second time.

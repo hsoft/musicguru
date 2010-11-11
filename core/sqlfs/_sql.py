@@ -128,7 +128,11 @@ class Directory(fs.Directory,Node):
     """
     cls_file_class = File
     def __new_item(self, node_type, name, commit=True):
-        #raises fs.AlreadyExistsError
+        #raises fs.AlreadyExistsError and ValueError
+        try:
+            name.encode('utf-8')
+        except UnicodeEncodeError:
+            raise ValueError("Can't add an item with an unencodable name")
         if node_type == NODE_TYPE_FILE:
             result = self._create_sub_file(name)
         else:
@@ -193,7 +197,10 @@ class Directory(fs.Directory,Node):
                     try:
                         new = self[reffile.name]
                     except KeyError:
-                        new = self.new_file(reffile.name, commit=False)
+                        try:
+                            new = self.new_file(reffile.name, commit=False)
+                        except ValueError:
+                            continue
                     new_mtime = float(new.mtime) # in old databases, mtime is stored as string 
                     if (new_mtime == 0) or (reffile.mtime > new_mtime):
                         attrnames = self.root._attrs_to_read
