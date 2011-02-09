@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import os.path as op
 import os
+import os.path as op
 from io import StringIO
 import sys
 import weakref
@@ -22,9 +22,8 @@ from hscommon.path import Path
 from jobprogress.job import Job
 
 from . import manualfs
-from .testcase import TestCase
 from .fs_utils import *
-from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED
+from .sqlfs.music import Root, VOLTYPE_CDROM
 
 class TestDir(manualfs.Directory):
     def AddDir(self,dirname):
@@ -33,7 +32,7 @@ class TestDir(manualfs.Directory):
     def AddFile(self,filename):
         return self._create_sub_file(filename)
 
-class SmartMove(TestCase):
+class TestSmartMove:
     def test_simple(self):
         merge_from = TestDir(None,'merge_from')
         merge_into = TestDir(None,'merge_into')
@@ -131,7 +130,7 @@ class SmartMove(TestCase):
         assert subfile in subdir
     
 
-class TCGetNewName(TestCase):
+class TestGetNewName:
     #The GetNewName functionnality has been moved to the RestructureView.
     #Moving all these tests individually would be too long. What I'll do
     #is that I'll create an interface here that will call restructuredirectory
@@ -153,14 +152,14 @@ class TCGetNewName(TestCase):
 
     def test_simple(self):
         #That all values that can be supplied as an argument in the model.
-        self.assertEqual('bar.mp3',self.MockGetNewName(self.Gen({}),'%oldfilename%'))
-        self.assertEqual('foo_artist.mp3',self.MockGetNewName(self.Gen({'artist':'foo_artist'}),'%artist%'))
-        self.assertEqual('foo_album.mp3',self.MockGetNewName(self.Gen({'album':'foo_album'}),'%album%'))
-        self.assertEqual('2005.mp3',self.MockGetNewName(self.Gen({'year':2005}),'%year%'))
-        self.assertEqual('foo_genre.mp3',self.MockGetNewName(self.Gen({'genre':'foo_genre'}),'%genre%'))
-        self.assertEqual('09.mp3',self.MockGetNewName(self.Gen({'track':9}),'%track%'))
-        self.assertEqual('foo_title.mp3',self.MockGetNewName(self.Gen({'title':'foo_title'}),'%title%'))
-        self.assertEqual('foo.mp3',self.MockGetNewName(self.Gen({}),'%oldpath%'))
+        eq_('bar.mp3',self.MockGetNewName(self.Gen({}),'%oldfilename%'))
+        eq_('foo_artist.mp3',self.MockGetNewName(self.Gen({'artist':'foo_artist'}),'%artist%'))
+        eq_('foo_album.mp3',self.MockGetNewName(self.Gen({'album':'foo_album'}),'%album%'))
+        eq_('2005.mp3',self.MockGetNewName(self.Gen({'year':2005}),'%year%'))
+        eq_('foo_genre.mp3',self.MockGetNewName(self.Gen({'genre':'foo_genre'}),'%genre%'))
+        eq_('09.mp3',self.MockGetNewName(self.Gen({'track':9}),'%track%'))
+        eq_('foo_title.mp3',self.MockGetNewName(self.Gen({'title':'foo_title'}),'%title%'))
+        eq_('foo.mp3',self.MockGetNewName(self.Gen({}),'%oldpath%'))
 
     def test_combined(self):
         #Try a couple of combinations.
@@ -174,16 +173,16 @@ class TCGetNewName(TestCase):
             }
         model = '%artist%/%album%/%track% - %artist% - %title%'
         expected = op.join('foo_artist','foo_album','09 - foo_artist - foo_title.mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model))
         model = '%artist%/%album%/%track% - %title%'
         expected = op.join('foo_artist','foo_album','09 - foo_title.mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model))
         model = '%genre%/%artist%/[%year%]%album%/%track% - %title%'
         expected = op.join('foo_genre','foo_artist','[2005]foo_album','09 - foo_title.mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model))
         model = '%artist%/%album% - %track% - %title%'
         expected = op.join('foo_artist','foo_album - 09 - foo_title.mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model))
 
     def test_invalid(self):
         attrs = {
@@ -195,10 +194,10 @@ class TCGetNewName(TestCase):
             }
         model = '%artist%/%album%/%track% - %artist% - %invalid%'
         expected = op.join('foo_artist','foo_album','09 - foo_artist - (none).mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model))
         model = '%genre%/%album%/%track% - %artist% - %invalid%' #no genre in attrs
         expected = op.join('(none)','foo_album','09 - foo_artist - (none).mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model))
 
     def test_whitespace(self):
         attrs = {
@@ -210,16 +209,16 @@ class TCGetNewName(TestCase):
             }
         model = '%artist%/%album%/%track% - %artist% - %title%'
         expected = op.join('foo artist','foo album','09 - foo artist - foo title.mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model,WS_UNDERSCORES_TO_SPACES))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model,WS_UNDERSCORES_TO_SPACES))
         expected = op.join('foo_artist','foo_album','09 - foo_artist - foo_title.mp3')
-        self.assertEqual(expected,self.MockGetNewName(self.Gen(attrs),model,WS_SPACES_TO_UNDERSCORES))
+        eq_(expected,self.MockGetNewName(self.Gen(attrs),model,WS_SPACES_TO_UNDERSCORES))
 
     def test_no_extension(self):
         myfile = self.Gen({})
         myfile.name = 'foobar'
-        self.assertEqual('foobar',self.MockGetNewName(myfile,'%oldfilename%'))
+        eq_('foobar',self.MockGetNewName(myfile,'%oldfilename%'))
 
-class TCRestructureDirectory(TestCase):
+class TestRestructureDirectory:
     def Gen(self,attrs,parent,name):
         result = hsfs.music._File(parent,name + '.mp3')
         result._read_all_info()
@@ -239,12 +238,12 @@ class TCRestructureDirectory(TestCase):
             }
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%artist%/%album%/%track% - %artist% - %title%')
-        self.assertEqual(1,len(result))
-        self.assertEqual('foo_artist',result[0].name)
-        self.assertEqual(1,len(result[0]))
-        self.assertEqual('foo_album',result[0][0].name)
-        self.assertEqual(1,len(result[0][0]))
-        self.assertEqual('09 - foo_artist - foo_title.mp3',result[0][0][0].name)
+        eq_(1,len(result))
+        eq_('foo_artist',result[0].name)
+        eq_(1,len(result[0]))
+        eq_('foo_album',result[0][0].name)
+        eq_(1,len(result[0][0]))
+        eq_('09 - foo_artist - foo_title.mp3',result[0][0][0].name)
     
     def test_conflict(self):
         dir = manualfs.Directory(None, 'root')
@@ -259,13 +258,13 @@ class TCRestructureDirectory(TestCase):
         self.Gen(attrs,dir,'foobar1')
         self.Gen(attrs,dir,'foobar2')
         result = RestructureDirectory(dir,'%artist%/%album%/%track% - %artist% - %title%')
-        self.assertEqual(1,len(result))
-        self.assertEqual('foo_artist',result[0].name)
-        self.assertEqual(1,len(result[0]))
-        self.assertEqual('foo_album',result[0][0].name)
-        self.assertEqual(2,len(result[0][0]))
-        self.assertEqual('09 - foo_artist - foo_title.mp3',result[0][0][0].name)
-        self.assertEqual('[000] 09 - foo_artist - foo_title.mp3',result[0][0][1].name)
+        eq_(1,len(result))
+        eq_('foo_artist',result[0].name)
+        eq_(1,len(result[0]))
+        eq_('foo_album',result[0][0].name)
+        eq_(2,len(result[0][0]))
+        eq_('09 - foo_artist - foo_title.mp3',result[0][0][0].name)
+        eq_('[000] 09 - foo_artist - foo_title.mp3',result[0][0][1].name)
     
     def test_slash_in_tokens(self):
         dir = manualfs.Directory(None, 'root')
@@ -279,103 +278,103 @@ class TCRestructureDirectory(TestCase):
             }
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%artist%/%album%/%track% - %artist% - %title%')
-        self.assertEqual(1,len(result))
-        self.assertEqual('foo artist',result[0].name)
-        self.assertEqual(1,len(result[0]))
-        self.assertEqual('foo album',result[0][0].name)
-        self.assertEqual(1,len(result[0][0]))
-        self.assertEqual('09 - foo artist - foo title.mp3',result[0][0][0].name)
+        eq_(1,len(result))
+        eq_('foo artist',result[0].name)
+        eq_(1,len(result[0]))
+        eq_('foo album',result[0][0].name)
+        eq_(1,len(result[0][0]))
+        eq_('09 - foo artist - foo title.mp3',result[0][0][0].name)
     
     def test_groups(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist%')
-        self.assertEqual('E-L.mp3',result[0].name)
+        eq_('E-L.mp3',result[0].name)
     
     def test_groups_lower(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'zoo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emp:lower%')
-        self.assertEqual('p-z.mp3',result[0].name)
+        eq_('p-z.mp3',result[0].name)
     
     def test_groups_on_exact_step(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'roo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
-        self.assertEqual('r-z.mp3',result[0].name)
+        eq_('r-z.mp3',result[0].name)
     
     def test_groups_on_step_plus_one(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'soo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
-        self.assertEqual('r-z.mp3',result[0].name)
+        eq_('r-z.mp3',result[0].name)
     
     def test_groups_on_step_minus_one(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'qoo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
-        self.assertEqual('m-q.mp3',result[0].name)
+        eq_('m-q.mp3',result[0].name)
     
     def test_groups_genre(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'genre':'soo_genre',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:genre:emr:lower%')
-        self.assertEqual('r-z.mp3',result[0].name)
+        eq_('r-z.mp3',result[0].name)
     
     def test_groups_out_of_range(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'(oo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
-        self.assertEqual('a-d.mp3',result[0].name)
+        eq_('a-d.mp3',result[0].name)
     
     def test_groups_empty(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%group:artist:emr:lower%')
-        self.assertEqual('a-d.mp3',result[0].name)
+        eq_('a-d.mp3',result[0].name)
     
     def test_firstletter_normal(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:artist%')
-        self.assertEqual('F.mp3',result[0].name)
+        eq_('F.mp3',result[0].name)
     
     def test_firstletter_album(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'album':'goo_album',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:album%')
-        self.assertEqual('G.mp3',result[0].name)
+        eq_('G.mp3',result[0].name)
     
     def test_firstletter_no_attr(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:album%')
-        self.assertEqual('(none).mp3',result[0].name)
+        eq_('(none).mp3',result[0].name)
     
     def test_firstletter_empty_attr(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:artist%')
-        self.assertEqual('(none).mp3',result[0].name)
+        eq_('(none).mp3',result[0].name)
     
     def test_firstletter_lower(self):
         dir = manualfs.Directory(None, 'root')
         attrs = {'artist':'foo_artist',}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%firstletter:artist:lower%')
-        self.assertEqual('f.mp3',result[0].name)
+        eq_('f.mp3',result[0].name)
     
     def test_forbidden_chars(self):
         dir = manualfs.Directory(None, 'root')
@@ -387,12 +386,12 @@ class TCRestructureDirectory(TestCase):
             }
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%genre%/%album%/%artist% - %title%')
-        self.assertEqual(1,len(result))
-        self.assertEqual('foo  genre',result[0].name)
-        self.assertEqual(1,len(result[0]))
-        self.assertEqual('foo  album',result[0][0].name)
-        self.assertEqual(1,len(result[0][0]))
-        self.assertEqual('foo  artist - foo  title.mp3',result[0][0][0].name)
+        eq_(1,len(result))
+        eq_('foo  genre',result[0].name)
+        eq_(1,len(result[0]))
+        eq_('foo  album',result[0][0].name)
+        eq_(1,len(result[0][0]))
+        eq_('foo  artist - foo  title.mp3',result[0][0][0].name)
     
     def test_weakref(self):
         dir = manualfs.Directory(None, 'root')
@@ -412,7 +411,7 @@ class TCRestructureDirectory(TestCase):
         del result
         copy.detach_copy(True)
         gc.collect()
-        self.assert_(w() is None)
+        assert w() is None
     
     def test_case_insensitive_option(self):
         dir = manualfs.Directory(None, 'root')
@@ -421,8 +420,8 @@ class TCRestructureDirectory(TestCase):
         attrs = {'artist':'FOO_ARTIST','title' :'t2'}
         file2 = self.Gen(attrs,dir,'foobar2')
         result = RestructureDirectory(dir,'%artist%/%title%',case_sensitive=False)
-        self.assertEqual(1,len(result))
-        self.assertEqual(2,len(result.allfiles))
+        eq_(1,len(result))
+        eq_(2,len(result.allfiles))
     
     def test_dont_rename_empty_tags(self):
         dir = manualfs.Directory(None, '')
@@ -437,12 +436,12 @@ class TCRestructureDirectory(TestCase):
             }
         file = self.Gen(attrs,subdir,'foobar')
         result = RestructureDirectory(dir,'%artist%/%album%/%track% - %artist% - %title%',rename_empty_tag=False)
-        self.assertEqual(1,len(result))
-        self.assertEqual('(not renamed)',result[0].name)
-        self.assertEqual(1,len(result[0]))
-        self.assertEqual('subdir',result[0][0].name)
-        self.assertEqual(1,len(result[0][0]))
-        self.assertEqual('foobar.mp3',result[0][0][0].name)
+        eq_(1,len(result))
+        eq_('(not renamed)',result[0].name)
+        eq_(1,len(result[0]))
+        eq_('subdir',result[0][0].name)
+        eq_(1,len(result[0][0]))
+        eq_('foobar.mp3',result[0][0][0].name)
     
     def test_backslashes_are_counted_as_slashes(self):
         #What happened here is that models containing backslashes could make 
@@ -464,10 +463,10 @@ class TCRestructureDirectory(TestCase):
         attrs = {'artist':'foo_artist','title' :'t1'}
         file = self.Gen(attrs,dir,'foobar')
         result = RestructureDirectory(dir,'%artist%\\%title%',parent_job=j)
-        self.assertEqual(100,self.progress)
+        eq_(100,self.progress)
     
 
-class TCSplit(TestCase):
+class TestSplit:
     def Gen(self,specs):
         #specs is a list of files you want to add to your virtual directory
         #Every item in specs must be a tuple like this:
@@ -491,17 +490,17 @@ class TCSplit(TestCase):
         #A test that should return only one chunk
         ref = self.Gen([self._one_byte,self._one_byte])
         splitter = Split(ref,'CD %sequence%',700 * 1024 * 1024)
-        self.assertEqual(1,len(splitter))
-        self.assert_(ref[0].name in splitter[0])
-        self.assert_(ref[1].name in splitter[0])
+        eq_(1,len(splitter))
+        assert ref[0].name in splitter[0]
+        assert ref[1].name in splitter[0]
     
     def test_simple_two_chunk(self):
         #A test that should return two chunks with one file in each
         ref = self.Gen([self._one_byte,self._one_byte])
         splitter = Split(ref,'CD %sequence%',1)
-        self.assertEqual(2,len(splitter))
-        self.assert_(ref[0].name in splitter[0])
-        self.assert_(ref[1].name in splitter[1])
+        eq_(2,len(splitter))
+        assert ref[0].name in splitter[0]
+        assert ref[1].name in splitter[1]
     
     def test_file_too_big_for_chunk(self):
         #Test a case where a file would be too big even to fit alone in a
@@ -510,55 +509,55 @@ class TCSplit(TestCase):
         #user of the Split to warn deal with these chunks appropriately.
         ref = self.Gen([self._one_byte,(None,2),self._one_byte])
         splitter = Split(ref,'CD %sequence%',2)
-        self.assertEqual(3,len(splitter))
-        self.assert_(ref[0].name in splitter[0])
-        self.assert_(ref[1].name in splitter[1])
-        self.assert_(ref[2].name in splitter[2])
+        eq_(3,len(splitter))
+        assert ref[0].name in splitter[0]
+        assert ref[1].name in splitter[1]
+        assert ref[2].name in splitter[2]
     
     def test_chunk_name_sequence(self):
         ref = self.Gen([self._one_byte,self._one_byte])
         splitter = Split(ref,'CD %sequence%',1)
-        self.assertEqual('CD 1',splitter[0].name)
-        self.assertEqual('CD 2',splitter[1].name)
+        eq_('CD 1',splitter[0].name)
+        eq_('CD 2',splitter[1].name)
     
     def test_chunk_name_item(self):
         ref = self.Gen([('abc',1),('def',1)])
         splitter = Split(ref,'CD %item:first% - %item:last%',2)
-        self.assertEqual('CD abc - def',splitter[0].name)
+        eq_('CD abc - def',splitter[0].name)
     
     def test_chunk_name_item_1st_letter(self):
         ref = self.Gen([('abc',1),('def',1)])
         splitter = Split(ref,'CD %item:first:1% - %item:last:1%',2)
-        self.assertEqual('CD a - d',splitter[0].name)
+        eq_('CD a - d',splitter[0].name)
     
     def test_chunk_name_item_2nd_letter(self):
         ref = self.Gen([('abc',1),('def',1)])
         splitter = Split(ref,'CD %item:first:2% - %item:last:2%',2)
-        self.assertEqual('CD ab - de',splitter[0].name)
+        eq_('CD ab - de',splitter[0].name)
 
     def test_chunk_name_item_invalid_letter(self):
         ref = self.Gen([('abc',1),('def',1)])
         splitter = Split(ref,'CD %item:first:invalid% - %item:last:invalid%',2)
-        self.assertEqual('CD abc - def',splitter[0].name)
+        eq_('CD abc - def',splitter[0].name)
     
     def test_invalid_model(self):
         ref = self.Gen([self._one_byte,self._one_byte])
         ref[0].artist = 'foobar_first'
         ref[1].artist = 'foobar_last'
         splitter = Split(ref,'CD %foobar% - %sequence:foobar:bleh% - %% - %artist% - %artist:foobar% - %artist:first:foobar% - %sequence%',2)
-        self.assertEqual('CD (none) - (none) - (none) - (none) - (none) - (none) - 1',splitter[0].name)
+        eq_('CD (none) - (none) - (none) - (none) - (none) - (none) - 1',splitter[0].name)
     
     def test_chunk_name_formatted_sequence(self):
         ref = self.Gen([self._one_byte,self._one_byte])
         splitter = Split(ref,'CD %sequence:3%',1)
-        self.assertEqual('CD 001',splitter[0].name)
-        self.assertEqual('CD 002',splitter[1].name)
+        eq_('CD 001',splitter[0].name)
+        eq_('CD 002',splitter[1].name)
     
     def test_chunk_name_conflict(self):
         ref = self.Gen([('foobar1',1),('foobar2',1)])
         splitter = Split(ref,'CD %item:first:1% - %item:last:1%',1)
-        self.assertEqual('CD f - f',splitter[0].name)
-        self.assertEqual('[000] CD f - f',splitter[1].name)
+        eq_('CD f - f',splitter[0].name)
+        eq_('[000] CD f - f',splitter[1].name)
     
     def test_that_structure_is_preserved(self):
         ref = self.Gen([self._one_byte,self._one_byte])
@@ -567,12 +566,12 @@ class TCSplit(TestCase):
         ref.files[0].move(dir1)
         ref.files[0].move(dir2)
         splitter = Split(ref,'CD %sequence%',2)
-        self.assertEqual(1,len(splitter))
-        self.assertEqual(2,len(splitter[0]))
-        self.assertEqual('dir1',splitter[0][0].name)
-        self.assertEqual('dir2',splitter[0][1].name)
-        self.assertEqual('foobar_0',splitter[0][0][0].name)
-        self.assertEqual('foobar_1',splitter[0][1][0].name)
+        eq_(1,len(splitter))
+        eq_(2,len(splitter[0]))
+        eq_('dir1',splitter[0][0].name)
+        eq_('dir2',splitter[0][1].name)
+        eq_('foobar_0',splitter[0][0][0].name)
+        eq_('foobar_1',splitter[0][1][0].name)
     
     def test_grouping(self):
         ref = self.Gen([self._one_byte,self._one_byte,self._one_byte])
@@ -585,22 +584,22 @@ class TCSplit(TestCase):
         f2.move(d2)
         f3.move(d2)
         splitter = Split(ref,'CD %sequence%',2)
-        self.assertEqual(2,len(splitter))
-        self.assert_(d1.name in splitter[0])
-        self.assert_(d2.name in splitter[0])
-        self.assert_(d2.name in splitter[1])
-        self.assert_(f1.name in splitter[0][0])
-        self.assert_(f2.name in splitter[0][1])
-        self.assert_(f3.name in splitter[1][0])
+        eq_(2,len(splitter))
+        assert d1.name in splitter[0]
+        assert d2.name in splitter[0]
+        assert d2.name in splitter[1]
+        assert f1.name in splitter[0][0]
+        assert f2.name in splitter[0][1]
+        assert f3.name in splitter[1][0]
         #now with grouping
         splitter = Split(ref,'CD %sequence%',2,1)
-        self.assertEqual(2,len(splitter))
-        self.assert_(d1.name in splitter[0])
-        self.assert_(d2.name not in splitter[0])
-        self.assert_(d2.name in splitter[1])
-        self.assert_(f1.name in splitter[0][0])
-        self.assert_(f2.name in splitter[1][0])
-        self.assert_(f3.name in splitter[1][0])
+        eq_(2,len(splitter))
+        assert d1.name in splitter[0]
+        assert d2.name not in splitter[0]
+        assert d2.name in splitter[1]
+        assert f1.name in splitter[0][0]
+        assert f2.name in splitter[1][0]
+        assert f3.name in splitter[1][0]
     
     def test_group_too_large(self):
         #What happens here is that the grouping level is at one, but one of the level 1
@@ -626,22 +625,22 @@ class TCSplit(TestCase):
         f4.move(d22)
         splitter = Split(ref,'CD %sequence%',2,1)
         #There should be 3 cds, one with 'a', one with 'b', and another one with 'b'
-        self.assertEqual(3,len(splitter))
-        self.assert_(d1.name in splitter[0])
-        self.assert_(d2.name not in splitter[0])
-        self.assert_(d2.name in splitter[1])
-        self.assert_(d2.name in splitter[2])
-        self.assert_(d21.name in splitter[1][0])
-        self.assert_(d22.name in splitter[2][0])
-        self.assert_(f1.name in splitter[0][0])
-        self.assert_(f2.name in splitter[1][0][0])
-        self.assert_(f3.name in splitter[1][0][0])
-        self.assert_(f4.name in splitter[2][0][0])
+        eq_(3,len(splitter))
+        assert d1.name in splitter[0]
+        assert d2.name not in splitter[0]
+        assert d2.name in splitter[1]
+        assert d2.name in splitter[2]
+        assert d21.name in splitter[1][0]
+        assert d22.name in splitter[2][0]
+        assert f1.name in splitter[0][0]
+        assert f2.name in splitter[1][0][0]
+        assert f3.name in splitter[1][0][0]
+        assert f4.name in splitter[2][0][0]
     
     def test_forbidden_chars(self):
         ref = self.Gen([('a|:<>',1),('b?\\/*',1)])
         splitter = Split(ref,'CD %item:first% - %item:last%',2)
-        self.assertEqual('CD a - b',splitter[0].name)
+        eq_('CD a - b',splitter[0].name)
     
     def test_file_that_is_higher_than_the_grouping_level(self):
         # if a file is in root of refdir when grouping level is 0, we want that
@@ -649,17 +648,18 @@ class TCSplit(TestCase):
         ref = manualfs.Directory(None, '')
         ref.new_file('foobar')
         splitted = Split(ref,'CD %sequence%',1,1)
-        self.assertEqual('foobar',splitted[0][0].name)
+        eq_('foobar',splitted[0][0].name)
     
     def test_file_too_large_dont_create_new_chunk_if_current_one_is_empty(self):
         ref = self.Gen([(None,2)])
         splitted = Split(ref,'foo',1)
-        self.assertEqual(1,len(splitted))
+        eq_(1,len(splitted))
     
 
-class TCBatchOperation(TestCase):
-    def setUp(self):
-        self.rootpath = self.tmpdir()
+class TestBatchOperation:
+    def pytest_funcarg__dosetup(self, request):
+        tmpdir = request.getfuncargvalue('tmpdir')
+        self.rootpath = str(tmpdir)
         self.testpath = create_fake_fs(self.rootpath)
         ref = phys.Directory(None, self.testpath)
         copy = manualfs.Directory(None, '')
@@ -667,44 +667,44 @@ class TCBatchOperation(TestCase):
         self.ref = ref
         self.copy = copy
     
-    def test_main(self):
+    def test_main(self, dosetup):
         self.copy['file1.test'].name = 'foobar'
         self.copy['dir1'].name = 'foobar_dir'
         bo = BatchOperation(self.copy,self.testpath)
         bo.rename()
         ref = phys.Directory(None,self.testpath)
-        self.assert_('foobar' in ref)
-        self.assert_('file1.test' not in ref)
-        self.assert_('foobar_dir' in ref)
-        self.assert_('file1.test' in ref['foobar_dir'])
+        assert 'foobar' in ref
+        assert 'file1.test' not in ref
+        assert 'foobar_dir' in ref
+        assert 'file1.test' in ref['foobar_dir']
     
-    def test_copy_has_a_name(self):
+    def test_copy_has_a_name(self, dosetup):
         #The name of the root copy dir must not be included in the rename.
         self.copy.name = 'foobar'
         self.copy['file1.test'].name = 'foobar'
         bo = BatchOperation(self.copy,self.testpath)
         bo.rename()
         ref = phys.Directory(None,self.testpath)
-        self.assert_('foobar' in ref)
-        self.assert_('file1.test' not in ref)
+        assert 'foobar' in ref
+        assert 'file1.test' not in ref
     
-    def test_copy_instead_of_move(self):
+    def test_copy_instead_of_move(self, dosetup):
         self.copy['file1.test'].name = 'foobar'
         self.copy['dir1'].name = 'foobar_dir'
         bo = BatchOperation(self.copy,self.testpath)
         bo.copy()
         ref = phys.Directory(None,self.testpath)
-        self.assert_('foobar' in ref)
-        self.assert_('file1.test' in ref)
-        self.assert_('foobar_dir' in ref)
-        self.assert_('file1.test' in ref['foobar_dir'])
-        self.assert_('file1.test' in ref['dir1'])
+        assert 'foobar' in ref
+        assert 'file1.test' in ref
+        assert 'foobar_dir' in ref
+        assert 'file1.test' in ref['foobar_dir']
+        assert 'file1.test' in ref['dir1']
     
-    def test_empty(self):
+    def test_empty(self, dosetup):
         bo = BatchOperation(TestDir(None,''),'foobar')
-        self.assertEqual([],bo.name_list)
+        eq_([],bo.name_list)
     
-    def test_simple(self):
+    def test_simple(self, dosetup):
         ref = TestDir(None,'reference')
         ref.AddDir('dir').AddFile('subfile')
         ref.AddFile('file')
@@ -715,9 +715,9 @@ class TCBatchOperation(TestCase):
             (Path(('reference','file')),Path(('destination','file'))),
             (Path(('reference','dir','subfile')),Path(('destination','dir','subfile'))),
         ]
-        self.assertEqual(expected,bo.name_list)
+        eq_(expected,bo.name_list)
     
-    def test_source_same_as_dest(self):
+    def test_source_same_as_dest(self, dosetup):
         ref = TestDir(None,'reference')
         ref.AddDir('dir').AddFile('subfile')
         ref.AddFile('file')
@@ -726,9 +726,9 @@ class TCBatchOperation(TestCase):
         copy.files[0].rename('renamed')
         bo = BatchOperation(copy,Path('reference'))
         expected = [(Path(('reference','file')),Path(('reference','renamed')))]
-        self.assertEqual(expected,bo.name_list)
+        eq_(expected,bo.name_list)
     
-    def test_renamed_as_list(self):
+    def test_renamed_as_list(self, dosetup):
         ref = TestDir(None,'reference')
         ref.AddDir('dir').AddFile('subfile')
         ref.AddFile('file')
@@ -739,9 +739,9 @@ class TCBatchOperation(TestCase):
             (Path(('reference','file')),Path(('destination','file'))),
             (Path(('reference','dir','subfile')),Path(('destination','dir','subfile'))),
         ]
-        self.assertEqual(expected,bo.name_list)
+        eq_(expected,bo.name_list)
     
-    def test_cdrom_volume_name_list(self):
+    def test_cdrom_volume_name_list(self, dosetup):
         #ABOUT CD PROCESSING
         #
         #When the original song of a song in renamed is a children of a
@@ -771,20 +771,20 @@ class TCBatchOperation(TestCase):
         renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(('','foobar')))
-        self.assertEqual(3,len(bo.name_list))
-        self.assertEqual(('!volume','fs','file1.test'),bo.name_list[0][0])
-        self.assertEqual(('','foobar','fs','file1.test'),bo.name_list[0][1])
-        self.assertEqual(('!volume','fs','file2.test'),bo.name_list[1][0])
-        self.assertEqual(('','foobar','fs','file2.test'),bo.name_list[1][1])
-        self.assertEqual(('!volume','fs','file3.test'),bo.name_list[2][0])
-        self.assertEqual(('','foobar','fs','file3.test'),bo.name_list[2][1])
+        eq_(3,len(bo.name_list))
+        eq_(('!volume','fs','file1.test'),bo.name_list[0][0])
+        eq_(('','foobar','fs','file1.test'),bo.name_list[0][1])
+        eq_(('!volume','fs','file2.test'),bo.name_list[1][0])
+        eq_(('','foobar','fs','file2.test'),bo.name_list[1][1])
+        eq_(('!volume','fs','file3.test'),bo.name_list[2][0])
+        eq_(('','foobar','fs','file3.test'),bo.name_list[2][1])
     
-    def test_copy_tokenized_path(self):
+    def test_copy_tokenized_path(self, dosetup, tmpdir):
         def OnNeedCD(location):
-            self.assert_(location is volume)
+            assert location is volume
             return Path(self.rootpath)
         
-        copypath = self.tmpdir()
+        copypath = str(tmpdir)
         root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
@@ -798,10 +798,10 @@ class TCBatchOperation(TestCase):
         bo.OnNeedCD = OnNeedCD
         bo.copy()
         result = phys.Directory(None,copypath)
-        self.assertEqual(1,len(result))
-        self.assertEqual('fs',result[0].name)
+        eq_(1,len(result))
+        eq_('fs',result[0].name)
     
-    def test_with_job(self):
+    def test_with_job(self, dosetup):
         def update(progress,description=''):
             self.log.append(progress)
             return True
@@ -811,15 +811,16 @@ class TCBatchOperation(TestCase):
         bo = BatchOperation(self.copy,self.testpath)
         self.log = []
         job = Job(1,update)
-        self.assert_(bo.copy(job))
+        assert bo.copy(job)
         expected_log = [0, 0, 50, 100]
-        self.assertEqual(expected_log,self.log)
+        eq_(expected_log,self.log)
     
-    def test_OnNeedCD_returns_none(self):
+    def test_OnNeedCD_returns_none(self, dosetup, tmpdir):
         def OnNeedCD(location):
             return
         
-        copypath = self.tmpdir()
+        copypath = str(tmpdir.join('copypath'))
+        os.mkdir(copypath)
         root = Root(threaded=False)
         volume = root.new_directory('volume')
         volume.vol_type = VOLTYPE_CDROM
@@ -831,11 +832,11 @@ class TCBatchOperation(TestCase):
         renamed.copy(volume)
         bo = BatchOperation(renamed,Path(copypath))
         bo.OnNeedCD = OnNeedCD
-        self.assert_(not bo.copy())
+        assert not bo.copy()
         result = phys.Directory(None,copypath)
-        self.assertEqual(0,len(result))
+        eq_(0,len(result))
     
-    def test_with_job_cancel(self):
+    def test_with_job_cancel(self, dosetup):
         def update(progress,description=''):
             self.log.append(progress)
             return progress < 50
@@ -845,11 +846,11 @@ class TCBatchOperation(TestCase):
         bo = BatchOperation(self.copy,self.testpath)
         self.log = []
         job = Job(1,update)
-        self.assert_(not bo.rename(job))
+        assert not bo.rename(job)
         expected_log = [0, 0, 50]
-        self.assertEqual(expected_log,self.log)
+        eq_(expected_log,self.log)
     
-    def test_with_ioerror(self):
+    def test_with_ioerror(self, dosetup):
         #When not copying from CDs, operation throwing IOError should just
         #skip the operation and go to the next file.
         fake_file = manualfs.File(self.copy, 'fake_file')
@@ -857,16 +858,16 @@ class TCBatchOperation(TestCase):
         fake_original_file = manualfs.File(fake_original_dir, 'fake_file')
         fake_file.copy(fake_original_file)
         bo = BatchOperation(self.copy,self.testpath)
-        self.assert_(bo.copy())
+        assert bo.copy()
     
-    def test_with_ioerror_cd(self):
+    def test_with_ioerror_cd(self, dosetup, tmpdir):
         #When copying from CDs, operation throwing IOError should call OnNeedCD
         #until the file is found or the whole operation is cancelled.
         def OnNeedCD(location):
             self.need_cd_calls += 1
             if self.need_cd_calls == 3:
                 return
-            self.assert_(location is volume)
+            assert location is volume
             return self.rootpath
         
         root = Root(threaded=False)
@@ -879,15 +880,15 @@ class TCBatchOperation(TestCase):
         dir.new_file('fake')
         renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
-        bo = BatchOperation(renamed,Path(self.tmpdir()))
+        bo = BatchOperation(renamed,Path(str(tmpdir)))
         self.need_cd_calls = 0
         bo.OnNeedCD = OnNeedCD
-        self.assert_(not bo.copy())
-        self.assertEqual(3,self.need_cd_calls)
+        assert not bo.copy()
+        eq_(3,self.need_cd_calls)
     
-    def test_cd_copy_with_job(self):
+    def test_cd_copy_with_job(self, dosetup, tmpdir):
         def OnNeedCD(location):
-            self.assert_(location is volume)
+            assert location is volume
             return Path(self.rootpath)
         
         def update(progress,description=''):
@@ -903,15 +904,15 @@ class TCBatchOperation(TestCase):
         dir.new_file('file3.test')
         renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
-        bo = BatchOperation(renamed,Path(self.tmpdir()))
+        bo = BatchOperation(renamed,Path(str(tmpdir)))
         bo.OnNeedCD = OnNeedCD
         self.log = []
         job = Job(1,update)
-        self.assert_(bo.copy(job))
+        assert bo.copy(job)
         expected_log = [0, 0, 33, 66, 100]
-        self.assertEqual(expected_log,self.log)
+        eq_(expected_log,self.log)
     
-    def test_cd_copy_OnNeedCD_returns_string(self):
+    def test_cd_copy_OnNeedCD_returns_string(self, dosetup, tmpdir):
         #When OnNeedCD returns a string instead of a path, BO must work properly.
         root = Root(threaded=False)
         volume = root.new_directory('volume')
@@ -922,14 +923,14 @@ class TCBatchOperation(TestCase):
         dir.new_file('file3.test')
         renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
-        bo = BatchOperation(renamed,Path(self.tmpdir()))
+        bo = BatchOperation(renamed,Path(str(tmpdir)))
         bo.OnNeedCD = lambda location: self.rootpath
-        self.assert_(bo.copy())
+        assert bo.copy()
     
-    def test_cd_move(self):
+    def test_cd_move(self, dosetup, tmpdir):
         #When it's cd operation, we should ALWAYS copy.
         def OnNeedCD(location):
-            self.assert_(location is volume)
+            assert location is volume
             return Path(self.testpath)
         
         root = Root(threaded=False)
@@ -938,12 +939,12 @@ class TCBatchOperation(TestCase):
         volume.new_file('file1.test')
         renamed = manualfs.Directory(None, '')
         renamed.copy(volume)
-        bo = BatchOperation(renamed,Path(self.tmpdir()))
+        bo = BatchOperation(renamed,Path(str(tmpdir)))
         bo.OnNeedCD = OnNeedCD
-        self.assert_(bo.rename())
-        self.assert_(op.exists(op.join(self.testpath,'file1.test')))
+        assert bo.rename()
+        assert op.exists(op.join(self.testpath,'file1.test'))
     
-    def test_rename_conflicts(self):
+    def test_rename_conflicts(self, dosetup):
         copy = self.copy
         file1 = copy['file1.test']
         file2 = copy['file2.test']
@@ -954,26 +955,27 @@ class TCBatchOperation(TestCase):
         bo = BatchOperation(copy,Path(self.testpath))
         bo.rename()
         ref = phys.Directory(None,self.testpath)
-        self.assertEqual(2,ref['file1.test'].size)
-        self.assertEqual(1,ref['file2.test'].size)
+        eq_(2,ref['file1.test'].size)
+        eq_(1,ref['file2.test'].size)
     
-    def test_rename_unresolved_conflict(self):
-        copypath = self.tmpdir(self.testpath)
+    def test_rename_unresolved_conflict(self, dosetup, tmpdir):
+        copypath = str(tmpdir.join('copypath'))
+        shutil.copytree(self.testpath, copypath)
         bo = BatchOperation(self.copy,Path(copypath))
         #every file will be in conflict, but the conflict will not be resolved.
         bo.rename()
         tmpdir = phys.Directory(None,self.testpath)
-        self.assert_('file1.test' in tmpdir)
+        assert 'file1.test' in tmpdir
     
-    def test_ProcessNormalList_catches_OSError_and_issue_warning(self):
+    def test_ProcessNormalList_catches_OSError_and_issue_warning(self, dosetup, tmpdir, monkeypatch):
         def FakeMove(_, __):
             raise OSError()
         
-        self.mock(shutil, 'move', FakeMove)
-        self.mock(sys, 'stdout', StringIO())
-        self.assert_(sys.stdout.tell() == 0)
+        monkeypatch.setattr(shutil, 'move', FakeMove)
+        monkeypatch.setattr(sys, 'stdout', StringIO())
+        assert sys.stdout.tell() == 0
         bo = BatchOperation(self.copy, Path('foo'))
-        rootpath = Path(self.tmpdir())
+        rootpath = Path(str(tmpdir))
         source = rootpath + 'zerofile'
         dest = rootpath + 'foo_zero'
         open(str(source), 'w').close() # He want the file to exist so the move call is made.
@@ -981,42 +983,44 @@ class TCBatchOperation(TestCase):
             bo._BatchOperation__ProcessNormalList([(source, dest)], False)
         except OSError:
             self.fail()
-        self.assert_(sys.stdout.tell() > 0)
+        assert sys.stdout.tell() > 0
     
 
-class TCBatchOperation_unicode(TestCase):
-        # Path instances should only be "rendered" as unicode(), not str()
-    def setUp(self):
-        self.mock(sys, 'getfilesystemencoding', lambda: 'ascii') # force a failure on any non-ascii char
-        testpath = self.tmppath()
+class TestBatchOperation_unicode:
+    # Path instances should only be "rendered" as unicode(), not str()
+    def pytest_funcarg__dosetup(self, request):
+        monkeypatch = request.getfuncargvalue('monkeypatch')
+        tmpdir = request.getfuncargvalue('tmpdir')
+        monkeypatch.setattr(sys, 'getfilesystemencoding', lambda: 'ascii') # force a failure on any non-ascii char
+        testpath = Path(str(tmpdir))
         create_unicode_test_dir(testpath)
         sourcedir = phys.Directory(None, str(testpath))
         copy = manualfs.Directory(None, '')
         copy.copy(sourcedir)
-        destpath = Path(self.tmpdir())
+        destpath = Path(str(tmpdir))
         self.sourcedircopy = copy
         self.destpath = destpath
         
-    def test_copy(self):
+    def test_copy(self, dosetup):
         bo = BatchOperation(self.sourcedircopy, self.destpath)
         try:
             bo.copy()
         except UnicodeEncodeError:
             self.fail()
     
-    def test_rename(self):
+    def test_rename(self, dosetup):
         bo = BatchOperation(self.sourcedircopy, self.destpath)
         try:
             bo.rename()
         except UnicodeEncodeError:
             self.fail()
     
-    def test_warning(self):
+    def test_warning(self, dosetup, monkeypatch):
         def FakeMove(_, __):
             raise OSError()
         
-        self.mock(shutil, 'move', FakeMove)
-        self.mock(sys, 'stdout', StringIO())
+        monkeypatch.setattr(shutil, 'move', FakeMove)
+        monkeypatch.setattr(sys, 'stdout', StringIO())
         bo = BatchOperation(self.sourcedircopy, self.destpath)
         try:
             bo.rename()
@@ -1024,14 +1028,14 @@ class TCBatchOperation_unicode(TestCase):
             self.fail()
     
 
-class TCFSBuffer(TestCase):
+class TestFSBuffer:
     def test_empty(self):
         buf = Buffer(5)
-        self.assertEqual(5,buf.size)
-        self.assertEqual([],buf.DoBufferingFor(''))
-        self.assertEqual([],buf.content)
-        self.assertEqual(0,buf.space_taken)
-        self.assertEqual(5,buf.space_left)
+        eq_(5,buf.size)
+        eq_([],buf.DoBufferingFor(''))
+        eq_([],buf.content)
+        eq_(0,buf.space_taken)
+        eq_(5,buf.space_left)
     
     def test_one_dest(self):
         #buf only has one dest, so the process is quite straightforward.
@@ -1046,17 +1050,17 @@ class TCFSBuffer(TestCase):
             (file3,'source2','dest1',1),
         )
         buf.AddFiles(files)
-        self.assertEqual(0,buf.space_taken)
-        self.assertEqual(3,buf.space_left)
+        eq_(0,buf.space_taken)
+        eq_(3,buf.space_left)
         expected = [(file1,'source1','dest1',1),(file2,'source2','dest1',1),(file3,'source2','dest1',1)]
-        self.assertEqual(expected,buf.DoBufferingFor('dest1'))
-        self.assertEqual(expected,buf.content)
-        self.assertEqual(3,buf.space_taken)
-        self.assertEqual(0,buf.space_left)
-        self.assertEqual(expected,buf.PurgeBufferOf('dest1'))
-        self.assertEqual([],buf.content)
-        self.assertEqual(0,buf.space_taken)
-        self.assertEqual(3,buf.space_left)
+        eq_(expected,buf.DoBufferingFor('dest1'))
+        eq_(expected,buf.content)
+        eq_(3,buf.space_taken)
+        eq_(0,buf.space_left)
+        eq_(expected,buf.PurgeBufferOf('dest1'))
+        eq_([],buf.content)
+        eq_(0,buf.space_taken)
+        eq_(3,buf.space_left)
     
     def test_get_sources_get_destinations(self):
         buf = Buffer(3)
@@ -1069,9 +1073,9 @@ class TCFSBuffer(TestCase):
             (file3,'source2','dest2',1),
         )
         expected = ['source1','source2']
-        self.assertEqual(expected,buf.GetSources(files))
+        eq_(expected,buf.GetSources(files))
         expected = ['dest1','dest2']
-        self.assertEqual(expected,buf.GetDestinations(files))
+        eq_(expected,buf.GetDestinations(files))
     
     def test_two_dest_enough_space(self):
         #Here, we have 2 dests, and enough space to hold every files. Thus,
@@ -1090,16 +1094,16 @@ class TCFSBuffer(TestCase):
         )
         buf.AddFiles(files)
         expected = [(file1,'source1','dest1',1),(file2,'source2','dest1',1),(file3,'source2','dest2',1)]
-        self.assertEqual(expected,buf.DoBufferingFor('dest1'))
-        self.assertEqual(expected,buf.content)
+        eq_(expected,buf.DoBufferingFor('dest1'))
+        eq_(expected,buf.content)
         expected = [(file1,'source1','dest1',1),(file2,'source2','dest1',1)]
-        self.assertEqual(expected,buf.PurgeBufferOf('dest1'))
+        eq_(expected,buf.PurgeBufferOf('dest1'))
         expected = [(file3,'source2','dest2',1)]
-        self.assertEqual(expected,buf.content)
-        self.assertEqual([],buf.DoBufferingFor('dest2'))
-        self.assertEqual(expected,buf.content)
-        self.assertEqual(expected,buf.PurgeBufferOf('dest2'))
-        self.assertEqual([],buf.content)
+        eq_(expected,buf.content)
+        eq_([],buf.DoBufferingFor('dest2'))
+        eq_(expected,buf.content)
+        eq_(expected,buf.PurgeBufferOf('dest2'))
+        eq_([],buf.content)
     
     def test_two_dest_not_enough_space(self):
         #Here, we have 2 dests, and notenough space to hold every files. Thus,
@@ -1117,15 +1121,15 @@ class TCFSBuffer(TestCase):
         )
         buf.AddFiles(files)
         expected = [(file1,'source1','dest1',1),(file2,'source2','dest1',1)]
-        self.assertEqual(expected,buf.DoBufferingFor('dest1'))
-        self.assertEqual(expected,buf.content)
-        self.assertEqual(expected,buf.PurgeBufferOf('dest1'))
+        eq_(expected,buf.DoBufferingFor('dest1'))
+        eq_(expected,buf.content)
+        eq_(expected,buf.PurgeBufferOf('dest1'))
         expected = [(file3,'source2','dest2',1)]
-        self.assertEqual([],buf.content)
-        self.assertEqual(expected,buf.DoBufferingFor('dest2'))
-        self.assertEqual(expected,buf.content)
-        self.assertEqual(expected,buf.PurgeBufferOf('dest2'))
-        self.assertEqual([],buf.content)
+        eq_([],buf.content)
+        eq_(expected,buf.DoBufferingFor('dest2'))
+        eq_(expected,buf.content)
+        eq_(expected,buf.PurgeBufferOf('dest2'))
+        eq_([],buf.content)
     
     def test_get_bytes_required(self):
         buf = Buffer(2)
@@ -1138,8 +1142,8 @@ class TCFSBuffer(TestCase):
             (file3,'source2','dest2',1),
         )
         buf.AddFiles(files)
-        self.assertEqual(3,buf.GetMinimumBytesRequired())
-        self.assertEqual(4,buf.GetMaximumBytesRequired())
+        eq_(3,buf.GetMinimumBytesRequired())
+        eq_(4,buf.GetMaximumBytesRequired())
     
     def test_set_size(self):
         buf = Buffer(5)
@@ -1153,11 +1157,11 @@ class TCFSBuffer(TestCase):
         )
         buf.AddFiles(files)
         buf.DoBufferingFor('dest1')
-        self.assertEqual(5,buf.size)
-        self.assertEqual(4,buf.space_taken)
-        self.assertEqual(1,buf.space_left)
+        eq_(5,buf.size)
+        eq_(4,buf.space_taken)
+        eq_(1,buf.space_left)
         buf.size = 10
-        self.assertEqual(10,buf.size)
-        self.assertEqual(4,buf.space_taken)
-        self.assertEqual(6,buf.space_left)
+        eq_(10,buf.size)
+        eq_(4,buf.space_taken)
+        eq_(6,buf.space_left)
     

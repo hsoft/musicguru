@@ -7,23 +7,22 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from hscommon.path import Path
-from hscommon.testcase import TestCase
+from hscommon.testutil import eq_
 
 from .app_cocoa import MusicGuru
 from .sqlfs.music import Root, VOLTYPE_CDROM
 
-class TCApp_GetLocationData(TestCase):
-    def test_values(self):
-        root = Root(threaded=False)
-        root.buffer_path = Path('/does/not/exist')
-        loc = root.new_directory('foo')
-        loc.vol_type = VOLTYPE_CDROM
-        # Let's fake its stats
-        loc._Stats__stats = {'size': int(3.5 * 1024 * 1024 * 1024), 'filecount': 42}
-        app = MusicGuru()
-        expected = ['foo', 42, '3.50', True, False, str(Path('/does/not/exist/foo'))]
-        result = app.GetLocationData(loc)
-        self.assertEqual(expected, result)
-        # The path supplied must be a unicode string, it is going through the pyobjc bridge
-        self.assert_(isinstance(result[5], str))
+def test_values():
+    root = Root(threaded=False)
+    root.buffer_path = Path('/does/not/exist')
+    loc = root.new_directory('foo')
+    loc.vol_type = VOLTYPE_CDROM
+    # Let's fake its stats
+    loc._Stats__stats = {'size': int(3.5 * 1024 * 1024 * 1024), 'filecount': 42}
+    app = MusicGuru()
+    expected = ['foo', 42, '3.50', True, False, str(Path('/does/not/exist/foo'))]
+    result = app.GetLocationData(loc)
+    eq_(expected, result)
+    # The path supplied must be a unicode string, it is going through the pyobjc bridge
+    assert isinstance(result[5], str)
     

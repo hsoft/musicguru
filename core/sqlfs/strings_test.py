@@ -9,53 +9,50 @@
 import sqlite3 as sqlite
 import os.path as op
 
-from ..testcase import TestCase
+from pytest import raises
+from hscommon.testutil import eq_
 from .strings import *
 
-class TCEmptyBuffer(TestCase):
-    def setUp(self):
+class TestEmptyBuffer:
+    def setup_method(self, method):
         con = sqlite.connect(':memory:')
         self.buf = Buffer(con)
     
     def test_add_some_strings(self):
-        self.assertEqual(1,self.buf.row_of_string('foo'))
-        self.assertEqual(2,self.buf.row_of_string('bar'))
+        eq_(1,self.buf.row_of_string('foo'))
+        eq_(2,self.buf.row_of_string('bar'))
     
     def test_ask_for_str_of_row(self):
         self.buf.row_of_string('foo')
         self.buf.row_of_string('bar')
-        self.assertEqual('foo',self.buf.string_of_row(1))
-        self.assertEqual('bar',self.buf.string_of_row(2))
-        self.assertRaises(IndexError,self.buf.string_of_row,3)
+        eq_('foo',self.buf.string_of_row(1))
+        eq_('bar',self.buf.string_of_row(2))
+        with raises(IndexError):
+            self.buf.string_of_row(3)
     
     def test_row_of_existing_str(self):
-        self.assertEqual(1,self.buf.row_of_string('foo'))
-        self.assertEqual(1,self.buf.row_of_string('foo'))
+        eq_(1,self.buf.row_of_string('foo'))
+        eq_(1,self.buf.row_of_string('foo'))
     
 
-class TCReloadedBuffer(TestCase):
-    def setUp(self):
-        super(TCReloadedBuffer,self).setUp()
-        p = self.tmpdir()
-        dbpath = op.join(p,'strings.db')
-        con = sqlite.connect(dbpath)
-        buf = Buffer(con)
-        buf.row_of_string('foo')
-        buf.row_of_string('bar')
-        buf.row_of_string('baz')
-        buf.row_of_string('bleh')
-        del buf
-        con.commit()
-        con.close()
-        del con
-        con = sqlite.connect(dbpath)
-        cur = con.execute("select * from strings")
-        self.buf = Buffer(con)
     
-    def tearDown(self):
-        self.buf.con.close()
-        super(TCReloadedBuffer,self).tearDown()
-    
-    def test_ask_for_rows(self):
-        self.assertEqual(2,self.buf.row_of_string('bar'))
-    
+def test_ask_for_rows(tmpdir):
+    p = str(tmpdir)
+    dbpath = op.join(p,'strings.db')
+    con = sqlite.connect(dbpath)
+    buf = Buffer(con)
+    buf.row_of_string('foo')
+    buf.row_of_string('bar')
+    buf.row_of_string('baz')
+    buf.row_of_string('bleh')
+    del buf
+    con.commit()
+    con.close()
+    del con
+    con = sqlite.connect(dbpath)
+    cur = con.execute("select * from strings")
+    buf = Buffer(con)
+    try:
+        eq_(buf.row_of_string('bar'), 2)
+    finally:
+        buf.con.close()
