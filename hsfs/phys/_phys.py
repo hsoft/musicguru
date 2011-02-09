@@ -10,8 +10,8 @@ import hashlib
 import time
 import logging
 
-from hsutil.misc import nonone
-from hsutil import io
+from hscommon.util import nonone
+from hscommon import io
 from .. import _fs as fs, auto
 
 MTIME_COOLDOWN = 1 # 1 second minimum cooldown between GetMTime() calls

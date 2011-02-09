@@ -8,9 +8,9 @@
 
 import random
 
-from hscommon import job
-from hsutil import conflict
-from hsutil.str import pluralize, format_size, format_time, FT_DECIMAL
+from jobprogress import job
+from hscommon import conflict
+from hscommon.util import pluralize, format_size, format_time_decimal
 
 from . import fs_utils, manualfs
 
@@ -30,12 +30,12 @@ class Board(manualfs.AutoMerge):
             return "%s (%d conflicts), %s, %s" % (
                 pluralize(self.get_stat('filecount'), 'song'),
                 len(self.allconflicts),
-                format_time(self.get_stat('duration'), FT_DECIMAL),
+                format_time_decimal(self.get_stat('duration')),
                 format_size(self.get_stat('size'), 2))
         else:
             return "%s, %s, %s" % (
                 pluralize(self.get_stat('filecount'), 'song'),
-                format_time(self.get_stat('duration'), FT_DECIMAL),
+                format_time_decimal(self.get_stat('duration')),
                 format_size(self.get_stat('size'), 2))
 
     #---Public

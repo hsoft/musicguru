@@ -6,11 +6,13 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.str import sqlite_escape
+def escape(s, to_escape, escape_with='\\'):
+    return ''.join((escape_with+c if c in to_escape else c) for c in s)
 
-from ._sql import Node
+def sqlite_escape(s):
+    return escape(s, "'", "'")
 
-class DBBuffer(object):
+class DBBuffer:
     """Progressively buffers a SQL SELECT request, using LIMIT
     """
     def __init__(self,con,sql,lookahead=10):

@@ -6,8 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.path import Path
-from hsutil.testcase import TestCase
+from hscommon.path import Path
+from hscommon.testcase import TestCase
 
 from .app_cocoa import MusicGuru
 from .sqlfs.music import Root, VOLTYPE_CDROM

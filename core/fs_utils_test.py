@@ -14,13 +14,12 @@ import weakref
 import gc
 import shutil
 
-from hsutil.testutil import eq_
-
+from hscommon.testutil import eq_
 import hsfs.music
 from hsfs import phys
 from hsfs.tests.phys_test import create_fake_fs, create_unicode_test_dir
-from hsutil.path import Path
-from hscommon.job import Job
+from hscommon.path import Path
+from jobprogress.job import Job
 
 from . import manualfs
 from .testcase import TestCase

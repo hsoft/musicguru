@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.testcase import TestCase
+from hscommon.testcase import TestCase
 
 from .. import _fs as fs, auto
 

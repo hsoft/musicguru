@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2004-12-27
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -8,11 +7,11 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 import hsfs as fs
-from hscommon import job
-from hsutil.misc import nonone
-from hsutil.conflict import get_conflicted_name, is_conflicted
+from jobprogress import job
+from hscommon.util import nonone
+from hscommon.conflict import get_conflicted_name, is_conflicted
 
-class _CopyOf(object):
+class _CopyOf:
     #--- Public
     
     def copy(self, refnode):

@@ -6,16 +6,9 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import os
-import os.path as op
-from threading import Thread
-import tempfile
-
-import hsfs as fs
-from hsutil.conflict import is_conflicted
-from hsutil.misc import cond, dedupe
-from hsutil.path import Path
-from hsutil.str import format_size, format_time, FT_MINUTES
+from hscommon.conflict import is_conflicted
+from hscommon.util import dedupe, format_size, format_time
+from hscommon.path import Path
 from hscommon import cocoa
 
 from . import app, sqlfs as sql
@@ -159,7 +152,7 @@ class MusicGuru(app.MusicGuru):
     #---Data
     def GetNodeData(self, node):
         if node.is_container:
-            img_name = cond(node.allconflicts,'folder_conflict_16','folder_16')
+            img_name = 'folder_conflict_16' if node.allconflicts else 'folder_16'
             parent_volumes = dedupe(song.original.parent_volume for song in node.iterallfiles())
             return [
                 node.name,
@@ -170,13 +163,13 @@ class MusicGuru(app.MusicGuru):
                 img_name,
             ]
         else:
-            img_name = cond(is_conflicted(node.name),'song_conflict_16','song_16')
+            img_name = 'song_conflict_16' if is_conflicted(node.name) else 'song_16'
             return [
                 node.name,
                 node.original.parent_volume.name,
                 0,
                 format_size(node.size,2,2,False),
-                format_time(node.duration,FT_MINUTES),
+                format_time(node.duration, with_hours=False),
                 img_name,
             ]
     

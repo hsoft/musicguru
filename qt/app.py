@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-09-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -13,10 +12,10 @@ import logging
 from PyQt4.QtCore import SIGNAL, QUrl
 from PyQt4.QtGui import QDesktopServices, QMessageBox, QApplication, QFileDialog, QDialog
 
-from hscommon import job
+from jobprogress import job
 from qtlib.app import Application as ApplicationBase
 from qtlib.about_box import AboutBox
-from qtlib.progress import Progress
+from jobprogress.qt import Progress
 from qtlib.reg import Registration
 
 from core.app import MusicGuru as MusicGuruBase

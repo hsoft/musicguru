@@ -9,18 +9,20 @@
 import tempfile
 
 import hsfs as fs
-from hsutil import conflict, io
-from hsutil.misc import tryint, dedupe
-from hsutil.path import Path
-from hsutil.str import multi_replace, FS_FORBIDDEN, rem_file_ext, process_tokens
-from hscommon.job import nulljob, JobCancelled
+from hscommon import conflict, io
+from hscommon.util import tryint, dedupe, multi_replace, rem_file_ext
+from hscommon.path import Path
+from jobprogress.job import nulljob, JobCancelled
 
+from .util import process_tokens
 from .sqlfs.music import VOLTYPE_CDROM, MODE_TOKEN, MODE_NORMAL
 from .manualfs import AutoResolve
 
 (WS_DONT_TOUCH,
  WS_SPACES_TO_UNDERSCORES,
  WS_UNDERSCORES_TO_SPACES) = list(range(3))
+
+FS_FORBIDDEN = '/\\:*?"<>|'
  
 def smart_move(items, dest, allow_merge=True):
     """move items into dest by taking care of name conflicts.

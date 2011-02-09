@@ -13,7 +13,6 @@ This package contains the source for musicGuru. To learns how to build it, refer
 There are also other sub-folder that comes from external repositories (automatically checked out
 with svn:externals):
 
-- hsutil: A collection of helpers used across HS applications.
 - hscommon: Code common to HS apps, yet not common enough to be called "hsutil"
 - cocoalib: A collection of helpers used across Cocoa UI codebases of HS applications.
 - qtlib: A collection of helpers used across Qt UI codebases of HS applications.
@@ -26,11 +25,12 @@ Before being able to build musicGuru, a few dependencies have to be installed:
 General dependencies
 -----
 
-- Python 2.6 (http://www.python.org)
-- hsutil 1.0.2 (http://hg.hardcoded.net/hsutil)
+- Python 3.1 (http://www.python.org)
+- hsaudiotag3k 1.1.1 (http://hg.hardcoded.net/hsaudiotag)
+- jobprogress (http://hg.hardcoded.net/jobprogress)
 - PyYaml, for help files and the build system. (http://pyyaml.org/)
 - Markdown, for help files. (http://www.freewisdom.org/projects/python-markdown/)
-- py.test, to run unit tests. (http://codespeak.net/py/dist/test/)
+- py.test 2.0, to run unit tests. (http://pytest.org)
 
 OS X prerequisites
 -----

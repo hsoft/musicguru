@@ -9,7 +9,7 @@
 import sys
 import objc
 
-from hscommon import job
+from jobprogress import job
 from hscommon.cocoa.inter import signature, PyFairware
 from hscommon.cocoa.objcmin import NSObject
 

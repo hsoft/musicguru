@@ -11,11 +11,11 @@ from . import _sql as sql
 import hsfs as fs
 import hsfs.music
 from hsfs.phys import music
-from hsutil import io
-from hsutil.path import Path
-from hscommon.job import nulljob, JobCancelled
+from hscommon import io
+from hscommon.path import Path
+from jobprogress.job import nulljob, JobCancelled
 
-class Node(object):
+class Node:
     @property
     def parent_volume(self):
         if self.parent is not None:

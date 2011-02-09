@@ -7,13 +7,11 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 import sqlite3 as sqlite
-import time
 from weakref import WeakValueDictionary
 
 import hsfs as fs
-from hscommon.job import nulljob, JobCancelled
-from hsutil.misc import tryint
-from hsutil.str import multi_replace
+from jobprogress.job import nulljob, JobCancelled
+from hscommon.util import tryint, multi_replace
 import hscommon.sqlite
 
 (NODE_TYPE_DIR,

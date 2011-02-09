@@ -11,11 +11,11 @@ import os.path as op
 import time
 import weakref
 
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 
 import hsfs as fs
 from .. import manualfs
-from hscommon.job import Job, JobCancelled
+from jobprogress.job import Job, JobCancelled
 
 from ..testcase import TestCase
 from ._sql import *

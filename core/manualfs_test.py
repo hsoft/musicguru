@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2005-01-14
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -10,11 +9,10 @@
 import weakref
 import gc
 
-from hsutil.testutil import eq_, assert_raises
-
-from hscommon import job
-from hsutil.decorators import log_calls
-from hsutil.path import Path
+from pytest import raises
+from hscommon.testutil import eq_, log_calls
+from jobprogress import job
+from hscommon.path import Path
 
 import hsfs as fs
 from .manualfs import *
@@ -122,21 +120,25 @@ def test_move_file_conflict_with_directory_name():
     source_file = source.AddFile('foobar')
     dest = TestDir(None,'dest')
     dest_dir = dest.AddDir('foobar')
-    assert_raises(fs.AlreadyExistsError, source_file.move, dest)
+    with raises(fs.AlreadyExistsError):
+        source_file.move(dest)
     assert source_file in source
 
 def test_already_exists():
     ref = TestDir(None,'')
     ref.AddFile('foobar')
-    assert_raises(fs.AlreadyExistsError, ref.AddFile, 'foobar')
-    assert_raises(fs.AlreadyExistsError, ref.AddDir, 'foobar')
+    with raises(fs.AlreadyExistsError):
+        ref.AddFile('foobar')
+    with raises(fs.AlreadyExistsError):
+        ref.AddDir('foobar')
 
 def test_move_dir_conflict():
     dir1 = TestDir(None,'')
     dir2 = TestDir(None,'')
     subdir = dir1.AddDir('foobar')
     dir2.AddFile('foobar')
-    assert_raises(fs.AlreadyExistsError, subdir.move, dir2)
+    with raises(fs.AlreadyExistsError):
+        subdir.move(dir2)
     assert 'foobar' in dir1
     assert 'foobar' in dir2
 
@@ -366,7 +368,8 @@ def test_job_cancelled():
     eq_(1, len(test))
     eq_('dir1', test[0].name)
     mainjob = job.Job(1,lambda progress:progress < 30)
-    assert_raises(job.JobCancelled, test.add_dir_copy, root, 'dir2', mainjob)
+    with raises(job.JobCancelled):
+        test.add_dir_copy(root, 'dir2', mainjob)
     eq_(1, len(test))
     eq_('dir1', test[0].name)
 
@@ -374,7 +377,8 @@ def test_add_dir_copy_already_exists():
     ref = TestDir(None,'test')
     root = Directory(None,'')
     root.add_dir_copy(ref,'foobar')
-    assert_raises(fs.AlreadyExistsError, root.add_dir_copy, ref, 'foobar')
+    with raises(fs.AlreadyExistsError):
+        root.add_dir_copy(ref, 'foobar')
 
 def test_original():
     root1 = TestDir(None,'')

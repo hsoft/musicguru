@@ -9,7 +9,7 @@
 from unicodedata import normalize
 import logging
 
-from hsutil.misc import flatten
+from hscommon.util import flatten
 from . import _fs as fs
 
 def hold_update(method):

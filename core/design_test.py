@@ -10,7 +10,7 @@ import os.path as op
 import os
 import random
 
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 
 from . import fs_utils, manualfs, design
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED

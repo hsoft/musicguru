@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-09-19
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,15 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-
-
 from PyQt4.QtCore import Qt, SIGNAL, QMimeData, QByteArray
 from PyQt4.QtGui import QPixmap
 
-from hsutil.conflict import is_conflicted
-from hsutil.misc import dedupe
-from hsutil.path import Path
-from hsutil.str import format_size, format_time, FT_MINUTES
+from hscommon.conflict import is_conflicted
+from hscommon.util import dedupe, format_size, format_time
+from hscommon.path import Path
 from qtlib.tree_model import TreeNode, TreeModel
 
 from core.fs_utils import smart_move
@@ -69,7 +65,7 @@ class SongNode(FSNode):
             song.original.parent_volume.name,
             0,
             format_size(song.size, 2, 2, False),
-            format_time(song.duration, FT_MINUTES),
+            format_time(song.duration, with_hours=False),
         ]
     
     def _getImageName(self):

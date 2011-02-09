@@ -12,13 +12,15 @@ import os.path as op
 import shutil
 import sys
 
-from hsutil import io
-from hsutil.decorators import log_calls
-from hsutil.path import Path
-from hsutil.testcase import TestCase
+from hscommon import io
+from hscommon.testutil import log_calls, TestData
+from hscommon.path import Path
+from hscommon.testcase import TestCase
 
 from .. import phys
 from .. import _fs as fs
+
+testdata = TestData(op.join(op.dirname(__file__), 'testdata'))
 
 def create_fake_fs(rootpath):
     rootpath = op.join(rootpath, 'fs')
@@ -135,7 +137,7 @@ class TCPhys(TestCase):
         testdata dir. Let's just assume that if it's not zero, it has been
         correctly fetched.
         """
-        root = phys.Directory(None, self.filepath('utils'))
+        root = phys.Directory(None, testdata.filepath('utils'))
         self.assert_(root._get_mtime() > 1)
         self.assert_(root.files[0].mtime > 1)
     
@@ -160,14 +162,14 @@ class TCPhys(TestCase):
             self.fail()
         except fs.InvalidPath:
             pass
-        root = phys.Directory(None, self.filepath('utils'))
+        root = phys.Directory(None, testdata.filepath('utils'))
         d = phys.Directory(root, 'does_not_exist')
         self.assertEqual([],d.dirs)
         self.assertEqual([],d.files)
     
     def test_that_move_keeps_the_same_instance(self):
         tmpdir = phys.Directory(None, self.tmpdir())
-        refdir = phys.Directory(None, self.filepath('utils'))
+        refdir = phys.Directory(None, testdata.filepath('utils'))
         f = refdir.files[0]
         f.copy(tmpdir)
         f = tmpdir.files[0]
@@ -179,7 +181,7 @@ class TCPhys(TestCase):
         def fake_copy_move(src,dest):
             raise EnvironmentError
             
-        refdir = phys.Directory(None, self.filepath('utils'))
+        refdir = phys.Directory(None, testdata.filepath('utils'))
         tmpdir = phys.Directory(None, self.tmpdir())
         self.mock(shutil, 'move', fake_copy_move)
         f = refdir.files[0]
@@ -191,7 +193,7 @@ class TCPhys(TestCase):
         def fake_copy_move(src,dest):
             raise EnvironmentError
         
-        refdir = phys.Directory(None, self.filepath('utils'))
+        refdir = phys.Directory(None, testdata.filepath('utils'))
         tmpdir = phys.Directory(None, self.tmpdir())
         self.mock(shutil, 'move', fake_copy_move)
         f = refdir.files[0]

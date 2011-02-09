@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.misc import nonone
+from hscommon.util import nonone
 
 def do_add(x, y):
     if isinstance(x, (int, list, tuple)):
@@ -33,7 +33,7 @@ def do_get_substats(item, attr):
         result = result.copy()
     return result
 
-class Stats(object):
+class Stats:
     """Stats is intended to be a mixin class, and it should be mixed with a
     container class. To use it, call get_stat(arg). This will go through self,
     and look for <arg> attributes among items, and will return stats about it.

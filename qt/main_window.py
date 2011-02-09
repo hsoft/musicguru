@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-09-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -13,7 +12,7 @@ from PyQt4.QtCore import Qt, SIGNAL, QModelIndex, QProcess, QCoreApplication, QU
 from PyQt4.QtGui import (QMainWindow, QHeaderView, QMenu, QIcon, QPixmap, QToolButton, QDialog,
     QDesktopServices)
 
-from hsutil.conflict import is_conflicted
+from hscommon.conflict import is_conflicted
 
 import mg_rc
 from board_model import BoardModel

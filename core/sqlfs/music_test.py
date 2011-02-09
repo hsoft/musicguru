@@ -11,8 +11,8 @@ import os
 import shutil
 
 from hsfs.phys import music
-from hsutil.path import Path
-from hscommon.job import Job, JobCancelled
+from hscommon.path import Path
+from jobprogress.job import Job, JobCancelled
 
 from ..testcase import TestCase
 from .. import manualfs
@@ -342,7 +342,7 @@ class TCvolume_is_available(TestCase):
         self.v = self.root.new_directory('vol')
     
     def test_true(self):
-        self.v.initial_path = TestCase.filepath('') #it always exists
+        self.v.initial_path = self.filepath('') #it always exists
         self.assertTrue(self.v.is_available)
     
     def test_false(self):

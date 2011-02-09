@@ -9,7 +9,7 @@
 import os
 
 from py.test import importorskip
-from hsutil.testutil import eq_
+from hscommon.testutil import eq_
 
 # This test is permanently skipped since there's no easy way to get to hsaudio's testdata now that
 # the dependency is through site-package (in which testdata isn't installed) instead of through
@@ -18,7 +18,7 @@ importorskip('hsaudiotagfoobar')
 from hsaudiotag.testcase import TestCase
 from ..phys import music
 
-from hsutil.str import get_file_ext
+from hscommon.util import get_file_ext
 
 from .. import phys, _fs as fs
 from ..music import _File

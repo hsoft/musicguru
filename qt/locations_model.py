@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-09-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -7,10 +6,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel, QModelIndex
+from PyQt4.QtCore import SIGNAL, Qt, QAbstractTableModel
 from PyQt4.QtGui import QBrush
 
-from hsutil.str import format_size
+from hscommon.util import format_size
 
 class LocationsModel(QAbstractTableModel):
     HEADER = ['Name', 'Files', 'GB']

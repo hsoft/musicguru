@@ -9,7 +9,7 @@
 from . import _phys as phys
 from .. import music
 from hsaudiotag import mpeg, wma, mp4, ogg, flac, aiff
-from hsutil.str import get_file_ext
+from hscommon.util import get_file_ext
 
 TAG_FIELDS = ['audiosize', 'duration', 'bitrate', 'samplerate', 'title', 'artist',
     'album', 'genre', 'year', 'track', 'comment']
@@ -18,12 +18,12 @@ class Mp3File(phys.File,music._File):
     #---Override
     def _read_info(self, field):
         if field == 'md5partial':
-            fileinfo = mpeg.Mpeg(self.path)
+            fileinfo = mpeg.Mpeg(str(self.path))
             self._md5partial_offset = fileinfo.audio_offset
             self._md5partial_size = fileinfo.audio_size
         super(Mp3File, self)._read_info(field)
         if field in TAG_FIELDS:
-            fileinfo = mpeg.Mpeg(self.path)
+            fileinfo = mpeg.Mpeg(str(self.path))
             self.audiosize = fileinfo.audio_size
             self.bitrate = fileinfo.bitrate
             self.duration = fileinfo.duration
@@ -46,12 +46,12 @@ class WmaFile(phys.File,music._File):
     #---Override
     def _read_info(self, field):
         if field == 'md5partial':
-            dec = wma.WMADecoder(self.path)
+            dec = wma.WMADecoder(str(self.path))
             self._md5partial_offset = dec.audio_offset
             self._md5partial_size = dec.audio_size
         super(WmaFile, self)._read_info(field)
         if field in TAG_FIELDS:
-            dec = wma.WMADecoder(self.path)
+            dec = wma.WMADecoder(str(self.path))
             self.audiosize = dec.audio_size
             self.bitrate = dec.bitrate
             self.duration = dec.duration
@@ -68,13 +68,13 @@ class Mp4File(phys.File,music._File):
     #---Override
     def _read_info(self, field):
         if field == 'md5partial':
-            dec = mp4.File(self.path)
+            dec = mp4.File(str(self.path))
             self._md5partial_offset = dec.audio_offset
             self._md5partial_size = dec.audio_size
             dec.close()
         super(Mp4File, self)._read_info(field)
         if field in TAG_FIELDS:
-            dec = mp4.File(self.path)
+            dec = mp4.File(str(self.path))
             self.audiosize = dec.audio_size
             self.bitrate = dec.bitrate
             self.duration = dec.duration
@@ -92,12 +92,12 @@ class OggFile(phys.File,music._File):
     #---Override
     def _read_info(self, field):
         if field == 'md5partial':
-            dec = ogg.Vorbis(self.path)
+            dec = ogg.Vorbis(str(self.path))
             self._md5partial_offset = dec.audio_offset
             self._md5partial_size = dec.audio_size
         super(OggFile, self)._read_info(field)
         if field in TAG_FIELDS:
-            dec = ogg.Vorbis(self.path)
+            dec = ogg.Vorbis(str(self.path))
             self.audiosize = dec.audio_size
             self.bitrate = dec.bitrate
             self.duration = dec.duration
@@ -114,12 +114,12 @@ class FlacFile(phys.File,music._File):
     #---Override
     def _read_info(self, field):
         if field == 'md5partial':
-            dec = flac.FLAC(self.path)
+            dec = flac.FLAC(str(self.path))
             self._md5partial_offset = dec.audio_offset
             self._md5partial_size = dec.audio_size
         super(FlacFile, self)._read_info(field)
         if field in TAG_FIELDS:
-            dec = flac.FLAC(self.path)
+            dec = flac.FLAC(str(self.path))
             self.audiosize = dec.audio_size
             self.bitrate = dec.bitrate
             self.duration = dec.duration
@@ -136,12 +136,12 @@ class AiffFile(phys.File, music._File):
     #---Override
     def _read_info(self, field):
         if field == 'md5partial':
-            dec = aiff.File(self.path)
+            dec = aiff.File(str(self.path))
             self._md5partial_offset = dec.audio_offset
             self._md5partial_size = dec.audio_size
         super(AiffFile, self)._read_info(field)
         if field in TAG_FIELDS:
-            dec = aiff.File(self.path)
+            dec = aiff.File(str(self.path))
             self.audiosize = dec.audio_size
             self.bitrate = dec.bitrate
             self.duration = dec.duration

@@ -9,9 +9,8 @@
 import weakref
 import gc
 
-from hsutil.testutil import eq_
-
-from hsutil.decorators import log_calls
+from hscommon.testutil import eq_
+from hscommon.testutil import log_calls
 
 from ..tree import *
 

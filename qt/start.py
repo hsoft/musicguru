@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Created By: Virgil Dupras
 # Created On: 2009-09-11
 # Copyright 2010 Hardcoded Software (http://www.hardcoded.net)
@@ -18,6 +17,7 @@ from PyQt4.QtGui import QApplication, QIcon, QPixmap
 
 import mg_rc
 
+from hscommon.trans import install_qt_trans
 from app import MusicGuru
 
 if sys.platform == 'win32':
@@ -32,6 +32,7 @@ if __name__ == "__main__":
     QCoreApplication.setOrganizationName('Hardcoded Software')
     QCoreApplication.setApplicationName('musicGuru')
     QCoreApplication.setApplicationVersion(MusicGuru.VERSION)
+    install_qt_trans('en')
     mgapp = MusicGuru()
     exec_result = app.exec_()
     del mgapp

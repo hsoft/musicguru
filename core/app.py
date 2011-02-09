@@ -8,20 +8,18 @@
 
 import os
 import os.path as op
-import shutil
 
 import hsfs as fs
 from hsfs import phys
 from hsfs.stats import StatsList
-from hsutil.conflict import get_unconflicted_name, get_conflicted_name
-from hsutil.files import clean_empty_dirs
-from hsutil.misc import cond, tryint
-from hsutil.str import format_size, format_time, multi_replace, FT_MINUTES, FS_FORBIDDEN
-from hscommon.job import JobCancelled
+from hscommon.conflict import get_unconflicted_name, get_conflicted_name
+from hscommon.util import tryint, format_size, format_time, multi_replace
+from jobprogress.job import JobCancelled
 from hscommon.reg import RegistrableApplication
 
 from . import design
-from .fs_utils import BatchOperation
+from .fs_utils import BatchOperation, FS_FORBIDDEN
+from .util import clean_empty_dirs
 from .sqlfs.music import Root, VOLTYPE_CDROM, VOLTYPE_FIXED, MODE_PHYSICAL, MODE_NORMAL
 
 class MusicGuru(RegistrableApplication):
@@ -38,7 +36,7 @@ class MusicGuru(RegistrableApplication):
         self.board = design.Board()
     
     def AddLocation(self, path, name, removeable, job):
-        vol_type = cond(removeable, VOLTYPE_CDROM, VOLTYPE_FIXED)
+        vol_type = VOLTYPE_CDROM if removeable else VOLTYPE_FIXED
         ref = phys.music.Directory(None, path)
         self.collection.add_volume(ref, name, vol_type, job)
     
@@ -59,7 +57,7 @@ class MusicGuru(RegistrableApplication):
     def GetSelectionInfo(self, item):
         def output_stats(info, item):
             info.append(('Size',format_size(item.get_stat('size'),2)))
-            info.append(('Time',format_time(item.get_stat('duration'),FT_MINUTES)))
+            info.append(('Time',format_time(item.get_stat('duration'), with_hours=False)))
             info.append(('Extensions',','.join(item.get_stat('extension',[]))))
             info.append(('# Artists',len(item.get_stat('artist',[]))))
             info.append(('# Albums',len(item.get_stat('album',[]))))
@@ -101,7 +99,7 @@ class MusicGuru(RegistrableApplication):
             new_info.append(('Year',item.year))
             new_info.append(('Track',"%02d" % item.track))
             new_info.append(('Size',format_size(item.size,2)))
-            new_info.append(('Time',format_time(item.duration,FT_MINUTES)))
+            new_info.append(('Time',format_time(item.duration, with_hours=False)))
             new_info.append(('Bitrate',item.bitrate))
             new_info.append(('Comment',item.comment))
         return new_info

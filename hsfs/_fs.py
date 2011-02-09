@@ -6,11 +6,10 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import sys
 import logging
 
-from hsutil.path import Path
-from hsutil.str import get_file_ext
+from hscommon.path import Path
+from hscommon.util import get_file_ext
 
 from . import tree
 from .stats import Stats

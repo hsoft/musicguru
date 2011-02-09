@@ -6,18 +6,15 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import time
 import os
-from random import randrange
 import sys
 from io import StringIO
 import weakref
 import gc
 
-from hsutil.testutil import eq_
-
-from hsutil.path import Path
-from hsutil.testcase import TestCase
+from hscommon.testutil import eq_
+from hscommon.path import Path
+from hscommon.testcase import TestCase
 
 from .._fs import *
 

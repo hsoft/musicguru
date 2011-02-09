@@ -6,17 +6,14 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from hsutil.testcase import TestCase as TestCaseBase
-from hsutil.path import Path
+import py.path
+from hscommon.testcase import TestCase as TestCaseBase
+from hscommon.path import Path
 
 class TestCase(TestCaseBase):
     def tearDown(self):
         if hasattr(self, '_created_directories'):
             self.global_teardown()
-    
-    @classmethod
-    def datadirpath(cls):
-        return Path(__file__)[:-1] + 'testdata'
     
     def tmpdir(self, *args, **kwargs):
         if not hasattr(self, '_created_directories'):
@@ -27,3 +24,7 @@ class TestCase(TestCaseBase):
         if not hasattr(self, '_created_directories'):
             self.global_setup()
         return TestCaseBase.mock(self, *args, **kwargs)
+    
+    @property
+    def datadirpath(self):
+        return py.path.local(str(Path(__file__)[:-1] + 'testdata'))

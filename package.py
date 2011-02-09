@@ -63,7 +63,7 @@ def package_debian():
     srcpath = op.join(destpath, 'src')
     os.makedirs(destpath)
     shutil.copytree('qt', srcpath)
-    copy_packages(['hsutil', 'hsaudiotag', 'hsfs', 'core', 'qtlib', 'hscommon'], srcpath)
+    copy_packages(['hsaudiotag', 'hsfs', 'core', 'qtlib', 'hscommon', 'jobprogress'], srcpath)
     shutil.copytree('debian', op.join(destpath, 'debian'))
     build_debian_changelog(op.join('help', 'changelog.yaml'), op.join(destpath, 'debian', 'changelog'), 'musicguru', from_version='1.3.6')
     shutil.copytree(op.join('help', 'musicguru_help'), op.join(srcpath, 'help'))
